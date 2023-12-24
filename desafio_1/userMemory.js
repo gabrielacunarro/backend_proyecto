@@ -28,6 +28,17 @@ class UserManager {
     readOne(id) {
         return this.#users.find(user => user.id === Number(id));
     }
+
+    destroy(id) {
+        const index = ProductManager.#users.findIndex(product => product.id === id);
+
+        if (index !== -1) {
+            ProductManager.#users.splice(index, 1);
+            return true; // Indicar que se eliminó correctamente
+        }
+
+        return false; // Indicar que no se encontró el producto con el ID especificado
+    }
 }
 const userManager = new UserManager();
 userManager.create({
@@ -52,4 +63,4 @@ userManager.create({
 });
 
 console.log("Users:", userManager.read());
-console.log("User with id 2:", userManager.readOne(2));
+console.log("User with id 1:", userManager.readOne(1));

@@ -1,10 +1,17 @@
+const crypto = require('crypto');
+
 class ProductManager {
     static #products = [];
+
+    #generateProductId() {
+        const idBuffer = crypto.randomBytes(12);
+        return idBuffer.toString('hex');
+    }
 
     create(data) {
         const requiredProps = ["title", "photo", "price", "stock"];
 
-        // verifico si estan todas las propiedades de cada producto, caso contrario arrojo un advertencia/error de creacion de art.
+        // Verifico si están todas las propiedades de cada producto, caso contrario, arrojo un advertencia/error de creación de art.
         const missingProps = requiredProps.filter(prop => !(prop in data));
 
         if (missingProps.length > 0) {
@@ -12,7 +19,7 @@ class ProductManager {
             console.log(`Warning: ${missingMessages.join(". ")}`);
 
         } else {
-            const id = ProductManager.#products.length === 0 ? 1 : ProductManager.#products[ProductManager.#products.length - 1].id + 1;
+            const id = this.#generateProductId();
 
             const product = {
                 id,
@@ -31,15 +38,27 @@ class ProductManager {
     }
 
     readOne(id) {
-        return ProductManager.#products.find(product => product.id === Number(id));
+        return ProductManager.#products.find(product => product.id === id);
     }
+
+    destroy(id) {
+        const index = ProductManager.#products.findIndex(product => product.id === id);
+
+        if (index !== -1) {
+            ProductManager.#products.splice(index, 1);
+            return true; // Indicar que se eliminó correctamente
+        }
+
+        return false; // Indicar que no se encontró el producto con el ID especificado
+    }
+    
 }
 
 const productManager = new ProductManager();
 productManager.create({
     title: "N°5 CHANEL",
     photo: "assets/chaneln5.png",
-    //price: 118000,
+    price: 118000,
     stock: 250
 });
 
@@ -65,4 +84,6 @@ productManager.create({
 });
 
 console.log("Products:", productManager.read());
-console.log("Product with ID 1", productManager.readOne(1));
+console.log("Product with ID 1:", productManager.readOne(productManager.read()[0].id));
+
+
