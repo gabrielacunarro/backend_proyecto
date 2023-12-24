@@ -1,0 +1,30 @@
+[
+  {
+    "id": "dcaaf604",
+    "title": "N°5 CHANEL",
+    "photo": "assets/chaneln5.png",
+    "price": 118000,
+    "stock": 250
+  },
+  {
+    "id": "6c141322",
+    "title": "Blue Seduction",
+    "photo": "assets/BlueSeduction.png",
+    "price": 18000,
+    "stock": 130
+  },
+  {
+    "id": "ee195caa",
+    "title": "Pure Poison EDP",
+    "photo": "assets/PurePoison.png",
+    "price": 18000,
+    "stock": 180
+  },
+  {
+    "id": "c2337a43",
+    "title": "Invictus EDT",
+    "photo": "assets/Invictus.png",
+    "price": 70000,
+    "stock": 110
+  }
+]

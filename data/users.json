@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Alejandro Perez",
+    "photo": "Alejandro.jpg",
+    "email": "alejandro.perez@gmail.com"
+  },
+  {
+    "id": 2,
+    "name": "Federico Suarez",
+    "photo": "Federico.jpg",
+    "email": "federico_suarez@gmail.com"
+  },
+  {
+    "id": 3,
+    "name": "Ana De Luca",
+    "photo": "Ana.jpg",
+    "email": "ana_deluca@gmail.com"
+  },
+  {
+    "id": 4,
+    "name": "Maria Sosa",
+    "photo": "Maria.jpg",
+    "email": "maria-sosa@gmail.com"
+  }
+]
