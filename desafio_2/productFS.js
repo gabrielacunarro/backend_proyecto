@@ -138,5 +138,3 @@ console.log("Products:", productManager.read());
 console.log("Product with ID 1", productManager.readOne(1));
 
 
-
-
