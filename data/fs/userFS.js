@@ -112,6 +112,18 @@ class UserManager {
             console.error('Error saving users:', error.message);
         }
     }
+
+    destroy(id) {
+        const userIndex = UserManager.#users.findIndex(user => user.id === id);
+
+        if (userIndex !== -1) {
+            UserManager.#users.splice(userIndex, 1);
+            console.log(`User with ID ${id} has been successfully destroyed.`);
+            this.saveUsers(); // Guardar los cambios después de eliminar
+        } else {
+            console.log(`User with ID ${id} not found. No user has been destroyed.`);
+        }
+    }
 }
 
 // Creación de usuarios

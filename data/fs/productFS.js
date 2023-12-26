@@ -102,6 +102,18 @@ class ProductManager {
             console.error('Error saving products:', error.message);
         }
     }
+
+    destroy(id) {
+        const productIndex = ProductManager.#products.findIndex(product => product.id === id);
+
+        if (productIndex !== -1) {
+            ProductManager.#products.splice(productIndex, 1);
+            console.log(`Product with ID ${id} has been successfully destroyed.`);
+            this.saveProducts(); // Guardar los cambios después de eliminar
+        } else {
+            console.log(`Product with ID ${id} not found. No product has been destroyed.`);
+        }
+    }
 }
 
 const productManager = new ProductManager();
