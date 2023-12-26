@@ -1,0 +1,26 @@
+[
+  {
+    "id": "27e97179",
+    "name": "Alejandro Perez",
+    "photo": "Alejandro.jpg",
+    "email": "alejandro.perez@gmail.com"
+  },
+  {
+    "id": "10db4f85",
+    "name": "Federico Suarez",
+    "photo": "Federico.jpg",
+    "email": "federico_suarez@gmail.com"
+  },
+  {
+    "id": "793c1499",
+    "name": "Ana De Luca",
+    "photo": "Ana.jpg",
+    "email": "ana_deluca@gmail.com"
+  },
+  {
+    "id": "a6815259",
+    "name": "Maria Sosa",
+    "photo": "Maria.jpg",
+    "email": "maria-sosa@gmail.com"
+  }
+]
