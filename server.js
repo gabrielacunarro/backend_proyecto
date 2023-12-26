@@ -1,10 +1,10 @@
 import express from "express";
-import ProductManager from "./data/fs/productFS.js";
+//import ProductManager from "./data/fs/productFS.js";
 //import UserManager from "./data/fs/userFS.js";
-//import Prueba from "./prueba.js";
+import Prueba from "./prueba.js";
 
 // Crear una instancia de ProductManager
-const productManagerInstance = new ProductManager();
+//const productManagerInstance = new ProductManager();
 
 const server = express();
 
@@ -98,6 +98,6 @@ server.get("/api/products", (req, res) => {
 
 // //endpoint de prueba por fallas del productFS y el userFS
 
-// server.get('/realizar-prueba', (req, res) => {
-//     res.send('Esto es una prueba'); // Envía la respuesta al navegador
-// });
+server.get('/realizar-prueba', (req, res) => {
+    res.send('Esto es una prueba'); // Envía la respuesta al navegador
+});

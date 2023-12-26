@@ -54,11 +54,11 @@ class ProductManager {
         return ProductManager.#products;
     }
 
-    readOne(index) {
-        const product = ProductManager.#products[index - 1];
+    readOne(id) {
+        const product = ProductManager.#products.find(product => product.id === id);
 
         if (!product) {
-            console.log("Product not found!");
+            console.log(`Product with ID ${id}: not found!`);
         }
 
         return product || null;
