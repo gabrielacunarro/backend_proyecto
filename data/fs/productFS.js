@@ -134,8 +134,8 @@ productManager.create({
 //     stock: 110
 // });
 
-console.log("Products:", productManager.read());
-console.log("Product with ID 1", productManager.readOne(1));
+//console.log("Products:", productManager.read());
+//console.log("Product with ID 1", productManager.readOne(1));
 
 export default ProductManager;
 

@@ -3,7 +3,7 @@ import path from 'path';
 import crypto from 'crypto';
 
 const usersFilePath = path.join('data', 'fs', 'files', 'users.json');
-const dataFolder = path.join(path.dirname(new URL(import.meta.url).pathname), 'data', 'fs');
+const dataFolder = path.join(process.cwd(), 'data', 'fs');
 
 class UserManager {
     static #usersFile = path.resolve(usersFilePath);
@@ -71,12 +71,11 @@ class UserManager {
         return UserManager.#users;
     }
 
-    readOne(index) {
-        const userIndex = index !== undefined ? index - 1 : 0;
-        const user = UserManager.#users[userIndex];
+    readOne(id) {
+        const user = UserManager.#users.find(user => user.id === id);
 
         if (!user) {
-            console.log(`User at position ${index || 1}: not found!`);
+            console.log(`User with ID ${id}: not found!`);
         }
 
         return user || null;
@@ -142,10 +141,12 @@ userManager.create({
     email: "maria-sosa@gmail.com"
 });
 
-console.log("Users:", userManager.read());
-console.log("User with ID 1:", userManager.readOne(1));
+//console.log("Users:", userManager.read());
+//sconsole.log("User with ID 1:", userManager.readOne(userManager.read()[0].id));
 
 export default UserManager;
+
+
 
 
 
