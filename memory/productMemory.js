@@ -33,6 +33,17 @@ class ProductManager {
     readOne(id) {
         return ProductManager.#products.find(product => product.id === Number(id));
     }
+
+    destroy(id) {
+        const index = ProductManager.#products.findIndex(product => product.id === Number(id));
+
+        if (index !== -1) {
+            ProductManager.#products.splice(index, 1);
+            console.log(`Product with ID ${id} has been deleted.`);
+        } else {
+            console.log(`Product with ID ${id} not found.`);
+        }
+    }
 }
 
 const productManager = new ProductManager();
@@ -66,3 +77,4 @@ productManager.create({
 
 console.log("Products:", productManager.read());
 console.log("Product with ID 1", productManager.readOne(1));
+productManager.destroy(2);
