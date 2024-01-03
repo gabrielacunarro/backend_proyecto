@@ -18,10 +18,10 @@ server.use(express.urlencoded({ extended: true }));
 server.listen(PORT, ready);
 
 // Endpoint para obtener la lista de productos
-server.get("/api/products", (req, res) => {
+server.get("/api/products", async (req, res) => {
     try {
         // Llama al método read de la instancia de ProductManager
-        const productList = productManagerInstance.read();
+        const productList = await productManagerInstance.read();
 
         if (productList.length > 0) {
             console.log("Product List:", productList);
@@ -42,6 +42,7 @@ server.get("/api/products", (req, res) => {
         });
     }
 });
+
 
 
 // Endpoint para obtener un producto readOne(ID)
