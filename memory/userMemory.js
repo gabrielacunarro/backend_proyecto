@@ -28,6 +28,17 @@ class UserManager {
     readOne(id) {
         return this.#users.find(user => user.id === Number(id));
     }
+
+    destroy(id) {
+        const index = this.#users.findIndex(user => user.id === Number(id));
+
+        if (index !== -1) {
+            this.#users.splice(index, 1);
+            console.log(`User with ID ${id} has been deleted.`);
+        } else {
+            console.log(`User with ID ${id} not found.`);
+        }
+    }
 }
 const userManager = new UserManager();
 userManager.create({
@@ -53,3 +64,4 @@ userManager.create({
 
 console.log("Users:", userManager.read());
 console.log("User with id 2:", userManager.readOne(2));
+userManager.destroy(1);  // Eliminará el usuario con ID 1

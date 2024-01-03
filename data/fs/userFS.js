@@ -1,10 +1,17 @@
-const fs = require('fs').promises;
-const path = require('path');
-const crypto = require('crypto');
+import fs from 'fs/promises';
+import path from 'path';
+import crypto from 'crypto';
+
+const usersFilePath = path.join('data', 'fs', 'files', 'users.json');
+const dataFolder = path.join(process.cwd(), 'data', 'fs');
 
 class UserManager {
-    static #usersFile = path.resolve(__dirname, 'data', 'users.json');
+    static #usersFile = path.resolve(usersFilePath);
     static #users = [];
+
+    constructor() {
+        this.loadUsers();
+    }
 
     #verifyRequiredProps(data) {
         const requiredProps = ["name", "photo", "email"];
@@ -41,18 +48,21 @@ class UserManager {
             UserManager.#users.push(user);
 
             try {
+                // Verificar la existencia de la carpeta que contiene users.json
                 await fs.access(dataFolder);
             } catch (error) {
                 // Si la carpeta no existe, la crea
-                try {
-                    await fs.mkdir(dataFolder);
-                } catch (mkdirError) {
-                    console.error('Error creating folder:', mkdirError.message);
+                if (error.code === 'ENOENT') {
+                    try {
+                        await fs.mkdir(dataFolder, { recursive: true });
+                    } catch (mkdirError) {
+                        console.error('Error creating folder:', mkdirError.message);
+                    }
+                } else {
+                    console.error('Error accessing folder:', error.message);
                 }
             }
 
-            // Llama a saveUsers después de cargar los usuarios
-            await this.loadUsers();
             await this.saveUsers();
         }
     }
@@ -61,30 +71,36 @@ class UserManager {
         return UserManager.#users;
     }
 
-    readOne(index) {
-        const userIndex = index !== undefined ? index - 1 : 0;
-        const user = UserManager.#users[userIndex];
-    
+    readOne(id) {
+        const user = UserManager.#users.find(user => user.id === id);
+
         if (!user) {
-            console.log(`User at position ${index || 1}: not found!`);
+            console.log(`User with ID ${id}: not found!`);
         }
-    
+
         return user || null;
-    } 
+    }
 
     async loadUsers() {
         try {
+            // Verificar la existencia del archivo users.json
+            await fs.access(UserManager.#usersFile);
             const data = await fs.readFile(UserManager.#usersFile, 'utf8');
+
             if (data.trim() === '') {
-                // Inicializo #users como un array vacío
                 UserManager.#users = [];
             } else {
                 UserManager.#users = JSON.parse(data);
             }
         } catch (error) {
-            // Manejo de error creando un user vacío
-            console.error('Error loading users:', error.message);
-            UserManager.#users = [];
+            // Manejo de error creando un usuario vacío
+            if (error.code === 'ENOENT') {
+                // Si el archivo no existe, inicializar #users como un array vacío
+                UserManager.#users = [];
+            } else {
+                console.error('Error loading users:', error.message);
+                UserManager.#users = [];
+            }
         }
     }
 
@@ -96,10 +112,19 @@ class UserManager {
             console.error('Error saving users:', error.message);
         }
     }
-}
 
-// Creo la carpeta 'data' para almacenar el archivo JSON
-const dataFolder = path.join(__dirname, 'data');
+    destroy(id) {
+        const userIndex = UserManager.#users.findIndex(user => user.id === id);
+
+        if (userIndex !== -1) {
+            UserManager.#users.splice(userIndex, 1);
+            console.log(`User with ID ${id} has been successfully destroyed.`);
+            this.saveUsers(); // Guardar los cambios después de eliminar
+        } else {
+            console.log(`User with ID ${id} not found. No user has been destroyed.`);
+        }
+    }
+}
 
 // Creación de usuarios
 const userManager = new UserManager();
@@ -109,6 +134,7 @@ userManager.create({
     photo: "Alejandro.jpg",
     email: "alejandro.perez@gmail.com"
 });
+
 userManager.create({
     name: "Federico Suarez",
     photo: "Federico.jpg",
@@ -127,8 +153,13 @@ userManager.create({
     email: "maria-sosa@gmail.com"
 });
 
-console.log("Users:", userManager.read());
-console.log("User with ID 1:", userManager.readOne(1));
+//console.log("Users:", userManager.read());
+//sconsole.log("User with ID 1:", userManager.readOne(userManager.read()[0].id));
+
+export default UserManager;
+
+
+
 
 
 
