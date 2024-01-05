@@ -68,9 +68,9 @@ server.get("/api/products", async (req, res) => {
 });
 
 // Endpoint para obtener un producto readOne(ID)
-server.get("/api/products/:pid", (req, res) => {
+server.get("/api/products/:id", (req, res) => {
     try {
-        const { id } = req.params;  // Corregir aquí de pid a id
+        const { id } = req.params;
         const product = productManager.readOne(id);
 
         if (product) {
@@ -94,7 +94,7 @@ server.get("/api/products/:pid", (req, res) => {
 
 
 //endpoint para eliminar un prod por ID
-server.delete("/api/products/delete/:id", (req, res) => {
+server.delete("/api/products/delete/:pid", (req, res) => {
     try {
         const { id } = req.params;
         const isDeleted = productManager.destroy(id);
@@ -118,7 +118,7 @@ server.delete("/api/products/delete/:id", (req, res) => {
     }
 });
 
-// ENDPOINTS DE USER MANAGER //
+// ------------------------------------------------------ENDPOINTS DE USER MANAGER --------------------------------------------------//
 
 // Endpoint para crear los usuarios
 server.post("/api/users/create", async (req, res) => {
@@ -138,8 +138,58 @@ server.post("/api/users/create", async (req, res) => {
     }
 });
 
+// Endpoint para obtener la lista de usuarios
+server.get("/api/users", (req, res) => {
+    try {
+        const userList = userManager.read();
+
+        if (userList.length > 0) {
+            console.log("User List:", userList);
+            return res.status(200).json({
+                success: true,
+                response: userList,
+            });
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: "Users not found",
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
+// Endpoint para obtener un usuario readOne(ID)
+server.get("/api/users/:id", (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = userManager.readOne(id);
+
+        if (user) {
+            return res.status(200).json({
+                success: true,
+                response: user,
+            });
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
 // Endpoint para eliminar un usuario por ID
-server.delete("/api/users/delete/:id", (req, res) => {
+server.delete("/api/users/delete/:uid", (req, res) => {
     try {
         const { id } = req.params;
         const isDeleted = userManager.destroy(id);

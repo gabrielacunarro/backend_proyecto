@@ -71,8 +71,6 @@ class ProductManager {
             // Guardar los productos y obtener la lista actualizada después de la operación
             const updatedProducts = await this.saveProducts();
 
-            console.log('Products after creation:', updatedProducts);
-
             return id;
         } catch (error) {
             console.error(`Error al guardar productos: ${error.message}`);
@@ -100,7 +98,6 @@ class ProductManager {
         try {
             const data = JSON.stringify(ProductManager.#products, null, 2);
             await fs.promises.writeFile(ProductManager.#productsFile, data, { encoding: 'utf8' });
-            console.log('Products saved successfully!');
             return ProductManager.#products; // Devolver la lista actualizada después de guardarlos
         } catch (error) {
             console.error('Error saving products:', error.message);
