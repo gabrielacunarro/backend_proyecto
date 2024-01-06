@@ -10,6 +10,7 @@ class UserManager {
     static #users = [];
 
     constructor() {
+        this.checkAndCreateDataFolder();
         this.loadUsers();
     }
 
@@ -30,6 +31,21 @@ class UserManager {
         return `Warning: ${missingMessages.join(". ")}`;
     }
 
+    // Método para constatar si la datafolder existe o no
+    async checkAndCreateDataFolder() {
+        try {
+            // Intenta acceder a la carpeta
+            await fs.access(dataFolder);
+        } catch (error) {
+            // Si la carpeta no existe, la crea
+            try {
+                await fs.mkdir(dataFolder, { recursive: true });
+            } catch (mkdirError) {
+                console.error('Error creating folder:', mkdirError.message);
+            }
+        }
+    }
+
     async create(data) {
         const missingProps = this.#verifyRequiredProps(data);
 
@@ -46,22 +62,6 @@ class UserManager {
             };
 
             UserManager.#users.push(user);
-
-            try {
-                // Verificar la existencia de la carpeta que contiene users.json
-                await fs.access(dataFolder);
-            } catch (error) {
-                // Si la carpeta no existe, la crea
-                if (error.code === 'ENOENT') {
-                    try {
-                        await fs.mkdir(dataFolder, { recursive: true });
-                    } catch (mkdirError) {
-                        console.error('Error creating folder:', mkdirError.message);
-                    }
-                } else {
-                    console.error('Error accessing folder:', error.message);
-                }
-            }
 
             await this.saveUsers();
         }
@@ -81,28 +81,18 @@ class UserManager {
         return user || null;
     }
 
+    // En UserManager
     async loadUsers() {
         try {
-            // Verificar la existencia del archivo users.json
             await fs.access(UserManager.#usersFile);
             const data = await fs.readFile(UserManager.#usersFile, 'utf8');
 
-            if (data.trim() === '') {
-                UserManager.#users = [];
-            } else {
-                UserManager.#users = JSON.parse(data);
-            }
+            UserManager.#users = JSON.parse(data);
         } catch (error) {
-            // Manejo de error creando un usuario vacío
-            if (error.code === 'ENOENT') {
-                // Si el archivo no existe, inicializar #users como un array vacío
-                UserManager.#users = [];
-            } else {
-                console.error('Error loading users:', error.message);
-                UserManager.#users = [];
-            }
+            console.error('Error loading users:', error.message);
         }
     }
+
 
     async saveUsers() {
         try {
@@ -118,45 +108,21 @@ class UserManager {
 
         if (userIndex !== -1) {
             UserManager.#users.splice(userIndex, 1);
-            console.log(`User with ID ${id} has been successfully destroyed.`);
-            this.saveUsers(); // Guardar los cambios después de eliminar
+            this.saveUsers().then(() => {
+                console.log(`User with ID ${id} has been successfully destroyed.`);
+            }).catch(error => {
+                console.error(`Error saving users after destroying user: ${error.message}`);
+            });
+            return true;
         } else {
             console.log(`User with ID ${id} not found. No user has been destroyed.`);
+            return false;
         }
     }
 }
 
-// Creación de usuarios
-const userManager = new UserManager();
-
-userManager.create({
-    name: "Alejandro Perez",
-    photo: "Alejandro.jpg",
-    email: "alejandro.perez@gmail.com"
-});
-
-userManager.create({
-    name: "Federico Suarez",
-    photo: "Federico.jpg",
-    email: "federico_suarez@gmail.com"
-});
-
-userManager.create({
-    name: "Ana De Luca",
-    photo: "Ana.jpg",
-    email: "ana_deluca@gmail.com"
-});
-
-userManager.create({
-    name: "Maria Sosa",
-    photo: "Maria.jpg",
-    email: "maria-sosa@gmail.com"
-});
-
-//console.log("Users:", userManager.read());
-//sconsole.log("User with ID 1:", userManager.readOne(userManager.read()[0].id));
-
 export default UserManager;
+
 
 
 

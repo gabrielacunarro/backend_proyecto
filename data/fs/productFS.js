@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 
@@ -18,24 +18,44 @@ class ProductManager {
     }
 
     #generateProductId() {
-        const idGenerator = crypto.randomBytes(4).toString('hex'); // 8 caracteres hexadecimales
+        const idGenerator = crypto.randomBytes(4).toString('hex');
         return idGenerator;
     }
-    
 
     #generateWarningMessage(missingProps, title) {
         const missingMessages = missingProps.map(prop => `The product has not been created as the "${prop}" property is missing for "${title}".`);
         return `Warning: ${missingMessages.join(". ")}`;
     }
 
+    // Método para constatar si la datafolder existe o no
+    async checkAndCreateDataFolder() {
+        const dataFolder = path.dirname(ProductManager.#productsFile);
+
+        try {
+            // Intenta acceder a la carpeta
+            await fs.promises.access(dataFolder);
+        } catch (error) {
+            // Si la carpeta no existe, la crea
+            try {
+                await fs.promises.mkdir(dataFolder, { recursive: true });
+            } catch (mkdirError) {
+                console.error('Error creating folder:', mkdirError.message);
+            }
+        }
+    }
+
+    // método de creación de productos
     async create(data) {
         const missingProps = this.#verifyRequiredProps(data);
-    
+
         if (missingProps.length > 0) {
             console.log(this.#generateWarningMessage(missingProps, data.title));
-        } else {
+            return null;
+        }
+
+        try {
             const id = this.#generateProductId();
-    
+
             const product = {
                 id,
                 title: data.title,
@@ -43,16 +63,69 @@ class ProductManager {
                 price: data.price,
                 stock: data.stock
             };
-    
+
             ProductManager.#products.push(product);
-            await this.saveProducts();
+
+            // Guardar los productos y obtener la lista actualizada después de la operación
+            const updatedProducts = await this.saveProducts();
+
+            return id;
+        } catch (error) {
+            console.error(`Error al guardar productos: ${error.message}`);
+            return null;
         }
     }
-    
 
-    read() {
-        return ProductManager.#products;
+    // Método para la carga de productos
+    async loadProducts() {
+        try {
+            const data = await fs.promises.readFile(ProductManager.#productsFile, 'utf8');
+            ProductManager.#products = JSON.parse(data);
+        } catch (error) {
+            if (error.code === 'ENOENT' || error.message === 'Unexpected end of JSON input') {
+                // Si el archivo no existe o está vacío, inicializo #products como un array vacío
+                ProductManager.#products = [];
+            } else {
+                console.error('Error loading products:', error.message);
+            }
+        }
     }
+
+    // método para guardado de productos
+    async saveProducts() {
+        try {
+            const data = JSON.stringify(ProductManager.#products, null, 2);
+            await fs.promises.writeFile(ProductManager.#productsFile, data, { encoding: 'utf8' });
+            return ProductManager.#products; // Devolver la lista actualizada después de guardarlos
+        } catch (error) {
+            console.error('Error saving products:', error.message);
+            throw error; // Re-lanzar el error para manejarlo en el llamador si es necesario
+        }
+    }
+
+    //metodo para elimiar un producto
+    destroy(id) {
+        const productIndex = ProductManager.#products.findIndex(product => product.id === id);
+
+        if (productIndex !== -1) {
+            ProductManager.#products.splice(productIndex, 1);
+            this.saveProducts();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //método para leer los productos
+    async read() {
+        try {
+            const products = fs.readFileSync(ProductManager.#productsFile, 'utf-8');
+            return JSON.parse(products);
+        } catch (error) {
+            throw new Error(`Error reading products: ${error.message}`);
+        }
+    }
+
 
     readOne(id) {
         const product = ProductManager.#products.find(product => product.id === id);
@@ -64,94 +137,9 @@ class ProductManager {
         return product || null;
     }
 
-    async checkAndCreateDataFolder() {
-        const dataFolder = path.dirname(ProductManager.#productsFile);
-        try {
-            await fs.access(dataFolder);
-        } catch (error) {
-            // Si la carpeta no existe, la crea
-            try {
-                await fs.mkdir(dataFolder, { recursive: true });
-            } catch (mkdirError) {
-                console.error('Error creating folder:', mkdirError.message);
-            }
-        }
-    }
-
-    async loadProducts() {
-        try {
-            const data = await fs.readFile(ProductManager.#productsFile, 'utf8');
-            ProductManager.#products = JSON.parse(data);
-        } catch (error) {
-            if (error.code === 'ENOENT' || error.message === 'Unexpected end of JSON input') {
-                // Si el archivo no existe o está vacío, inicializo #products como un array vacío
-                ProductManager.#products = [];
-            } else {
-                // Manejo otros errores al cargar los productos
-                console.error('Error loading products:', error.message);
-            }
-        }
-    }
-    
-
-    async saveProducts() {
-        try {
-            const data = JSON.stringify(ProductManager.#products, null, 2);
-            await fs.writeFile(ProductManager.#productsFile, data, 'utf8');
-        } catch (error) {
-            console.error('Error saving products:', error.message);
-        }
-    }
-
-    destroy(id) {
-        const productIndex = ProductManager.#products.findIndex(product => product.id === id);
-
-        if (productIndex !== -1) {
-            ProductManager.#products.splice(productIndex, 1);
-            console.log(`Product with ID ${id} has been successfully destroyed.`);
-            this.saveProducts(); // Guardar los cambios después de eliminar
-        } else {
-            console.log(`Product with ID ${id} not found. No product has been destroyed.`);
-        }
-    }
 }
 
-const productManager = new ProductManager();
-
-// Creación de productos
-productManager.create({
-    title: "N°5 CHANEL",
-    photo: "assets/chaneln5.png",
-    price: 118000,
-    stock: 250
-});
-// productManager.create({
-//     title: "Blue Seduction",
-//     photo: "assets/BlueSeduction.png",
-//     price: 18000,
-//     stock: 130
-// });
-
-// productManager.create({
-//     title: "Pure Poison EDP",
-//     photo: "assets/PurePoison.png",
-//     price: 18000,
-//     stock: 180
-// });
-
-// productManager.create({
-//     title: "Invictus EDT",
-//     photo: "assets/Invictus.png",
-//     price: 70000,
-//     stock: 110
-// });
-
-//console.log("Products:", productManager.read());
-//console.log("Product with ID 1", productManager.readOne(1));
-
 export default ProductManager;
-
-
 
 
 

@@ -9,24 +9,58 @@ class UserManager {
 
         if (missingProps.length > 0) {
             const missingMessages = missingProps.map(prop => `The user has not been created as the "${prop}" property is missing.`);
-            console.log(`Warning: ${missingMessages.join(". ")}`);
-
+            return {
+                statusCode: 400,
+                response: {
+                    message: `Warning: ${missingMessages.join(". ")}`,
+                },
+            };
         } else {
             const user = {
                 id: this.#users.length === 0 ? 1 : this.#users[this.#users.length - 1].id + 1,
                 name: data.name,
                 photo: data.photo,
-                email: data.email
+                email: data.email,
             };
             this.#users.push(user);
+
+            return {
+                statusCode: 201,
+                response: {
+                    id: user.id,
+                    message: "User has been successfully created.",
+                },
+            };
         }
     }
 
     read() {
-        return this.#users;
+        return {
+            statusCode: 200,
+            response: {
+                data: this.#users,
+            },
+        };
     }
+
     readOne(id) {
-        return this.#users.find(user => user.id === Number(id));
+        const user = this.#users.find(user => user.id === Number(id));
+
+        if (user) {
+            return {
+                statusCode: 200,
+                response: {
+                    data: user,
+                },
+            };
+        } else {
+            return {
+                statusCode: 404,
+                response: {
+                    message: `User with ID ${id} not found.`,
+                },
+            };
+        }
     }
 
     destroy(id) {
@@ -34,12 +68,44 @@ class UserManager {
 
         if (index !== -1) {
             this.#users.splice(index, 1);
-            console.log(`User with ID ${id} has been deleted.`);
+            return {
+                statusCode: 200,
+                response: {
+                    message: `User with ID ${id} has been successfully deleted.`,
+                },
+            };
         } else {
-            console.log(`User with ID ${id} not found.`);
+            return {
+                statusCode: 404,
+                response: {
+                    message: `User with ID ${id} not found. No user has been deleted.`,
+                },
+            };
+        }
+    }
+
+    update(id, data) {
+        const index = this.#users.findIndex(user => user.id === Number(id));
+
+        if (index !== -1) {
+            this.#users[index] = { ...this.#users[index], ...data };
+            return {
+                statusCode: 200,
+                response: {
+                    message: `User with ID ${id} has been successfully updated.`,
+                },
+            };
+        } else {
+            return {
+                statusCode: 404,
+                response: {
+                    message: `User with ID ${id} not found. No user has been updated.`,
+                },
+            };
         }
     }
 }
+
 const userManager = new UserManager();
 userManager.create({
     name: "Alejandro Perez",

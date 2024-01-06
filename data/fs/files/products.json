@@ -1,9 +1,16 @@
 [
   {
-    "id": "7d9cf88a",
-    "title": "N°5 CHANEL",
+    "id": "fbffab9c",
+    "title": "Invictus EDT",
+    "photo": "assets/Invictus.png",
+    "price": 70000,
+    "stock": 110
+  },
+  {
+    "id": "d5059014",
+    "title": "CHANEL N°5",
     "photo": "assets/chaneln5.png",
-    "price": 118000,
+    "price": 100000,
     "stock": 250
   }
 ]

@@ -9,8 +9,12 @@ class ProductManager {
 
         if (missingProps.length > 0) {
             const missingMessages = missingProps.map(prop => `The product has not been created as the "${prop}" property is missing for "${data.title}".`);
-            console.log(`Warning: ${missingMessages.join(". ")}`);
-
+            return {
+                statusCode: 400,
+                response: {
+                    message: `Warning: ${missingMessages.join(". ")}`,
+                },
+            };
         } else {
             const id = ProductManager.#products.length === 0 ? 1 : ProductManager.#products[ProductManager.#products.length - 1].id + 1;
 
@@ -19,19 +23,48 @@ class ProductManager {
                 title: data.title,
                 photo: data.photo,
                 price: data.price,
-                stock: data.stock
+                stock: data.stock,
             };
 
             ProductManager.#products.push(product);
+
+            return {
+                statusCode: 201,
+                response: {
+                    id: id,
+                    message: "Product has been successfully created.",
+                },
+            };
         }
     }
 
     read() {
-        return ProductManager.#products;
+        return {
+            statusCode: 200,
+            response: {
+                data: ProductManager.#products,
+            },
+        };
     }
 
     readOne(id) {
-        return ProductManager.#products.find(product => product.id === Number(id));
+        const product = ProductManager.#products.find(product => product.id === Number(id));
+
+        if (product) {
+            return {
+                statusCode: 200,
+                response: {
+                    data: product,
+                },
+            };
+        } else {
+            return {
+                statusCode: 404,
+                response: {
+                    message: `Product with ID ${id} not found.`,
+                },
+            };
+        }
     }
 
     destroy(id) {
@@ -39,9 +72,41 @@ class ProductManager {
 
         if (index !== -1) {
             ProductManager.#products.splice(index, 1);
-            console.log(`Product with ID ${id} has been deleted.`);
+            return {
+                statusCode: 200,
+                response: {
+                    message: `Product with ID ${id} has been successfully deleted.`,
+                },
+            };
         } else {
-            console.log(`Product with ID ${id} not found.`);
+            return {
+                statusCode: 404,
+                response: {
+                    message: `Product with ID ${id} not found. No product has been deleted.`,
+                },
+            };
+        }
+    }
+
+    update(id, data) {
+        const index = ProductManager.#products.findIndex(product => product.id === Number(id));
+
+        if (index !== -1) {
+            // Actualizar el producto con los nuevos datos
+            ProductManager.#products[index] = { ...ProductManager.#products[index], ...data };
+            return {
+                statusCode: 200,
+                response: {
+                    message: `Product with ID ${id} has been successfully updated.`,
+                },
+            };
+        } else {
+            return {
+                statusCode: 404,
+                response: {
+                    message: `Product with ID ${id} not found. No product has been updated.`,
+                },
+            };
         }
     }
 }
@@ -50,7 +115,7 @@ const productManager = new ProductManager();
 productManager.create({
     title: "N°5 CHANEL",
     photo: "assets/chaneln5.png",
-    //price: 118000,
+    price: 118000,
     stock: 250
 });
 
