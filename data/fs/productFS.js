@@ -18,7 +18,7 @@ class ProductManager {
     }
 
     #generateProductId() {
-        const idGenerator = crypto.randomBytes(4).toString('hex'); // 8 caracteres hexadecimales
+        const idGenerator = crypto.randomBytes(4).toString('hex');
         return idGenerator;
     }
 
@@ -44,15 +44,13 @@ class ProductManager {
         }
     }
 
-
-    //metodo de creacion de productos
     // método de creación de productos
     async create(data) {
         const missingProps = this.#verifyRequiredProps(data);
 
         if (missingProps.length > 0) {
             console.log(this.#generateWarningMessage(missingProps, data.title));
-            return null; // Devuelve null si faltan propiedades
+            return null;
         }
 
         try {
@@ -74,7 +72,7 @@ class ProductManager {
             return id;
         } catch (error) {
             console.error(`Error al guardar productos: ${error.message}`);
-            return null; 
+            return null;
         }
     }
 
@@ -111,10 +109,10 @@ class ProductManager {
 
         if (productIndex !== -1) {
             ProductManager.#products.splice(productIndex, 1);
-            this.saveProducts(); 
-            return true; 
+            this.saveProducts();
+            return true;
         } else {
-            return false; 
+            return false;
         }
     }
 

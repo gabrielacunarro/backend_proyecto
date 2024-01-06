@@ -81,18 +81,17 @@ class UserManager {
         return user || null;
     }
 
-  // En UserManager
-async loadUsers() {
-    try {
-        // Verificar la existencia del archivo users.json
-        await fs.access(UserManager.#usersFile);
-        const data = await fs.readFile(UserManager.#usersFile, 'utf8');
+    // En UserManager
+    async loadUsers() {
+        try {
+            await fs.access(UserManager.#usersFile);
+            const data = await fs.readFile(UserManager.#usersFile, 'utf8');
 
-        UserManager.#users = JSON.parse(data);
-    } catch (error) {
-        console.error('Error loading users:', error.message);
+            UserManager.#users = JSON.parse(data);
+        } catch (error) {
+            console.error('Error loading users:', error.message);
+        }
     }
-}
 
 
     async saveUsers() {
@@ -106,7 +105,7 @@ async loadUsers() {
 
     destroy(id) {
         const userIndex = UserManager.#users.findIndex(user => user.id === id);
-    
+
         if (userIndex !== -1) {
             UserManager.#users.splice(userIndex, 1);
             this.saveUsers().then(() => {
@@ -120,8 +119,6 @@ async loadUsers() {
             return false;
         }
     }
-    
-    
 }
 
 export default UserManager;
