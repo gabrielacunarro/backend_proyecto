@@ -89,4 +89,19 @@ ordersRouter.delete("/:oid", async (req, res, next) => {
     }
 });
 
+// Endpoint para actualizar una orden por ID
+ordersRouter.put("/:oid", async (req, res, next) => {
+    try {
+        const { oid } = req.params;
+        const { quantity, state } = req.body;
+
+        const updatedOrder = await ordersManager.updateOrder(oid, quantity, state, next);
+
+        return res.json(updatedOrder);
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
 export default ordersRouter;
