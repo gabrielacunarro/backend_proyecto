@@ -47,24 +47,18 @@ class UserManager {
 
     async create(data, next) {
         try {
-            const missingProps = this.#verifyRequiredProps(data);
+            const id = this.#generateUserId();
 
-            if (missingProps.length > 0) {
-                console.log(this.#generateWarningMessage(missingProps));
-            } else {
-                const id = this.#generateUserId();
+            const user = {
+                id,
+                name: data.name,
+                photo: data.photo,
+                email: data.email
+            };
 
-                const user = {
-                    id,
-                    name: data.name,
-                    photo: data.photo,
-                    email: data.email
-                };
+            UserManager.#users.push(user);
 
-                UserManager.#users.push(user);
-
-                await this.saveUsers();
-            }
+            await this.saveUsers();
         } catch (error) {
             console.error(`Error creating user: ${error.message}`);
             next(error);
@@ -99,7 +93,7 @@ class UserManager {
 
     async loadUsers() {
         try {
-            await this.checkAndCreateDataFolder();
+            await this.checkAndCreateDataFolder(); 
             await fs.access(UserManager.#usersFile);
 
             const data = await fs.readFile(UserManager.#usersFile, 'utf8');

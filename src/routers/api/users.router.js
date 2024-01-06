@@ -1,8 +1,12 @@
 import { Router } from "express"
 import usersManager from "../../data/fs/userFS.js";
+import propsUsersMiddleware from "../../data/middlewares/propsUsers.mid.js";  
 
 const usersRouter = Router()
 
+
+// Middleware para validar propiedades de usuario
+usersRouter.use(propsUsersMiddleware);
 
 //definir los endpoints (POST GET PUT DELETE)
 
