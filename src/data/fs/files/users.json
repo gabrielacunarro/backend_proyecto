@@ -1,0 +1,20 @@
+[
+  {
+    "id": "54c6dcc3",
+    "name": "Maria Sosa",
+    "photo": "Maria.jpg",
+    "email": "Maria.sosa@gmail.com"
+  },
+  {
+    "id": "67bd98cc",
+    "name": "Federico Perez",
+    "photo": "Federico.jpg",
+    "email": "Federico.perez@gmail.com"
+  },
+  {
+    "id": "86f05866",
+    "name": "Alejandro Juarez",
+    "photo": "Alejandro.jpg",
+    "email": "Alejandro.juarez@gmail.com"
+  }
+]

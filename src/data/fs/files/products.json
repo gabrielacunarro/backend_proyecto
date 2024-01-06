@@ -1,0 +1,23 @@
+[
+  {
+    "id": "dcaaf604",
+    "title": "CHANEL N°5",
+    "photo": "assets/chaneln5.png",
+    "price": 100000,
+    "stock": 150
+  },
+  {
+    "id": "c2337a43",
+    "title": "Invictus EDT",
+    "photo": "assets/Invictus.png",
+    "price": 70000,
+    "stock": 110
+  },
+  {
+    "id": "106f3f1a",
+    "title": "Kenzo",
+    "photo": "assets/Kenzo.png",
+    "price": 90000,
+    "stock": 100
+  }
+]
