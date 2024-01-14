@@ -2,99 +2,41 @@
   {
     "id": "dcaaf604",
     "title": "CHANEL N°5",
-    "photo": "https://i.imgur.com/hMa6XZG.png",
+    "description": "N°5, la esencia misma de la feminidad. Un bouquet floral aldehído sublimado por un frasco emblemático con líneas minimalistas. Un perfume icónico y atemporal.",
+    "photo": "https://i.imgur.com/YouUFD8.png",
     "price": 100000,
     "stock": 150
   },
   {
     "id": "c2337a43",
     "title": "Invictus EDT",
-    "photo": "https://i.imgur.com/qMFgcgp.png",
+    "description": "Una fragancia que hace sentir la esencia de la victoria, dos fuerzas inesperadas al unísono: éxtasis y adicción.El hombre Invictus sólo tiene una meta: la victoria, nadie puede competir contra él.",
+    "photo": "https://i.imgur.com/Wj0AZrU.png",
     "price": 70000,
     "stock": 110
   },
   {
     "id": "106f3f1a",
     "title": "Pure Poison Dior",
-    "photo": "https://i.imgur.com/j2alf6b.png",
+    "description": "Erase una vez una fragancia ingenua y cautivadora, sincera y misteriosa Pure Posion celebra la seducción en el estado más puro, explorando sudualidad y su alquimia irresistible.",
+    "photo": "https://i.imgur.com/98ZBJUR.png",
     "price": 150000,
     "stock": 120
   },
   {
     "id": "77776402",
     "title": "Blue Seduction",
+    "description": "La naturalidad convertida en la seducción más auténtica a través de un eau de toilette para hombre con aroma a cedro irresistible.Esencia de seducción natural.",
     "photo": "https://i.imgur.com/LkDwkKR.png",
     "price": 110000,
     "stock": 300
   },
   {
     "id": "782bb523",
+    "description": "Escale a Portofino es un Eau de Toilette compuesta por materias primas de la mejor calidad, exclusivas de la Maison Dior. Una escapada por Italia, que se compone de dieciséis esencias naturales",
     "title": "Escale a Portofino EDT",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "photo": "https://i.imgur.com/YB5OiP1.png",
     "price": 101000,
     "stock": 230
-  },
-  {
-    "id": "f54eb690",
-    "title": "Dior Shine",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
-    "price": 50000,
-    "stock": 100
-  },
-  {
-    "id": "d0bc2b92",
-    "title": "Dior Shine",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
-    "price": 50000,
-    "stock": 100
-  },
-  {
-    "id": "4212aadf",
-    "title": "Dior Shine",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
-    "price": 50000,
-    "stock": 100
-  },
-  {
-    "id": "f8d14329",
-    "title": "Dior Shine",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
-    "price": 50000,
-    "stock": 100
-  },
-  {
-    "id": "a1f1356f",
-    "title": "Dior Shine",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
-    "price": 50000,
-    "stock": 100
-  },
-  {
-    "id": "8c547dea",
-    "title": "Dior Shine",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
-    "price": 50000,
-    "stock": 100
-  },
-  {
-    "id": "85a8eecf",
-    "title": "Dior Shine",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
-    "price": 50000,
-    "stock": 100
-  },
-  {
-    "id": "d8e9c1b0",
-    "title": "Dior Shine",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
-    "price": 50000,
-    "stock": 100
-  },
-  {
-    "id": "cb653e2d",
-    "title": "Dior Shine",
-    "photo": "https://i.imgur.com/9lKtAUf.png",
-    "price": 50000,
-    "stock": 100
   }
 ]

@@ -59,6 +59,7 @@ class ProductManager {
             const product = {
                 id,
                 title: data.title,
+                description: data.description, 
                 photo: data.photo,
                 price: data.price,
                 stock: data.stock

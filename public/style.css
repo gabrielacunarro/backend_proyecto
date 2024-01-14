@@ -7,7 +7,7 @@
 
 /* fondo pag principal y scrollbar*/
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     background-size: cover;
@@ -35,11 +35,18 @@ body::-webkit-scrollbar {
 
 .navbar-brand,.navbar-nav .nav-link {
     color: white;
+    transition: color 0.3s ease;
 }
 
+.navbar-brand:hover,
+.navbar-nav .nav-link:hover {
+    color: #b3b3b3; 
+}
 
 .navbar-toggler {
     border: none;
+    max-width: 50px;
+    background-color: #fff;
 }
 
 /* Puedes ajustar estos valores según tus preferencias */
@@ -50,6 +57,22 @@ body::-webkit-scrollbar {
 
 .custom-margin{
     margin: 100px 10px;
+}
+/* titulo de web */
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #333;
+    font-style:oblique;
+    background-color: #f8f8f8;
+    padding: 10px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2{
+    font-size: 18px;
+    font-style: italic;
 }
 
 /* estilos de las cards */
@@ -91,21 +114,6 @@ input {
     box-sizing: border-box;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-
 /* estilos del footer */
 .footer {
     background-color: rgb(46, 46, 46);
@@ -124,5 +132,5 @@ button:hover {
 }
 
 .red-social a:hover {
-    color: #000000;
+    color: #b3b3b3; 
 }

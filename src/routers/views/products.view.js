@@ -11,9 +11,9 @@ productsRouter.get("/", async (req, res, next) => {
         next(error)
     }
 })
-productsRouter.get("/new", async (req, res, next) => {
+productsRouter.get("/form", async (req, res, next) => {
     try {
-        return res.render("layouts/new.handlebars")
+        return res.render("layouts/form.handlebars")
     } catch (error) {
         nexy(error)
     }

@@ -1,0 +1,28 @@
+<main>
+    <form class="w-50 m-auto my-5">
+        <div class="mb-3">
+            <label for="inputTitle" class="form-label">Title</label>
+            <input type="text" class="form-control" id="inputTitle">
+        </div>
+        <div class="mb-3">
+            <label for="inputDescription" class="form-label">Description</label>
+            <input type="text" class="form-control" id="inputDescription">
+        </div>
+        <div class="mb-3">
+            <label for="inputPhoto" class="form-label">Photo</label>
+            <input type="url" class="form-control" id="inputPhoto">
+        </div>
+        <div class="mb-3">
+            <label for="inputPrice" class="form-label">Price</label>
+            <input type="number" class="form-control" id="inputPrice">
+        </div>
+        <div class="mb-3">
+            <label for="inputStock" class="form-label">Stock</label>
+            <input type="number" class="form-control" id="inputStock">
+        </div>
+        <button id="newEvent" type="button" class="w-100 btn btn-primary">Create</button>
+    </form>
+</main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/form.js"></script>

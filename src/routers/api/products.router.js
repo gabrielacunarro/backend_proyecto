@@ -3,7 +3,6 @@ import productsManager from "../../data/fs/productFS.js"
 
 const productsRouter = Router()
 
-//definir los endpoints (POST GET PUT DELETE)
 
 // Endpoint para crear los productos
 productsRouter.post("/", async (req, res, next) => {
@@ -15,7 +14,7 @@ productsRouter.post("/", async (req, res, next) => {
             statusCode: 201,
             response: {
                 id: createdProductId,
-                productData: productData,  // Usar productData en lugar de productList
+                productData: productData,  
             },
         });
     } catch (error) {
