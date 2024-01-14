@@ -1,6 +1,6 @@
 import { Router } from "express"
 import usersManager from "../../data/fs/userFS.js";
-import propsUsersMiddleware from "../../data/middlewares/propsUsers.mid.js";  
+import propsUsersMiddleware from "../../middlewares/propsUsers.mid.js";  
 
 const usersRouter = Router()
 
@@ -35,7 +35,6 @@ usersRouter.get("/", async (req, res,next) => {
         const userList = usersManager.read();
 
         if (userList.length > 0) {
-            console.log("User List:", userList);
             return res.json({
                 statusCode: 200,
                 response: userList,

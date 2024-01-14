@@ -2,22 +2,99 @@
   {
     "id": "dcaaf604",
     "title": "CHANEL N°5",
-    "photo": "assets/chaneln5.png",
+    "photo": "https://i.imgur.com/hMa6XZG.png",
     "price": 100000,
     "stock": 150
   },
   {
     "id": "c2337a43",
     "title": "Invictus EDT",
-    "photo": "assets/Invictus.png",
+    "photo": "https://i.imgur.com/qMFgcgp.png",
     "price": 70000,
     "stock": 110
   },
   {
     "id": "106f3f1a",
-    "title": "Kenzo",
-    "photo": "assets/Kenzo.png",
-    "price": 90000,
+    "title": "Pure Poison Dior",
+    "photo": "https://i.imgur.com/j2alf6b.png",
+    "price": 150000,
+    "stock": 120
+  },
+  {
+    "id": "77776402",
+    "title": "Blue Seduction",
+    "photo": "https://i.imgur.com/LkDwkKR.png",
+    "price": 110000,
+    "stock": 300
+  },
+  {
+    "id": "782bb523",
+    "title": "Escale a Portofino EDT",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 101000,
+    "stock": 230
+  },
+  {
+    "id": "f54eb690",
+    "title": "Dior Shine",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 50000,
+    "stock": 100
+  },
+  {
+    "id": "d0bc2b92",
+    "title": "Dior Shine",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 50000,
+    "stock": 100
+  },
+  {
+    "id": "4212aadf",
+    "title": "Dior Shine",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 50000,
+    "stock": 100
+  },
+  {
+    "id": "f8d14329",
+    "title": "Dior Shine",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 50000,
+    "stock": 100
+  },
+  {
+    "id": "a1f1356f",
+    "title": "Dior Shine",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 50000,
+    "stock": 100
+  },
+  {
+    "id": "8c547dea",
+    "title": "Dior Shine",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 50000,
+    "stock": 100
+  },
+  {
+    "id": "85a8eecf",
+    "title": "Dior Shine",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 50000,
+    "stock": 100
+  },
+  {
+    "id": "d8e9c1b0",
+    "title": "Dior Shine",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 50000,
+    "stock": 100
+  },
+  {
+    "id": "cb653e2d",
+    "title": "Dior Shine",
+    "photo": "https://i.imgur.com/9lKtAUf.png",
+    "price": 50000,
     "stock": 100
   }
 ]

@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+/* fondo pag principal y scrollbar*/
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+    height: 100%;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/*barra de navegacion BS*/
+.navbar {
+    position: sticky;
+    top: 0;
+    background-color: rgb(46, 46, 46)!important; 
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: bold;
+    z-index: 1000;
+    align-items: center;
+}
+
+.navbar-brand,.navbar-nav .nav-link {
+    color: white;
+}
+
+
+.navbar-toggler {
+    border: none;
+}
+
+/* Puedes ajustar estos valores según tus preferencias */
+.navbar-brand img {
+    width: 50px; /* Ancho deseado del logo */
+    height: auto; /* Altura ajustada automáticamente */
+}
+
+.custom-margin{
+    margin: 100px 10px;
+}
+
+/* estilos de las cards */
+
+.card{
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    transition: box-shadow 0.3s ease; 
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+}
+
+/* styles.css */
+
+main {
+    text-align: center;
+}
+
+form {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+/* estilos del footer */
+.footer {
+    background-color: rgb(46, 46, 46);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.red-social a {
+    display: inline-block;
+    font-size: 20px;
+    margin: 0 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.red-social a:hover {
+    color: #000000;
+}
