@@ -1,5 +1,8 @@
 const socketRegister = io();
 
+// Escuchar el evento "new success" y mostrar una alerta
+socketRegister.on("new success", (message) => alert(message));
+
 document.addEventListener("DOMContentLoaded", () => {
     const registerButton = document.querySelector("#registerButton");
 
@@ -9,9 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const username = document.querySelector("#username").value;
         const password = document.querySelector("#password").value;
         const email = document.querySelector("#email").value;
+        const name = document.querySelector("#name").value; 
+        const photo = document.querySelector("#photo").value; 
 
         // Validar campos si es necesario
-        if (!username || !password || !email) {
+        if (!username || !password || !email || !name || !photo) {
             alert("Por favor, complete todos los campos.");
             return;
         }
@@ -19,14 +24,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const userData = {
             username: username,
             password: password,
-            email: email
+            email: email,
+            name: name,    
+            photo: photo  
         };
 
         console.log(userData);
 
-        // Emitir el evento "register" junto con los datos del usuario al servidor
-        socketRegister.emit("register", userData);
+        // Emitir el evento "new user" junto con los datos del usuario al servidor
+        socketRegister.emit("new user", userData);
     });
 });
+
+
 
 

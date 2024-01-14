@@ -49,10 +49,10 @@ body::-webkit-scrollbar {
     background-color: #fff;
 }
 
-/* Puedes ajustar estos valores según tus preferencias */
+
 .navbar-brand img {
-    width: 50px; /* Ancho deseado del logo */
-    height: auto; /* Altura ajustada automáticamente */
+    width: 50px;
+    height: auto; 
 }
 
 .custom-margin{

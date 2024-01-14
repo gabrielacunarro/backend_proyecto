@@ -5,6 +5,7 @@ import __dirname from "./utils.js";
 import morgan from "morgan";
 import { engine } from "express-handlebars";
 import productsManager from "./src/data/fs/productFS.js";
+import usersManager from "./src/data/fs/userFS.js";
 import realViewRouter from "./src/routers/views/real.view.js";
 import registerViewRouter from './src/routers/views/register.view.js';
 
@@ -45,6 +46,39 @@ socketServer.on("connection", (socket) => {
 
             // Después de crear un nuevo producto, volvemos a emitir la lista actualizada
             emitProducts(socket);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+});
+
+
+//register de usuarios
+async function emitUsers(socket) {
+    try {
+
+        const users = await usersManager.read();
+
+        socket.emit("users", users);
+    } catch (error) {
+        console.error('Error al leer la lista de usuarios:', error);
+    }
+}
+
+socketServer.on("connection", (socket) => {
+    console.log(socket.id);
+
+    // Emitir la lista de users 
+    emitUsers(socket);
+
+    socket.on("new user", async (data) => {
+        try {
+            console.log(data);
+            await usersManager.create(data);
+            socket.emit("new success", "User registered successfully!");
+
+            // Después de crear un nuevo user, volvemos a emitir la lista actualizada
+            emitUsers(socket);
         } catch (error) {
             console.log(error);
         }
