@@ -1,10 +1,11 @@
 import { Router } from "express"
 import productsManager from "../../data/fs/productFS.js"
+import isAdmin from "../../middlewares/isAdmin.mid.js";
 
 const productsRouter = Router()
 
 // Endpoint para crear los productos
-productsRouter.post("/", async (req, res, next) => {
+productsRouter.post("/", isAdmin,async (req, res, next) => {
     try {
         const productData = req.body;
         const createdProductId = await productsManager.create(productData);
