@@ -1,22 +1,24 @@
 import { Router } from "express";
+import productsManager from "../../data/fs/productFS.js";
 
-import productsRouter from "./products.view.js";
-import productsManager from '../../data/fs/productFS.js';
+const productsRouter = Router();
 
-const viewsRouter = Router()
-
-viewsRouter.get('/', async (req, res, next) => {
+productsRouter.get("/", async (req, res, next) => {
     try {
-
-        const productList = await productsManager.read();
-
-        return res.render('layouts/index.handlebars', { productList });
+        const all = await productsManager.read();
+        return res.render('layouts/index.handlebars', { productList: all });
     } catch (error) {
-        console.error('Error al obtener la lista de productos:', error);
-        res.status(500).send('Error interno del servidor');
+        next(error);
     }
 });
 
-viewsRouter.use("/products", productsRouter)
+productsRouter.get("/form", async (req, res, next) => {
+    try {
+        return res.render("layouts/form.handlebars");
+    } catch (error) {
+        next(error);
+    }
+});
 
-export default viewsRouter
+export default productsRouter;
+

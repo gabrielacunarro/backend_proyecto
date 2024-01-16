@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         console.log(userData);
 
-        // Emitir el evento "new user" junto con los datos del usuario al servidor
         socketRegister.emit("new user", userData);
     });
 });

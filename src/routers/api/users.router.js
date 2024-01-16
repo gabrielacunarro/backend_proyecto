@@ -1,14 +1,11 @@
 import { Router } from "express"
 import usersManager from "../../data/fs/userFS.js";
-import propsUsersMiddleware from "../../middlewares/propsUsers.mid.js";  
+import propsUsersMiddleware from "../../middlewares/propsUsers.mid.js";
 
 const usersRouter = Router()
 
-
 // Middleware para validar propiedades de usuario
 usersRouter.use(propsUsersMiddleware);
-
-//definir los endpoints (POST GET PUT DELETE)
 
 // Endpoint para crear los usuarios
 usersRouter.post("/", async (req, res) => {
@@ -30,7 +27,7 @@ usersRouter.post("/", async (req, res) => {
 })
 
 // Endpoint para obtener la lista de usuarios
-usersRouter.get("/", async (req, res,next) => {
+usersRouter.get("/", async (req, res, next) => {
     try {
         const userList = usersManager.read();
 
@@ -77,7 +74,7 @@ usersRouter.get("/:uid", async (req, res, next) => {
 
 
 // Endpoint para actualizar un usuario por ID
-usersRouter.put("/:uid", async (req, res,next) => {
+usersRouter.put("/:uid", async (req, res, next) => {
     try {
         const { uid } = req.params; // Cambiado de { id } a { uid }
         const userData = req.body;
@@ -101,7 +98,7 @@ usersRouter.put("/:uid", async (req, res,next) => {
 })
 
 // Endpoint para eliminar un usuario por ID
-usersRouter.delete("/:id", async (req, res,next) => {
+usersRouter.delete("/:id", async (req, res, next) => {
     try {
         const { id } = req.params;
         const isDeleted = usersManager.destroy(id);
