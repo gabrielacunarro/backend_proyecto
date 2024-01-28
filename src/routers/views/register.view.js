@@ -8,10 +8,9 @@ registerViewRouter.get('/register', (req, res) => {
 
 registerViewRouter.post('/register', (req, res) => {
 
-    const { username, password, email } = req.body;
+    const { username, email } = req.body;
 
     console.log("Username:", username);
-    console.log("Password:", password);
     console.log("Email:", email);
 
     res.send('Registro exitoso');

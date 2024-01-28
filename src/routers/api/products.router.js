@@ -1,14 +1,14 @@
 import { Router } from "express"
-import productsManager from "../../data/fs/productFS.js"
-import isAdmin from "../../middlewares/isAdmin.mid.js";
+import { products } from "../../data/mongo/manager.mongo.js";
+//import productsManager from "../../data/fs/productFS.js"
 
 const productsRouter = Router()
 
 // Endpoint para crear los productos
-productsRouter.post("/", isAdmin,async (req, res, next) => {
+productsRouter.post("/", async (req, res, next) => {
     try {
         const productData = req.body;
-        const createdProductId = await productsManager.create(productData);
+        const createdProductId = await products.create(productData);
 
         return res.json({
             statusCode: 201,
@@ -23,11 +23,10 @@ productsRouter.post("/", isAdmin,async (req, res, next) => {
     }
 });
 
-
 // Endpoint para obtener la lista de productos
 productsRouter.get("/", async (req, res, next) => {
     try {
-        const productList = await productsManager.read();
+        const productList = await products.read();
 
         if (productList && productList.length > 0) {
             return res.json({
@@ -49,7 +48,7 @@ productsRouter.get("/", async (req, res, next) => {
 productsRouter.get("/:eid", async (req, res, next) => {
     try {
         const { eid } = req.params;
-        const product = productsManager.readOne(eid);
+        const product = await products.readOne(eid);
 
         if (product) {
             return res.json({
@@ -67,16 +66,15 @@ productsRouter.get("/:eid", async (req, res, next) => {
     }
 });
 
-
 // Endpoint para actualizar un producto por ID
 productsRouter.put("/:eid", async (req, res, next) => {
     try {
-        const { eid } = req.params;  // Usar eid en lugar de pid
+        const { eid } = req.params;
         const productData = req.body;
 
-        const isUpdated = productsManager.update(eid, productData);
+        const updatedProduct = await products.update(eid, productData);
 
-        if (isUpdated) {
+        if (updatedProduct) {
             return res.json({
                 statusCode: 200,
                 response: `Product with ID ${eid} has been successfully updated.`,
@@ -96,9 +94,9 @@ productsRouter.put("/:eid", async (req, res, next) => {
 productsRouter.delete("/:pid", async (req, res, next) => {
     try {
         const { pid } = req.params;
-        const isDeleted = productsManager.destroy(pid);
+        const deletedProduct = await products.destroy(pid);
 
-        if (isDeleted) {
+        if (deletedProduct) {
             return res.json({
                 statusCode: 200,
                 response: `Product with ID ${pid} has been successfully deleted.`,
@@ -113,6 +111,5 @@ productsRouter.delete("/:pid", async (req, res, next) => {
         return next(error);
     }
 });
-
 
 export default productsRouter;

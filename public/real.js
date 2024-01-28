@@ -25,6 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
+
+            //  textContent para evitar posibles problemas de seguridad
+            productElement.querySelectorAll('*').forEach(node => { // selecciona los nodos desc de productElement
+                node.textContent = node.textContent;
+            });
+
             productsContainer.appendChild(productElement);
         });
     }

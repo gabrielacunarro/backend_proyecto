@@ -1,3 +1,4 @@
+import "dotenv/config.js";
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -10,10 +11,13 @@ import registerViewRouter from './src/routers/views/register.view.js';
 import router from "./src/routers/index.router.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
+import dbConnection from "./src/utils/db.js";
 
 const server = express();
-const PORT = 8080;
-const ready = () => console.log("Server on port " + PORT);
+const PORT = process.env.PORT || 8080;
+const ready = () =>
+    console.log("Server on port " + PORT);
+dbConnection()
 const httpServer = createServer(server);
 const socketServer = new Server(httpServer);
 httpServer.listen(PORT, ready);

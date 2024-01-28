@@ -12,5 +12,12 @@
     "uid": "67bd98cc",
     "quantity": 10,
     "state": "In progress"
+  },
+  {
+    "id": "ab6d40d7",
+    "pid": "106f3f1a",
+    "uid": "67bd98cc",
+    "quantity": 5,
+    "state": "paid"
   }
 ]

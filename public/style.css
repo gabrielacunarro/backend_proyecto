@@ -7,7 +7,7 @@
 
 /* fondo pag principal y scrollbar*/
 body {
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     background-size: cover;
@@ -25,7 +25,7 @@ body::-webkit-scrollbar {
 .navbar {
     position: sticky;
     top: 0;
-    background-color: rgb(46, 46, 46)!important; 
+    background-color: rgb(46, 46, 46) !important;
     font-size: 1em;
     text-transform: uppercase;
     font-weight: bold;
@@ -33,14 +33,15 @@ body::-webkit-scrollbar {
     align-items: center;
 }
 
-.navbar-brand,.navbar-nav .nav-link {
+.navbar-brand,
+.navbar-nav .nav-link {
     color: white;
     transition: color 0.3s ease;
 }
 
 .navbar-brand:hover,
 .navbar-nav .nav-link:hover {
-    color: #b3b3b3; 
+    color: #b3b3b3;
 }
 
 .navbar-toggler {
@@ -52,39 +53,40 @@ body::-webkit-scrollbar {
 
 .navbar-brand img {
     width: 50px;
-    height: auto; 
+    height: auto;
 }
 
-.custom-margin{
+.custom-margin {
     margin: 100px 10px;
 }
+
 /* titulo de web */
 h1 {
     font-size: 36px;
     font-weight: bold;
     margin: 20px 0;
     color: #333;
-    font-style:oblique;
+    font-style: oblique;
     background-color: #f8f8f8;
     padding: 10px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-h2{
+h2 {
     font-size: 18px;
     font-style: italic;
 }
 
 /* estilos de las cards */
 
-.card{
+.card {
     margin: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-    transition: box-shadow 0.3s ease; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* styles.css */
@@ -96,7 +98,7 @@ main {
 form {
     max-width: 500px;
     margin: auto;
-    padding: 20px;
+    padding: 55px;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -112,6 +114,17 @@ input {
     padding: 8px;
     margin-bottom: 16px;
     box-sizing: border-box;
+}
+
+#registerButton {
+    margin-top: 35px;
+    max-width: 150px;
+    background-color: #606060;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#registerButton:hover {
+    background-color: #333;
 }
 
 /* estilos del footer */
@@ -132,5 +145,5 @@ input {
 }
 
 .red-social a:hover {
-    color: #b3b3b3; 
+    color: #b3b3b3;
 }

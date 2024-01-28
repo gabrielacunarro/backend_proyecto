@@ -1,13 +1,20 @@
 import { Router } from "express";
-import ordersManager from "../../data/fs/orderFS.js";
+import { orders } from "../../data/mongo/manager.mongo.js";
+import mongoose from "mongoose";
+//import ordersManager from "../../data/fs/orderFS.js";
 
 const ordersRouter = Router();
 
 // Endpoint para crear una orden
-ordersRouter.post("/", async (req, res) => {
+ordersRouter.post("/", async (req, res, next) => {
     try {
         const orderData = req.body;
-        const createdOrder = await ordersManager.createOrder(orderData);
+        
+        // Asegúrate de que uid y pid sean ObjectId válidos
+        orderData.uid = mongoose.Types.ObjectId(orderData.uid);
+        orderData.pid = mongoose.Types.ObjectId(orderData.pid);
+
+        const createdOrder = await Order.create(orderData);
 
         return res.json({
             statusCode: createdOrder.statusCode,
@@ -15,17 +22,15 @@ ordersRouter.post("/", async (req, res) => {
         });
     } catch (error) {
         console.error(error);
-        return res.json({
-            statusCode: 500,
-            response: error.message,
-        });
+        return next(error);
     }
 });
+
 
 // Endpoint para obtener la lista de órdenes
 ordersRouter.get("/", async (req, res, next) => {
     try {
-        const orderList = await ordersManager.readOrders();
+        const orderList = await orders.readOrders();
 
         if (orderList && orderList.length > 0) {
             return res.json({
@@ -33,10 +38,9 @@ ordersRouter.get("/", async (req, res, next) => {
                 data: orderList,
             });
         } else {
-            return res.json({
-                statusCode: 400,
-                response: "Orders not found",
-            });
+            const error = new Error("Orders not found");
+            error.statusCode = 400;
+            return next(error);
         }
     } catch (error) {
         return next(error);
@@ -47,7 +51,7 @@ ordersRouter.get("/", async (req, res, next) => {
 ordersRouter.get("/:uid", async (req, res, next) => {
     try {
         const { uid } = req.params;
-        const userOrders = ordersManager.readByUser(uid);
+        const userOrders = orders.readByUser(uid);
 
         if (userOrders && userOrders.length > 0) {
             return res.json({
@@ -55,23 +59,20 @@ ordersRouter.get("/:uid", async (req, res, next) => {
                 response: userOrders,
             });
         } else {
-            return res.json({
-                statusCode: 404,
-                response: `Orders for user with ID ${uid} not found`,
-            });
+            const error = new Error(`Orders for user with ID ${uid} not found`);
+            error.statusCode = 404;
+            return next(error);
         }
     } catch (error) {
         return next(error);
     }
 });
 
-
-
 // Endpoint para eliminar una orden por ID
 ordersRouter.delete("/:oid", async (req, res, next) => {
     try {
         const { oid } = req.params;
-        const isDeleted = ordersManager.destroyOrder(oid);
+        const isDeleted = orders.destroyOrder(oid);
 
         if (isDeleted) {
             return res.json({
@@ -79,10 +80,9 @@ ordersRouter.delete("/:oid", async (req, res, next) => {
                 response: `Order with ID ${oid} has been successfully deleted.`,
             });
         } else {
-            return res.json({
-                statusCode: 404,
-                response: `Order with ID ${oid} not found. No order has been deleted.`,
-            });
+            const error = new Error(`Order with ID ${oid} not found. No order has been deleted.`);
+            error.statusCode = 404;
+            return next(error);
         }
     } catch (error) {
         return next(error);
@@ -95,7 +95,7 @@ ordersRouter.put("/:oid", async (req, res, next) => {
         const { oid } = req.params;
         const { quantity, state } = req.body;
 
-        const updatedOrder = await ordersManager.updateOrder(oid, quantity, state, next);
+        const updatedOrder = await orders.updateOrder(oid, quantity, state, next);
 
         return res.json(updatedOrder);
     } catch (error) {
@@ -103,5 +103,5 @@ ordersRouter.put("/:oid", async (req, res, next) => {
     }
 });
 
-
 export default ordersRouter;
+

@@ -2,7 +2,7 @@
   {
     "id": "dcaaf604",
     "title": "CHANEL N°5",
-    "description": "N°5, la esencia misma de la feminidad. Un bouquet floral aldehído sublimado por un frasco emblemático con líneas minimalistas. Un perfume icónico y atemporal.",
+    "description": "La esencia misma de la feminidad.Un bouquet floral aldehído sublimado por un frasco emblemático totalmente minimalista, un perfume atemporal.",
     "photo": "https://i.imgur.com/YouUFD8.png",
     "price": 100000,
     "stock": 150
@@ -10,8 +10,8 @@
   {
     "id": "c2337a43",
     "title": "Invictus EDT",
-    "description": "Una fragancia que hace sentir la esencia de la victoria, dos fuerzas inesperadas al unísono: éxtasis y adicción.El hombre Invictus sólo tiene una meta: la victoria, nadie puede competir contra él.",
-    "photo": "https://i.imgur.com/Wj0AZrU.png",
+    "description": "Una fragancia que hace sentir la esencia de la victoria, el hombre Invictus sólo tiene una meta: la victoria.",
+    "photo": "https://i.imgur.com/yvlID3O.jpg",
     "price": 70000,
     "stock": 110
   },
@@ -33,7 +33,7 @@
   },
   {
     "id": "782bb523",
-    "description": "Escale a Portofino es un Eau de Toilette compuesta por materias primas de la mejor calidad, exclusivas de la Maison Dior. Una escapada por Italia, que se compone de dieciséis esencias naturales",
+    "description": "Escale a Portofino es un Eau de Toilette compuesta por materias primas de la mejor calidad, exclusivas de la Maison Dior, una escapada por Italia",
     "title": "Escale a Portofino EDT",
     "photo": "https://i.imgur.com/YB5OiP1.png",
     "price": 101000,

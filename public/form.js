@@ -1,5 +1,9 @@
 const socketNew = io();
 
+socketNew.on('connect', () => {
+    console.log('Conectado al servidor de Socket.IO');
+});
+
 socketNew.on("new success", (message) => alert(message));
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,6 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         socketNew.emit("new product", data);
     });
+        // Aquí va la parte para escuchar el evento 'update'
+        socketNew.on('update', (data) => {
+            console.log('Actualización en tiempo real:', data);
+        });
 });
 
 
