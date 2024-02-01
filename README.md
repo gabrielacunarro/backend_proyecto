@@ -8,6 +8,7 @@
   - **product.js:** Archivo que define la clase `ProductManager` para gestionar productos.
   - **user.js:** Archivo que define la clase `UserManager` para gestionar usuarios.
   - **order.js:** Archivo que define la clase `OrderManager` para gestionar órdenes.
+  - **mongo.manager.js:** Archivo que define la clase MongoManager para gestionar operaciones en la base de datos MongoDB.
 
 - **utils.js:** Archivo que contiene funciones y utilidades compartidas en todo el proyecto.
 - **middlewares:** Carpeta que almacena funciones de middleware para el servidor.
@@ -30,6 +31,7 @@
 - `POST /usuarios`: Crear un nuevo usuario.
 - `PUT /usuarios/:id`: Actualizar un usuario existente.
 - `DELETE /usuarios/:id`: Eliminar un usuario.
+- **GET /usuarios/readbyemail/:email:** Obtener un usuario por email.
 
 ### Órdenes
 - `GET /ordenes`: Obtener la lista de órdenes.
@@ -38,5 +40,10 @@
 - `PUT /ordenes/:id`: Actualizar una orden existente.
 - `DELETE /ordenes/:id`: Eliminar una orden.
 
+## MongoDB
 
+- **db.js:** Archivo que contiene la configuración y conexión a la base de datos MongoDB.
+
+- **managers:**
+  - **mongo.manager.js:** Archivo que define la clase MongoManager para gestionar operaciones en la base de datos MongoDB.
 
