@@ -20,7 +20,7 @@ usersRouter.post("/", async (req, res, next) => {
         });
     } catch (error) {
         console.error(error);
-        next(error); 
+        next(error);
     }
 });
 
@@ -37,7 +37,7 @@ usersRouter.get("/", async (req, res, next) => {
         } else {
             const error = new Error("Users not found");
             error.statusCode = 404;
-            throw error; 
+            throw error;
         }
     } catch (error) {
         console.error(error);
@@ -59,7 +59,7 @@ usersRouter.get("/:uid", async (req, res, next) => {
         } else {
             const error = new Error(`User with ID ${uid} not found`);
             error.statusCode = 404;
-            throw error; 
+            throw error;
         }
     } catch (error) {
         next(error);
@@ -82,7 +82,7 @@ usersRouter.put("/:uid", async (req, res, next) => {
         } else {
             const error = new Error(`User with ID ${uid} not found. No user has been updated.`);
             error.statusCode = 404;
-            throw error; 
+            throw error;
         }
     } catch (error) {
         next(error);
@@ -109,5 +109,27 @@ usersRouter.delete("/:id", async (req, res, next) => {
         next(error);
     }
 });
+//endpoint para buscar un usuario por email
+usersRouter.get("/readbyemail/:email", async (req, res, next) => {
+    try {
+        const { email } = req.params;
+        const user = await users.readByEmail(email);
+
+        if (user) {
+            return res.json({
+                statusCode: 200,
+                ...user,  // Devuelve directamente el objeto user sin el objeto response
+            });
+        } else {
+            return res.json({
+                statusCode: 404,
+                message: `User with email ${email} not found`,
+            });
+        }
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 export default usersRouter;

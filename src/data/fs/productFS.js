@@ -1,14 +1,12 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
 
 class ProductManager {
     static #productsFile = 'src/data/fs/files/products.json';
-    static #products = [];
 
     constructor() {
         this.checkAndCreateDataFolder();
-        this.loadProducts();
     }
 
     #verifyRequiredProps(data) {
@@ -18,8 +16,7 @@ class ProductManager {
     }
 
     #generateProductId() {
-        const idGenerator = crypto.randomBytes(4).toString('hex');
-        return idGenerator;
+        return crypto.randomBytes(4).toString('hex');
     }
 
     #generateWarningMessage(missingProps, title) {
@@ -27,25 +24,21 @@ class ProductManager {
         return `Warning: ${missingMessages.join(". ")}`;
     }
 
-    // Método para constatar si la datafolder existe o no
     async checkAndCreateDataFolder() {
         const dataFolder = path.dirname(ProductManager.#productsFile);
 
         try {
-            // Intenta acceder a la carpeta
-            await fs.promises.access(dataFolder);
+            await fs.access(dataFolder);
         } catch (error) {
-            // Si la carpeta no existe, la crea
             try {
-                await fs.promises.mkdir(dataFolder, { recursive: true });
+                await fs.mkdir(dataFolder, { recursive: true });
             } catch (mkdirError) {
                 console.error('Error creating folder:', mkdirError.message);
             }
         }
     }
 
-    // método de creación de productos
-    async create(data, next) {
+    async create(data) {
         try {
             const missingProps = this.#verifyRequiredProps(data);
 
@@ -59,143 +52,120 @@ class ProductManager {
             const product = {
                 id,
                 title: data.title,
-                description: data.description, 
+                description: data.description,
                 photo: data.photo,
                 price: data.price,
                 stock: data.stock
             };
 
-            ProductManager.#products.push(product);
+            const products = await this.loadProducts();
+            products.push(product);
 
-            // Guardar los productos y obtener la lista actualizada después de la operación
-            const updatedProducts = await this.saveProducts();
+            await this.saveProducts(products);
 
             return id;
         } catch (error) {
             console.error(`Error creating product: ${error.message}`);
-            next(error);
-            return null;
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error creating product: ${error.message}`,
+                },
+            };
         }
     }
 
-    // Método para la carga de productos
-    async loadProducts(next) {
+    async loadProducts() {
         try {
-            const data = await fs.promises.readFile(ProductManager.#productsFile, 'utf8');
-            ProductManager.#products = JSON.parse(data);
+            const data = await fs.readFile(ProductManager.#productsFile, 'utf8');
+            return JSON.parse(data) || [];
         } catch (error) {
             if (error.code === 'ENOENT' || error.message === 'Unexpected end of JSON input') {
-                // Si el archivo no existe o está vacío, inicializo #products como un array vacío
-                ProductManager.#products = [];
+                return [];
             } else {
                 console.error('Error loading products:', error.message);
-                next(error);
+                throw error;
             }
         }
     }
 
-    // método para guardado de productos
-    async saveProducts(next) {
+    async saveProducts(products) {
         try {
-            const data = JSON.stringify(ProductManager.#products, null, 2);
-            await fs.promises.writeFile(ProductManager.#productsFile, data, { encoding: 'utf8' });
-            return ProductManager.#products; // Devolver la lista actualizada después de guardarlos
+            const data = JSON.stringify(products, null, 2);
+            await fs.writeFile(ProductManager.#productsFile, data, { encoding: 'utf8' });
         } catch (error) {
             console.error('Error saving products:', error.message);
-            next(error);
+            throw error;
         }
     }
 
-    //método para elimiar un producto
-    destroy(id, next) {
+    async read() {
         try {
-            const productIndex = ProductManager.#products.findIndex(product => product.id === id);
+            return await this.loadProducts();
+        } catch (error) {
+            console.error(`Error reading products: ${error.message}`);
+            throw error;
+        }
+    }
+
+    async readOne(id) {
+        try {
+            const products = await this.loadProducts();
+            return products.find(product => product.id === id) || null;
+        } catch (error) {
+            console.error(`Error reading product by ID: ${error.message}`);
+            throw error;
+        }
+    }
+
+    async update(id, data) {
+        try {
+            const products = await this.loadProducts();
+            const productIndex = products.findIndex(product => product.id === id);
 
             if (productIndex !== -1) {
-                ProductManager.#products.splice(productIndex, 1);
-                this.saveProducts().then(() => {
-                    console.log(`Product with ID ${id} has been successfully destroyed.`);
-                }).catch(error => {
-                    console.error(`Error saving products after destroying product: ${error.message}`);
-                });
-                return true;
-            } else {
-                console.log(`Product with ID ${id} not found. No product has been destroyed.`);
-                return false;
-            }
-        } catch (error) {
-            console.error(`Error destroying product: ${error.message}`);
-            next(error);
-            return false;
-        }
-    }
-
-    //método para leer los productos
-    async read(next) {
-        try {
-            const data = await fs.promises.readFile(ProductManager.#productsFile, 'utf-8');
-            return JSON.parse(data);
-        } catch (error) {
-            if (error.code === 'ENOENT') {
-                // Manejar el caso cuando el archivo no existe
-                console.log('Products file not found. Returning an empty array.');
-                return [];
-            } else {
-                // Re-lanzar el error si es de otro tipo
-                console.error(`Error reading products: ${error.message}`);
-                next(error);
-                return [];
-            }
-        }
-    }
-
-    readOne(id, next) {
-        try {
-            const product = ProductManager.#products.find(product => product.id === id);
-
-            if (!product) {
-                console.log(`Product with ID ${id}: not found!`);
-            }
-
-            return product || null;
-        } catch (error) {
-            console.error(`Error reading product: ${error.message}`);
-            next(error);
-            return null;
-        }
-    }
-
-    // Método de actualización de producto
-    update(id, data, next) {
-        try {
-            if (!ProductManager.#products || ProductManager.#products.length === 0) {
-                return false;
-            }
-
-            const productIndex = ProductManager.#products.findIndex(product => product.id === id);
-
-            if (productIndex !== -1) {
-
-                ProductManager.#products[productIndex] = { ...ProductManager.#products[productIndex], ...data };
-                this.saveProducts().then(() => {
-                    console.log(`Product with ID ${id} has been successfully updated.`);
-                }).catch(error => {
-                    console.error(`Error saving products after updating product: ${error.message}`);
-                });
+                products[productIndex] = { ...products[productIndex], ...data };
+                await this.saveProducts(products);
                 return true;
             }
 
             return false;
         } catch (error) {
             console.error(`Error updating product: ${error.message}`);
-            next(error);
-            return false;
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error updating product: ${error.message}`,
+                },
+            };
+        }
+    }
+
+    async destroy(id) {
+        try {
+            const products = await this.loadProducts();
+            const productIndex = products.findIndex(product => product.id === id);
+
+            if (productIndex !== -1) {
+                products.splice(productIndex, 1);
+                await this.saveProducts(products);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.error(`Error destroying product: ${error.message}`);
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error destroying product: ${error.message}`,
+                },
+            };
         }
     }
 }
 
 const productsManager = new ProductManager();
-
 export default productsManager;
 
 

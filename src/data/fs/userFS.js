@@ -45,7 +45,7 @@ class UserManager {
         }
     }
 
-    async create(data, next) {
+    async create(data) {
         try {
             const id = this.#generateUserId();
 
@@ -61,21 +61,30 @@ class UserManager {
             await this.saveUsers();
         } catch (error) {
             console.error(`Error creating user: ${error.message}`);
-            next(error);
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error creating user: ${error.message}`,
+                },
+            };
         }
     }
 
-    read(next) {
+    read() {
         try {
             return UserManager.#users;
         } catch (error) {
             console.error(`Error reading users: ${error.message}`);
-            next(error);
-            return [];
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error reading users: ${error.message}`,
+                },
+            };
         }
     }
 
-    readOne(id, next) {
+    readOne(id) {
         try {
             const user = UserManager.#users.find(user => user.id === id);
 
@@ -86,14 +95,18 @@ class UserManager {
             return user || null;
         } catch (error) {
             console.error(`Error reading user: ${error.message}`);
-            next(error);
-            return null;
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error reading user: ${error.message}`,
+                },
+            };
         }
     }
 
     async loadUsers() {
         try {
-            await this.checkAndCreateDataFolder(); 
+            await this.checkAndCreateDataFolder();
             await fs.access(UserManager.#usersFile);
 
             const data = await fs.readFile(UserManager.#usersFile, 'utf8');
@@ -104,6 +117,7 @@ class UserManager {
                 await this.saveUsers();
             } else {
                 console.error('Error loading users:', error.message);
+                throw error;
             }
         }
     }
@@ -120,10 +134,11 @@ class UserManager {
             console.log('Users saved successfully.');
         } catch (error) {
             console.error('Error saving users:', error.message);
+            throw error;
         }
     }
 
-    destroy(id, next) {
+    destroy(id) {
         try {
             const userIndex = UserManager.#users.findIndex(user => user.id === id);
 
@@ -141,12 +156,16 @@ class UserManager {
             }
         } catch (error) {
             console.error(`Error destroying user: ${error.message}`);
-            next(error);
-            return false;
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error destroying user: ${error.message}`,
+                },
+            };
         }
     }
 
-    update(id, data, next) {
+    update(id, data) {
         try {
             if (!UserManager.#users || UserManager.#users.length === 0) {
                 return false;
@@ -168,15 +187,29 @@ class UserManager {
             return false;
         } catch (error) {
             console.error(`Error updating user: ${error.message}`);
-            next(error);
-            return false;
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error updating user: ${error.message}`,
+                },
+            };
         }
     }
+    readByEmail(email) {
+        try {
+            const lowercasedEmail = email.toLowerCase();
+            return UserManager.#users.find(user => user.email.toLowerCase() === lowercasedEmail) || null;
+        } catch (error) {
+            console.error(`Error reading user by email: ${error.message}`);
+            return null;
+        }
+    }
+
 }
 
 const usersManager = new UserManager();
-
 export default usersManager;
+
 
 
 

@@ -1,7 +1,7 @@
 class MemoryOrdersManager {
     static #orders = [];
 
-    create(data, next) {
+    create(data) {
         const requiredProps = ["pid", "uid", "quantity", "state"];
 
         // Verifico si están todas las propiedades de cada orden, caso contrario, lanzo una advertencia/error de creación.
@@ -38,8 +38,7 @@ class MemoryOrdersManager {
                 };
             } catch (error) {
                 console.error(`Error creating order: ${error.message}`);
-                next(error); // Llamar a next(error) para pasar el error al siguiente middleware
-                return {
+                throw {
                     statusCode: 500,
                     response: {
                         message: `Error creating order: ${error.message}`,
@@ -49,7 +48,7 @@ class MemoryOrdersManager {
         }
     }
 
-    read(next) {
+    read() {
         try {
             return {
                 statusCode: 200,
@@ -59,8 +58,7 @@ class MemoryOrdersManager {
             };
         } catch (error) {
             console.error(`Error reading orders: ${error.message}`);
-            next(error);
-            return {
+            throw {
                 statusCode: 500,
                 response: {
                     message: `Error reading orders: ${error.message}`,
@@ -69,7 +67,7 @@ class MemoryOrdersManager {
         }
     }
 
-    readOne(id, next) {
+    readOne(id) {
         try {
             const order = MemoryOrdersManager.#orders.find(order => order.id === Number(id));
 
@@ -90,8 +88,7 @@ class MemoryOrdersManager {
             }
         } catch (error) {
             console.error(`Error reading order: ${error.message}`);
-            next(error);
-            return {
+            throw {
                 statusCode: 500,
                 response: {
                     message: `Error reading order: ${error.message}`,
@@ -100,7 +97,7 @@ class MemoryOrdersManager {
         }
     }
 
-    destroy(id, next) {
+    destroy(id) {
         try {
             const index = MemoryOrdersManager.#orders.findIndex(order => order.id === Number(id));
 
@@ -122,8 +119,7 @@ class MemoryOrdersManager {
             }
         } catch (error) {
             console.error(`Error deleting order: ${error.message}`);
-            next(error);
-            return {
+            throw {
                 statusCode: 500,
                 response: {
                     message: `Error deleting order: ${error.message}`,
@@ -132,7 +128,7 @@ class MemoryOrdersManager {
         }
     }
 
-    update(id, data, next) {
+    update(id, data) {
         try {
             const index = MemoryOrdersManager.#orders.findIndex(order => order.id === Number(id));
 
@@ -155,8 +151,7 @@ class MemoryOrdersManager {
             }
         } catch (error) {
             console.error(`Error updating order: ${error.message}`);
-            next(error);
-            return {
+            throw {
                 statusCode: 500,
                 response: {
                     message: `Error updating order: ${error.message}`,

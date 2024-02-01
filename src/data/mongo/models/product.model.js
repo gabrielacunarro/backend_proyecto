@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-const collection = "products" // el plural, en minuscula y descriptivo
+const collection = "products" // en plural, en minuscula y descriptivo
 const schema = new Schema({
     title: { type: String, required: true },
     description: { type: String },

@@ -9,14 +9,14 @@ class MongoManager {
     async create(data) {
         try {
             const one = await this.model.create(data) // create metodo de mongoose
-            return one._id // mongo para ID
+            return one._id
         } catch (error) {
             throw error;
         }
     }
     async read(obj) {
         try {
-            const { filter, order } = obj // desestructurar, obj es un objeto con 2 propiedades filter = consulta para el filtro y sort = con el obj de ordenamiento
+            let { filter, order } = obj || {};// desestructurar, obj es un objeto con 2 propiedades filter = consulta para el filtro y sort = con el obj de ordenamiento
             const all = await this.model.find(filter).sort(order) // metodo find de mongoose
             if (all.length === 0) {
                 const error = new Error("There isn't documents")
@@ -68,7 +68,23 @@ class MongoManager {
             throw error;
         }
     }
+    async readByEmail(email) {
+        try {
+            const user = await this.model.findOne({ email });
+
+            if (!user) {
+                const error = new Error(`No user found with email: ${email}`);
+                error.statusCode = 404;
+                throw error;
+            }
+
+            return user;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
+
 
 const users = new MongoManager(User)
 const products = new MongoManager(Product)

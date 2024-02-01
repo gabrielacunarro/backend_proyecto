@@ -4,7 +4,6 @@ class UserManager {
     create(data, next) {
         const requiredProps = ["name", "photo", "email"];
 
-        // Verifico si están todas las propiedades de cada usuario, caso contrario, lanzo una advertencia/error de creación del mismo.
         const missingProps = requiredProps.filter(prop => !(prop in data) || data[prop] === undefined);
 
         if (missingProps.length > 0) {
@@ -34,7 +33,7 @@ class UserManager {
                 };
             } catch (error) {
                 console.error(`Error creating user: ${error.message}`);
-                next(error); // Llamar a next(error) para pasar el error al siguiente middleware
+                next(error);
                 return {
                     statusCode: 500,
                     response: {
@@ -133,7 +132,6 @@ class UserManager {
             const index = this.#users.findIndex(user => user.id === Number(id));
 
             if (index !== -1) {
-                // Actualizar el usuario con los nuevos datos
                 this.#users[index] = { ...this.#users[index], ...data };
                 return {
                     statusCode: 200,
@@ -160,7 +158,71 @@ class UserManager {
             };
         }
     }
+
+    readByEmail(email, next) {
+        try {
+            const user = this.#users.find(user => user.email === email);
+
+            if (user) {
+                return {
+                    statusCode: 200,
+                    response: {
+                        data: user,
+                    },
+                };
+            } else {
+                return {
+                    statusCode: 404,
+                    response: {
+                        message: `User with email ${email} not found.`,
+                    },
+                };
+            }
+        } catch (error) {
+            console.error(`Error reading user by email: ${error.message}`);
+            next(error);
+            return {
+                statusCode: 500,
+                response: {
+                    message: `Error reading user by email: ${error.message}`,
+                },
+            };
+        }
+    }
+    // Buscar usuario por email
+    readByEmail(email, next) {
+        try {
+            const user = this.#users.find(user => user.email === email);
+
+            if (user) {
+                return {
+                    statusCode: 200,
+                    response: {
+                        data: user,
+                    },
+                };
+            } else {
+                return {
+                    statusCode: 404,
+                    response: {
+                        message: `User with email ${email} not found.`,
+                    },
+                };
+            }
+        } catch (error) {
+            console.error(`Error reading user by email: ${error.message}`);
+            next(error);
+            return {
+                statusCode: 500,
+                response: {
+                    message: `Error reading user by email: ${error.message}`,
+                },
+            };
+        }
+    }
+
 }
 
-const userManager = new UserManager()
-export default userManager
+const userManager = new UserManager();
+export default userManager;
+

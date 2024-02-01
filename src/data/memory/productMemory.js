@@ -1,7 +1,7 @@
 class ProductManager {
     static #products = [];
 
-    create(data, next) {
+    create(data) {
         const requiredProps = ["title", "photo", "price", "stock"];
 
         // Verifico si están todas las propiedades de cada producto, caso contrario, lanzo una advertencia/error de creación.
@@ -38,8 +38,7 @@ class ProductManager {
                 };
             } catch (error) {
                 console.error(`Error creating product: ${error.message}`);
-                next(error); // Llamar a next(error) para pasar el error al siguiente middleware
-                return {
+                throw {
                     statusCode: 500,
                     response: {
                         message: `Error creating product: ${error.message}`,
@@ -49,7 +48,7 @@ class ProductManager {
         }
     }
 
-    read(next) {
+    read() {
         try {
             return {
                 statusCode: 200,
@@ -59,8 +58,7 @@ class ProductManager {
             };
         } catch (error) {
             console.error(`Error reading products: ${error.message}`);
-            next(error);
-            return {
+            throw {
                 statusCode: 500,
                 response: {
                     message: `Error reading products: ${error.message}`,
@@ -69,7 +67,7 @@ class ProductManager {
         }
     }
 
-    readOne(id, next) {
+    readOne(id) {
         try {
             const product = ProductManager.#products.find(product => product.id === Number(id));
 
@@ -90,8 +88,7 @@ class ProductManager {
             }
         } catch (error) {
             console.error(`Error reading product: ${error.message}`);
-            next(error);
-            return {
+            throw {
                 statusCode: 500,
                 response: {
                     message: `Error reading product: ${error.message}`,
@@ -100,7 +97,7 @@ class ProductManager {
         }
     }
 
-    destroy(id, next) {
+    destroy(id) {
         try {
             const index = ProductManager.#products.findIndex(product => product.id === Number(id));
 
@@ -122,8 +119,7 @@ class ProductManager {
             }
         } catch (error) {
             console.error(`Error deleting product: ${error.message}`);
-            next(error);
-            return {
+            throw {
                 statusCode: 500,
                 response: {
                     message: `Error deleting product: ${error.message}`,
@@ -132,7 +128,7 @@ class ProductManager {
         }
     }
 
-    update(id, data, next) {
+    update(id, data) {
         try {
             const index = ProductManager.#products.findIndex(product => product.id === Number(id));
 
@@ -155,8 +151,7 @@ class ProductManager {
             }
         } catch (error) {
             console.error(`Error updating product: ${error.message}`);
-            next(error);
-            return {
+            throw {
                 statusCode: 500,
                 response: {
                     message: `Error updating product: ${error.message}`,
