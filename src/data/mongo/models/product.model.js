@@ -13,5 +13,6 @@ const schema = new Schema({
     { timestamps: true }
 );
 
+schema.plugin(mongoosePaginate);
 const Product = model(collection, schema);
 export default Product

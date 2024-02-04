@@ -2,10 +2,7 @@ import User from "./models/user.model.js";
 import Product from "./models/product.model.js"
 import Order from "./models/order.model.js";
 import notFoundOne from "../../utils/notFoundOne.utils.js"
-//import mongoose from "mongoose";
-
-//mongoose.set('strictPopulate', false);
-
+import { Types } from "mongoose";
 
 class MongoManager {
     constructor(model) {
@@ -21,9 +18,11 @@ class MongoManager {
     }
     async read(obj) {
         try {
-            let { filter, order } = obj || {};// desestructurar, obj es un objeto con 2 propiedades filter = consulta para el filtro y sort = con el obj de ordenamiento
-            const all = await this.model.find(filter, "-createdAt -updatedAt -__v").sort(order) // metodo find de mongoose
-            if (all.length === 0) {
+            let { filter, orderAndPaginate } = obj || {};// desestructurar, obj es un objeto con 2 propiedades filter = consulta para el filtro y sort = con el obj de ordenamiento
+            const all = await this.model
+                //.find(filter, "-createdAt -updatedAt -__v").sort(order) // metodo find de mongoose
+                .paginate(filter, orderAndPaginate)
+            if (all.totalPages === 0) {
                 const error = new Error("There isn't any documents")
                 error.statusCode = 404;
                 throw error;
@@ -90,8 +89,36 @@ class MongoManager {
             throw error
         }
     }
-}
 
+    async report(uid) {
+        try {
+            const report = await this.model.aggregate([
+                {
+                    $match: { uid: new Types.ObjectId(uid) }
+                },
+                {
+                    $lookup: { from: "products", foreignField: "_id", localField: "pid", as: "pid" }
+                },
+                {
+                    $replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ["$pid", 0] }, "$$ROOT"] } }
+                },
+                {
+                    $set: { subtotal: { $multiply: ["$price", "$quantity"] } }
+                },
+                {
+                    $group: { _id: "$uid", total: { $sum: "$subtotal" } }
+                },
+                {
+                    $project: { _id: 0, uid: "$_id", total: "$total", date: new Date(), currency: " ARS" }
+                }
+            ])
+            return report
+        } catch (error) {
+            throw error
+        }
+    }
+
+}
 
 const users = new MongoManager(User)
 const products = new MongoManager(Product)

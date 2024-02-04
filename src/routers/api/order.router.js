@@ -21,31 +21,70 @@ ordersRouter.post("/", async (req, res, next) => {
     }
 });
 
-
 // Endpoint para obtener la lista de órdenes
 ordersRouter.get("/", async (req, res, next) => {
     try {
-        const orderList = await orders.read();
+        const orderAndPaginate = {
+            limit: req.query.limit || 10,
+            page: req.query.page || 1,
+        };
 
-        if (orderList && orderList.length > 0) {
-            return res.json({
-                statusCode: 200,
-                data: orderList,
+        const filter = {};
+
+        if (req.query.uid) {
+            filter.uid = new RegExp(req.query.uid.trim(), 'i');
+        }
+
+        let all;
+
+        if (req.query.sort === "desc") {  // Ordenar por fecha de creación en orden descendente
+            all = await orders.read({
+                filter,
+                orderAndPaginate: {
+                    ...orderAndPaginate,
+                    sort: { createdAt: -1 },
+                },
             });
         } else {
-            const error = new Error("Orders not found");
-            error.statusCode = 400;
-            return next(error);
+            all = await orders.read({ filter, orderAndPaginate });
         }
+
+        if (all.length > 0) {
+            return res.json({
+                statusCode: 200,
+                response: all,
+            });
+        }
+        return res.json({
+            statusCode: 404,
+            response: all,
+        });
     } catch (error) {
-        return next(error);
+        console.error(error);
+        next(error);
+    }
+});
+
+// Endpoint para obtener el total a pagar de una orden por usuario
+ordersRouter.get("/total/:uid", async (req, res, next) => {
+    try {
+        const { uid } = req.params;
+        const report = await orders.report(uid);
+
+        return res.json({
+            statusCode: 200,
+            response: report,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
     }
 });
 
 // Endpoint para obtener las órdenes de 1 usuario
 ordersRouter.get("/:uid", async (req, res, next) => {
     try {
-        const { uid } = req.params; 
+        const { uid } = req.params;
         const filter = { uid: uid };
         const all = await orders.read({ filter });
         return res.json({
@@ -56,8 +95,6 @@ ordersRouter.get("/:uid", async (req, res, next) => {
         return next(error);
     }
 });
-
-
 
 // Endpoint para obtener una orden por ID
 ordersRouter.get("/:oid", async (req, res, next) => {
@@ -80,7 +117,6 @@ ordersRouter.get("/:oid", async (req, res, next) => {
     }
 });
 
-
 // Endpoint para eliminar una orden por ID
 ordersRouter.delete("/:oid", async (req, res, next) => {
     try {
@@ -101,7 +137,6 @@ ordersRouter.delete("/:oid", async (req, res, next) => {
         return next(error);
     }
 });
-
 
 // Endpoint para actualizar una orden por ID
 ordersRouter.put("/:oid", async (req, res, next) => {

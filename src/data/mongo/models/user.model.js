@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, mongo, Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
 
 
@@ -12,6 +12,7 @@ const schema = new Schema({
     role: { type: Number, default: 0 }
 }, { timestamps: true });
 
+schema.plugin(mongoosePaginate);
 const User = model(collection, schema);
 export default User;
 

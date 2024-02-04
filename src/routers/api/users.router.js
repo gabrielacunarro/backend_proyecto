@@ -27,18 +27,29 @@ usersRouter.post("/", async (req, res, next) => {
 // Endpoint para obtener la lista de usuarios
 usersRouter.get("/", async (req, res, next) => {
     try {
-        const userList = await users.read();
-
-        if (userList.length > 0) {
+        const orderAndPaginate = {
+            limit: req.query.limit || 10,
+            page: req.query.page || 1,
+        }
+        const filter ={}
+        if (req.query.email){
+            filter.email = new RegExp(req.query.email.trim(),'i')
+        }
+        if (req.query.name==="desc"){
+            orderAndPaginate.sort.name =1
+        }
+        const all = await users.read({ filter, orderAndPaginate });
+        
+        if (all.length > 0) {
             return res.json({
                 statusCode: 200,
-                response: userList,
+                response: all,
             });
-        } else {
-            const error = new Error("Users not found");
-            error.statusCode = 404;
-            throw error;
         }
+        return res.json({
+            statusCode: 404,
+            response: all,
+        })
     } catch (error) {
         console.error(error);
         next(error);
