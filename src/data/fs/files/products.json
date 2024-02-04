@@ -1,0 +1,42 @@
+[
+  {
+    "id": "dcaaf604",
+    "title": "CHANEL N°5",
+    "description": "La esencia misma de la feminidad.Un bouquet floral aldehído sublimado por un frasco emblemático totalmente minimalista, un perfume atemporal.",
+    "photo": "https://i.imgur.com/YouUFD8.png",
+    "price": 100000,
+    "stock": 150
+  },
+  {
+    "id": "c2337a43",
+    "title": "Invictus EDT",
+    "description": "Una fragancia que hace sentir la esencia de la victoria, el hombre Invictus sólo tiene una meta: la victoria.",
+    "photo": "https://i.imgur.com/yvlID3O.jpg",
+    "price": 70000,
+    "stock": 110
+  },
+  {
+    "id": "106f3f1a",
+    "title": "Pure Poison Dior",
+    "description": "Erase una vez una fragancia ingenua y cautivadora, sincera y misteriosa Pure Posion celebra la seducción en el estado más puro, explorando sudualidad y su alquimia irresistible.",
+    "photo": "https://i.imgur.com/98ZBJUR.png",
+    "price": 150000,
+    "stock": 120
+  },
+  {
+    "id": "77776402",
+    "title": "Blue Seduction",
+    "description": "La naturalidad convertida en la seducción más auténtica a través de un eau de toilette para hombre con aroma a cedro irresistible.Esencia de seducción natural.",
+    "photo": "https://i.imgur.com/LkDwkKR.png",
+    "price": 110000,
+    "stock": 300
+  },
+  {
+    "id": "782bb523",
+    "description": "Escale a Portofino es un Eau de Toilette compuesta por materias primas de la mejor calidad, exclusivas de la Maison Dior, una escapada por Italia",
+    "title": "Escale a Portofino EDT",
+    "photo": "https://i.imgur.com/YB5OiP1.png",
+    "price": 101000,
+    "stock": 230
+  }
+]

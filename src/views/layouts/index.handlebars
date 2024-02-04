@@ -1,0 +1,17 @@
+<main>
+    <h1>Eleva tu estilo con Essence Selecto</h1>
+    <h2> Hasta 6 cuotas sin interés!</h2>
+    <div class="d-flex flex-wrap justify-content-evenly custom-margin">
+        {{#each productList}}
+        <div class="card" style="width: 18rem;">
+            <img src="{{this.photo}}" class="card-img-top" alt="{{this.name}}">
+            <div class="card-body">
+                <h5 class="card-title">{{this.title}}</h5>
+                <p class="card-text">{{this.description}}</p>
+                <a href="#" class="btn btn-primary">Ver más</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</main>
+<script src="/socket.io/socket.io.js"></script>

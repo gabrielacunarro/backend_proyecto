@@ -1,0 +1,114 @@
+import { Router } from "express";
+import Order from "../../data/mongo/models/order.model.js";
+import { orders } from "../../data/mongo/manager.mongo.js";
+import mongoose from "mongoose";
+//import ordersManager from "../../data/fs/orderFS.js";
+
+const ordersRouter = Router();
+
+// En tu archivo order.router.js
+
+// Endpoint para crear una orden
+ordersRouter.post("/", async (req, res, next) => {
+    try {
+        const orderData = req.body;
+        const createdOrder = await orders.create(orderData);
+
+        return res.json({
+            statusCode: 201,
+            response: "Order created successfully",
+            data: createdOrder,
+        });
+    } catch (error) {
+        console.error(error);
+        return next(error);
+    }
+});
+
+
+// Endpoint para obtener la lista de órdenes
+ordersRouter.get("/", async (req, res, next) => {
+    try {
+        const orderList = await orders.read();
+
+        if (orderList && orderList.length > 0) {
+            return res.json({
+                statusCode: 200,
+                data: orderList,
+            });
+        } else {
+            const error = new Error("Orders not found");
+            error.statusCode = 400;
+            return next(error);
+        }
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
+// Endpoint para obtener una orden por ID
+ordersRouter.get("/:oid", async (req, res, next) => {
+    try {
+        const { oid } = req.params;
+        const order = await orders.readOne(oid);
+
+        if (order) {
+            return res.json({
+                statusCode: 200,
+                response: order,
+            });
+        } else {
+            const error = new Error(`Order with ID ${oid} not found.`);
+            error.statusCode = 404;
+            return next(error);
+        }
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
+// Endpoint para eliminar una orden por ID
+ordersRouter.delete("/:oid", async (req, res, next) => {
+    try {
+        const { oid } = req.params;
+        const deletedOrder = await orders.destroy(oid);
+
+        if (deletedOrder) {
+            return res.json({
+                statusCode: 200,
+                response: `Order with ID ${oid} has been successfully deleted.`,
+            });
+        } else {
+            const error = new Error(`Order with ID ${oid} not found. No order has been deleted.`);
+            error.statusCode = 404;
+            return next(error);
+        }
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
+// Endpoint para actualizar una orden por ID
+ordersRouter.put("/:oid", async (req, res, next) => {
+    try {
+        const { oid } = req.params;
+        const { quantity, state } = req.body;
+
+        const updatedOrder = await orders.update(oid, { quantity, state });
+
+        return res.json({
+            statusCode: 200,
+            response: `Order with ID ${oid} has been successfully updated.`,
+            data: updatedOrder,
+        });
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
+export default ordersRouter;
+
