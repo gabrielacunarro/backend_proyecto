@@ -1,12 +1,8 @@
-import { Router } from "express";
-import Order from "../../data/mongo/models/order.model.js";
 import { orders } from "../../data/mongo/manager.mongo.js";
-import mongoose from "mongoose";
 //import ordersManager from "../../data/fs/orderFS.js";
+import { Router } from "express";
 
 const ordersRouter = Router();
-
-// En tu archivo order.router.js
 
 // Endpoint para crear una orden
 ordersRouter.post("/", async (req, res, next) => {
@@ -46,6 +42,22 @@ ordersRouter.get("/", async (req, res, next) => {
     }
 });
 
+// Endpoint para obtener las órdenes de 1 usuario
+ordersRouter.get("/:uid", async (req, res, next) => {
+    try {
+        const { uid } = req.params; 
+        const filter = { uid: uid };
+        const all = await orders.read({ filter });
+        return res.json({
+            statusCode: 200,
+            response: all
+        });
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
 
 // Endpoint para obtener una orden por ID
 ordersRouter.get("/:oid", async (req, res, next) => {
@@ -73,9 +85,9 @@ ordersRouter.get("/:oid", async (req, res, next) => {
 ordersRouter.delete("/:oid", async (req, res, next) => {
     try {
         const { oid } = req.params;
-        const deletedOrder = await orders.destroy(oid);
+        const one = await orders.destroy(oid);
 
-        if (deletedOrder) {
+        if (one) {
             return res.json({
                 statusCode: 200,
                 response: `Order with ID ${oid} has been successfully deleted.`,
@@ -108,7 +120,6 @@ ordersRouter.put("/:oid", async (req, res, next) => {
         return next(error);
     }
 });
-
 
 export default ordersRouter;
 

@@ -5,3 +5,5 @@ function notFoundOne(one) {
         throw error;
     }
 }
+
+export default notFoundOne;

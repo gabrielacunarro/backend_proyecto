@@ -1,6 +1,11 @@
 import User from "./models/user.model.js";
 import Product from "./models/product.model.js"
 import Order from "./models/order.model.js";
+import notFoundOne from "../../utils/notFoundOne.utils.js"
+//import mongoose from "mongoose";
+
+//mongoose.set('strictPopulate', false);
+
 
 class MongoManager {
     constructor(model) {
@@ -17,9 +22,9 @@ class MongoManager {
     async read(obj) {
         try {
             let { filter, order } = obj || {};// desestructurar, obj es un objeto con 2 propiedades filter = consulta para el filtro y sort = con el obj de ordenamiento
-            const all = await this.model.find(filter).sort(order) // metodo find de mongoose
+            const all = await this.model.find(filter, "-createdAt -updatedAt -__v").sort(order) // metodo find de mongoose
             if (all.length === 0) {
-                const error = new Error("There isn't documents")
+                const error = new Error("There isn't any documents")
                 error.statusCode = 404;
                 throw error;
             }
@@ -31,11 +36,7 @@ class MongoManager {
     async readOne(id) {
         try {
             const one = await this.model.findById(id)
-            if (!one) {
-                const error = new Error("There isn't any products")
-                error.statusCode = 404
-                throw error;
-            }
+            notFoundOne(one)
             return one
         } catch (error) {
             throw error
@@ -45,11 +46,7 @@ class MongoManager {
         try {
             const opt = { new: true } // este obj de config opcional devuelve el objeto luego de la modificacion
             const one = await this.model.findByIdAndUpdate(id, data, opt)
-            if (!one) {
-                const error = new Error("There isn't any products")
-                error.statusCode = 404
-                throw error;
-            }
+            notFoundOne(one)
             return one;
         } catch (error) {
             throw error;
@@ -58,11 +55,7 @@ class MongoManager {
     async destroy(id) {
         try {
             const one = await this.model.findByIdAndDelete(id)
-            if (!one) {
-                const error = new Error("There isn't any products")
-                error.statusCode = 404
-                throw error;
-            }
+            notFoundOne(one)
             return one;
         } catch (error) {
             throw error;
@@ -81,6 +74,20 @@ class MongoManager {
             return user;
         } catch (error) {
             throw error;
+        }
+    }
+
+    async stats({ filter }) {
+        try {
+            let stats = await this.model.find(filter).explain("executionStats");
+            console.log(stats);
+            stats = {
+                quantity: stats.executionStats.nReturned,
+                time: stats.executionStats.excecutionTimeMillis,
+            }
+            return stats
+        } catch (error) {
+            throw error
         }
     }
 }
