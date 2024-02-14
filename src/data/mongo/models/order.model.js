@@ -1,21 +1,27 @@
 import { model, Schema, Types } from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
-const collection = "orders"; // el plural, en minúscula y descriptivo
+const collection = "orders";
 const schema = new Schema(
     {
-        uid: { type: Types.ObjectId, required: true, ref: "users" }, // corregido: ref debe ser "users"
-        pid: { type: Types.ObjectId, required: true, ref: "products" }, // corregido: ref debe ser "products"
+        uid: { type: Types.ObjectId, required: true, ref: "users" },
+        pid: { type: Types.ObjectId, required: true, ref: "products" }, 
         quantity: { type: Number, default: 1 },
-        state: { type: String, default: "0" }, // pasa lo mismo que para los roles, puedo definirlo como num o como string
-        // 0 reserved
-        // 1 paid
-        // 2 delivered
+        state: { type: String, enum: ["reserved", "paid", "delivered"], default: "reserved" },
     },
     { timestamps: true }
 );
 
+//midleware pre
+
+schema.pre("find", function () {this.populate("uid", "-password -createdAt -updatedAt -__v")})
+schema.pre("find", function () {this.populate("pid", "title price")})
+
+schema.plugin(mongoosePaginate);
 const Order = model(collection, schema);
 export default Order;
+
+
 
 
 

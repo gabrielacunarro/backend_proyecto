@@ -26,21 +26,32 @@ productsRouter.post("/", async (req, res, next) => {
 // Endpoint para obtener la lista de productos
 productsRouter.get("/", async (req, res, next) => {
     try {
-        const productList = await products.read();
+        const orderAndPaginate = {
+            limit: req.query.limit || 10,
+            page: req.query.page || 1,
+        }
+        const filter = {}
+        if (req.query.name) {
+            filter.name = new RegExp(req.query.name.trim(), 'i')
+        }
+        if (req.query.name === "desc") {
+            orderAndPaginate.sort.name = 1
+        }
+        const all = await products.read({ filter, orderAndPaginate });
 
-        if (productList && productList.length > 0) {
+        if (all.length > 0) {
             return res.json({
                 statusCode: 200,
-                response: productList,
-            });
-        } else {
-            return res.json({
-                statusCode: 400,
-                response: "Products not found",
+                response: all,
             });
         }
+        return res.json({
+            statusCode: 404,
+            response: all,
+        })
     } catch (error) {
-        return next(error);
+        console.error(error);
+        next(error);
     }
 });
 
