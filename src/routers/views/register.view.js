@@ -2,12 +2,11 @@ import { Router } from "express";
 
 const registerViewRouter = Router();
 
-registerViewRouter.get('/register', (req, res) => {
+registerViewRouter.get('/auth/register', (req, res) => {
     res.render('layouts/register');
 });
 
-registerViewRouter.post('/register', (req, res) => {
-
+registerViewRouter.post('/auth/register', (req, res) => {
     const { username, email } = req.body;
 
     console.log("Username:", username);
@@ -17,4 +16,5 @@ registerViewRouter.post('/register', (req, res) => {
 });
 
 export default registerViewRouter;
+
 

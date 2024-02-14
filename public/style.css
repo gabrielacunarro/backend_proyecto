@@ -89,7 +89,7 @@ h2 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* styles.css */
+/* estilos main, form y botones */
 
 main {
     text-align: center;
@@ -116,24 +116,27 @@ input {
     box-sizing: border-box;
 }
 
-#registerButton {
+#registerButton, #loginButton, #newEvent {
     margin-top: 35px;
-    max-width: 150px;
+    max-width: 40%;
     background-color: #606060;
     transition: background-color 0.3s ease-in-out;
 }
 
-#registerButton:hover {
+#registerButton:hover, #loginButton:hover, #newEvent:hover {
     background-color: #333;
 }
 
-/* estilos del footer */
+/* Estilos del footer */
 .footer {
+    position: fixed; 
+    bottom: 0; 
+    left: 0;
+    width: 100%;
     background-color: rgb(46, 46, 46);
     color: #fff;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
-    width: 100%;
 }
 
 .red-social a {
