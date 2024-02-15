@@ -4,7 +4,7 @@ function has8char(req, res, next) {
     try {
         const {password} = req.body;
         has8charUtils(password)
-        next()
+        return next()
     } catch (error) {
         return next(error)
     }

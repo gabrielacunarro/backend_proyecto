@@ -3,11 +3,11 @@ import User from "../../data/mongo/models/user.model.js";
 
 const loginViewRouter = Router();
 
-loginViewRouter.get('/auth/login', (req, res) => {
+loginViewRouter.get('/login', (req, res) => {
     res.render('layouts/login');
 });
 
-loginViewRouter.post('/auth/login', async (req, res) => {
+loginViewRouter.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
@@ -21,11 +21,9 @@ loginViewRouter.post('/auth/login', async (req, res) => {
             res.render('layouts/login', { error: 'Nombre de usuario o contraseña incorrectos' });
         }
     } catch (error) {
-        // Manejar cualquier error de la base de datos u otro error
         console.error('Error al autenticar al usuario:', error);
         res.status(500).send('Error interno del servidor');
     }
 });
 
-// Exportar el enrutador
 export default loginViewRouter;

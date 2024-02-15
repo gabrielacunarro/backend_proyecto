@@ -23,15 +23,13 @@ authRouter.post("/login",isValidPass, async (req, res, next) => {
     try {
         const { email, password } = req.body;
         if (email && password === "hola1234") {
-            // Configurar datos de usuario en la sesión
-            req.auth.email = email;
-            req.auth.role = "user";
+            req.session.email = email;
+            req.session.role="user";
 
-            // Devolver los datos del usuario en la respuesta JSON
             return res.json({
                 statusCode: 200,
                 message: "Logged in!",
-                auth: req.auth
+                session: req.session,
             });
         }
         const error = new Error("Bad Auth");
@@ -44,19 +42,21 @@ authRouter.post("/login",isValidPass, async (req, res, next) => {
 
 authRouter.post("/signout", async (req, res, next) => {
     try {
-        if (req.auth.email) {
-            req.auth.destroy()
+        // Verificar si req.auth está definido y contiene la propiedad 'email'
+        if (req.session && req.session.email) {
+            // Eliminar req.auth
+            delete req.session;
             return res.json({
                 statusCode: 200,
                 message: "Signed out!"
-            })
+            });
         }
-        const error = new Error("Bad Auth")
+        const error = new Error("Bad Auth");
         error.statusCode = 401;
         throw error;
     } catch (error) {
-        return next(error)
+        return next(error);
     }
-})
+});
 
 export default authRouter;
