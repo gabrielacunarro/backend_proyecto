@@ -2,11 +2,11 @@ import { Router } from "express";
 
 const formViewRouter = Router();
 
-formViewRouter.get('/form', (req, res) => {
+formViewRouter.get('/products/form', (req, res) => {
     res.render('layouts/form');
 });
 
-formViewRouter.post('/form', (req, res) => {
+formViewRouter.post('/products/form', (req, res) => {
     const { title, description, photo, price, stock } = req.body;
 
     res.send('Registro exitoso');

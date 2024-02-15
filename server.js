@@ -12,6 +12,7 @@ import MongoStore from "connect-mongo";
 import { socketUtils } from "./src/utils/socket.utils.js";
 import registerViewRouter from './src/routers/views/register.view.js';
 import loginViewRouter from './src/routers/views/login.view.js';
+import formViewRouter from "./src/routers/views/form.view.js";
 import router from "./src/routers/index.router.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
@@ -34,6 +35,7 @@ server.set("view engine", "handlebars");
 server.set("views", __dirname + "/src/views");
 
 //Agrega la ruta del enrutador 
+server.use(formViewRouter);
 server.use(registerViewRouter);
 server.use(loginViewRouter);
 
