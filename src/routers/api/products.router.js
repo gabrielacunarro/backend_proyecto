@@ -1,11 +1,12 @@
 import { Router } from "express"
 import { products } from "../../data/mongo/manager.mongo.js";
+import isAdmin from "../../middlewares/isAdmin.mid.js";
 //import productsManager from "../../data/fs/productFS.js"
 
 const productsRouter = Router()
 
 // Endpoint para crear los productos
-productsRouter.post("/", async (req, res, next) => {
+productsRouter.post("/", isAdmin,async (req, res, next) => {
     try {
         const productData = req.body;
         const createdProductId = await products.create(productData);
@@ -29,17 +30,20 @@ productsRouter.get("/", async (req, res, next) => {
         const orderAndPaginate = {
             limit: req.query.limit || 10,
             page: req.query.page || 1,
+            sort: { title: 1 },
+            lean: true
         }
         const filter = {}
-        if (req.query.name) {
-            filter.name = new RegExp(req.query.name.trim(), 'i')
+        console.log(req.query.title)
+        if (req.query.title) {
+            filter.title = new RegExp(req.query.title.trim(), 'i')
         }
-        if (req.query.name === "desc") {
-            orderAndPaginate.sort.name = 1
+        if (req.query.title === "desc") {
+            orderAndPaginate.sort.title = 1
         }
         const all = await products.read({ filter, orderAndPaginate });
 
-        if (all.length > 0) {
+        if (all && Array.from (all.docs).length > 0) {
             return res.json({
                 statusCode: 200,
                 response: all,

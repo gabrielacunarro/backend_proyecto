@@ -6,10 +6,14 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentPage = 0;
     const totalProducts = 8;
     const productsPerPage = 4;
-    const totalPages = Math.ceil(totalProducts / productsPerPage); 
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
 
-    function fetchProducts() {
-        fetch('/api/products')
+    function fetchProducts(filter) {
+        let filtro = ""
+        if(filter !==""){
+            filtro = "?"+filter
+        }
+        fetch('/api/products'+filtro)
             .then(response => response.json())
             .then(products => {
                 renderProducts(products);
@@ -18,12 +22,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function renderProducts(products) {
-        productsSection.innerHTML = ""; 
+        productsSection.innerHTML = "";
 
-        const productsArray = products.response.docs; 
+        const productsArray = products.response.docs;
         const startIndex = currentPage * productsPerPage;
         const endIndex = startIndex + productsPerPage;
-        const productsToRender = productsArray.slice(startIndex, endIndex); 
+        const productsToRender = productsArray.slice(startIndex, endIndex);
 
         productsToRender.forEach(product => {
             const cardHtml = `
@@ -38,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
             productsSection.insertAdjacentHTML("beforeend", cardHtml);
         });
-        
+
     }
 
     function goToPrevPage() {
@@ -52,12 +56,23 @@ document.addEventListener("DOMContentLoaded", function () {
         const maxPage = totalPages - 1;
         if (currentPage < maxPage) {
             currentPage++;
-            fetchProducts(); 
+            fetchProducts();
         }
     }
-    
+    const params = new URLSearchParams(location.search);
+    const selector = document.querySelector("#text");
+    selector.value = params.get("title");
+    document.querySelector("#search").addEventListener("click", async (event) => {
+        try {
+            const text = selector.value;
+            fetchProducts('title='+text)
+        } catch (error) {
+            alert(error.message);
+        }
+    });
+
     prevButton.addEventListener("click", goToPrevPage);
     nextButton.addEventListener("click", goToNextPage);
 
-    fetchProducts(); 
+    fetchProducts();
 });

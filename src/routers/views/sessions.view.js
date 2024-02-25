@@ -7,7 +7,7 @@ sessionsViewRouter.get('/sessions/register', (req, res) => {
 });
 
 sessionsViewRouter.post('/sessions/register', async (req, res) => {
-
+    res.redirect('/sessions/login');
 });
 
 sessionsViewRouter.get('/sessions/login', (req, res) => {
@@ -17,6 +17,7 @@ sessionsViewRouter.get('/sessions/login', (req, res) => {
 
 sessionsViewRouter.post('/sessions/login', async (req, res) => {
 
+    res.redirect('/');
 });
 
 export default sessionsViewRouter;
