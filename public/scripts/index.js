@@ -1,0 +1,63 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const productsSection = document.getElementById("perfumes");
+    const prevButton = document.getElementById("prev");
+    const nextButton = document.getElementById("next");
+
+    let currentPage = 0;
+    const totalProducts = 8;
+    const productsPerPage = 4;
+    const totalPages = Math.ceil(totalProducts / productsPerPage); 
+
+    function fetchProducts() {
+        fetch('/api/products')
+            .then(response => response.json())
+            .then(products => {
+                renderProducts(products);
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    }
+
+    function renderProducts(products) {
+        productsSection.innerHTML = ""; 
+
+        const productsArray = products.response.docs; 
+        const startIndex = currentPage * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+        const productsToRender = productsArray.slice(startIndex, endIndex); 
+
+        productsToRender.forEach(product => {
+            const cardHtml = `
+                <div class="card m-2 anchor" style="width: 360px">
+                    <img src="${product.photo}" style="height: 240px" class="card-img-top object-fit-cover" alt="${product.title}" />
+                    <div class="card-body">
+                        <h5 class="p-2 text-center card-title">${product.title}</h5>
+                        <p class="p-2 text-center card-price">Precio: ${product.price}</p>
+                        <p class="p-2 text-center card-stock">Stock: ${product.stock}</p>
+                    </div>
+                </div>
+            `;
+            productsSection.insertAdjacentHTML("beforeend", cardHtml);
+        });
+        
+    }
+
+    function goToPrevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            fetchProducts();
+        }
+    }
+
+    function goToNextPage() {
+        const maxPage = totalPages - 1;
+        if (currentPage < maxPage) {
+            currentPage++;
+            fetchProducts(); 
+        }
+    }
+    
+    prevButton.addEventListener("click", goToPrevPage);
+    nextButton.addEventListener("click", goToNextPage);
+
+    fetchProducts(); 
+});

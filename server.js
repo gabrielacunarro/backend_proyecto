@@ -10,8 +10,7 @@ import expressSession from "express-session"
 import sessionFileStore from "session-file-store"
 import MongoStore from "connect-mongo";
 import { socketUtils } from "./src/utils/socket.utils.js";
-import registerViewRouter from './src/routers/views/register.view.js';
-import loginViewRouter from './src/routers/views/login.view.js';
+import sessionsViewRouter from './src/routers/views/sessions.view.js';
 import formViewRouter from "./src/routers/views/form.view.js";
 import router from "./src/routers/index.router.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
@@ -36,8 +35,7 @@ server.set("views", __dirname + "/src/views");
 
 //Agrega la ruta del enrutador 
 server.use(formViewRouter);
-server.use(registerViewRouter);
-server.use(loginViewRouter);
+server.use(sessionsViewRouter);
 
 const FileStore = sessionFileStore(expressSession)
 

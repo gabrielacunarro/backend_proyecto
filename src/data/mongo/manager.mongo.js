@@ -63,13 +63,6 @@ class MongoManager {
     async readByEmail(email) {
         try {
             const user = await this.model.findOne({ email });
-
-            if (!user) {
-                const error = new Error(`No user found with email: ${email}`);
-                error.statusCode = 404;
-                throw error;
-            }
-
             return user;
         } catch (error) {
             throw error;
