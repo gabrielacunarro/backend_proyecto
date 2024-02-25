@@ -9,7 +9,6 @@ import cookieParser from "cookie-parser";
 import expressSession from "express-session"
 import sessionFileStore from "session-file-store"
 import MongoStore from "connect-mongo";
-import { socketUtils } from "./src/utils/socket.utils.js";
 import sessionsViewRouter from './src/routers/views/sessions.view.js';
 import formViewRouter from "./src/routers/views/form.view.js";
 import router from "./src/routers/index.router.js";
@@ -25,8 +24,6 @@ dbConnection()
 const httpServer = createServer(server);
 const socketServer = new Server(httpServer);
 httpServer.listen(PORT, ready);
-socketServer.on("connection", socketUtils);
-
 
 //templates
 server.engine("handlebars", engine());

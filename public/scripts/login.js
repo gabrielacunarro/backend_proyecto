@@ -1,11 +1,11 @@
 const selector = document.querySelector("#login")
-selector.addEventListener("click", async () => {
+selector.addEventListener("click", async (e) => {
     try {
+        e.preventDefault()
         const data = {
             email: document.querySelector("#email").value,
             password: document.querySelector("#password").value
         }
-        console.log(data);
         const opts = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -15,7 +15,7 @@ selector.addEventListener("click", async () => {
         response = await response.json()
         
         alert(response.message)
-        response.session && location.replace("/")
+        window.location.href = "/"
     } catch (error) {
         alert(error.message)
     }

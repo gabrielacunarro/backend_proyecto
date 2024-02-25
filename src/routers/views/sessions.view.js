@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { users } from "../../data/mongo/manager.mongo.js";
 
 const sessionsViewRouter = Router();
 sessionsViewRouter.get('/sessions/register', (req, res) => {
@@ -7,7 +6,7 @@ sessionsViewRouter.get('/sessions/register', (req, res) => {
 });
 
 sessionsViewRouter.post('/sessions/register', async (req, res) => {
-    res.redirect('/sessions/login');
+
 });
 
 sessionsViewRouter.get('/sessions/login', (req, res) => {
@@ -17,7 +16,6 @@ sessionsViewRouter.get('/sessions/login', (req, res) => {
 
 sessionsViewRouter.post('/sessions/login', async (req, res) => {
 
-    res.redirect('/');
 });
 
 export default sessionsViewRouter;

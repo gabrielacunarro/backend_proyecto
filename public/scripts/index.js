@@ -9,17 +9,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalPages = Math.ceil(totalProducts / productsPerPage);
 
     function fetchProducts(filter) {
-        let filtro = ""
-        if(filter !==""){
-            filtro = "?"+filter
-        }
-        fetch('/api/products'+filtro)
+        let filtro = filter ? "?" + filter : ""; 
+        fetch('/api/products' + filtro)
             .then(response => response.json())
             .then(products => {
                 renderProducts(products);
             })
             .catch(error => console.error('Error fetching products:', error));
     }
+    
 
     function renderProducts(products) {
         productsSection.innerHTML = "";
@@ -74,5 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
     prevButton.addEventListener("click", goToPrevPage);
     nextButton.addEventListener("click", goToNextPage);
 
+    // Llama a fetchProducts sin pasar un filtro al cargar la página
     fetchProducts();
 });
