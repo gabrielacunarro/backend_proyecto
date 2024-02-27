@@ -82,7 +82,7 @@ productsRouter.get("/:eid", async (req, res, next) => {
 });
 
 // Endpoint para actualizar un producto por ID
-productsRouter.put("/:eid", async (req, res, next) => {
+productsRouter.put("/:eid",isAdmin, async (req, res, next) => {
     try {
         const { eid } = req.params;
         const productData = req.body;
@@ -106,7 +106,7 @@ productsRouter.put("/:eid", async (req, res, next) => {
 });
 
 // Endpoint para eliminar un prod por ID
-productsRouter.delete("/:pid", async (req, res, next) => {
+productsRouter.delete("/:pid", isAdmin,async (req, res, next) => {
     try {
         const { pid } = req.params;
         const deletedProduct = await products.destroy(pid);

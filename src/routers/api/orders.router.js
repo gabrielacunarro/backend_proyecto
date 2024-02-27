@@ -81,20 +81,31 @@ ordersRouter.get("/total/:uid", async (req, res, next) => {
     }
 });
 
-// Endpoint para obtener las órdenes de 1 usuario
-ordersRouter.get("/:uid", async (req, res, next) => {
+// Endpoint para obtener las órdenes del usuario logueado
+ordersRouter.get("/", async (req, res, next) => {
     try {
-        const { uid } = req.params;
-        const filter = { uid: uid };
-        const all = await orders.read({ filter });
+        // Obtener el ID de usuario autenticado desde la solicitud
+        const userId = req.user.id;
+
+        // Filtrar las órdenes por el ID de usuario
+        const all = await orders.read({ filter: { uid: userId } });
+
+        if (all.length > 0) {
+            return res.json({
+                statusCode: 200,
+                response: all,
+            });
+        }
         return res.json({
-            statusCode: 200,
-            response: all
+            statusCode: 404,
+            response: all,
         });
     } catch (error) {
-        return next(error);
+        console.error(error);
+        next(error);
     }
 });
+
 
 // Endpoint para obtener una orden por ID
 ordersRouter.get("/:oid", async (req, res, next) => {

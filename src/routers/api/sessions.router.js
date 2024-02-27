@@ -1,6 +1,7 @@
 import { Router } from "express";
 import has8char from "../../middlewares/has8char.mid.js";
 import passport from "../../middlewares/passport.mid.js";
+import { verifyToken } from "../../utils/token.util.js";
 
 const sessionsRouter = Router();
 
@@ -33,7 +34,7 @@ sessionsRouter.post("/login", passport.authenticate("login", { session: false, f
 //signout
 sessionsRouter.post("/signout", async (req, res, next) => {
     try {
-        if (req.session.email) {
+        if (verifyToken(req.headers)) {
             req.session.destroy();
             return res.json({
                 statusCode: 200,
@@ -49,7 +50,6 @@ sessionsRouter.post("/signout", async (req, res, next) => {
     }
 });
 
-
 sessionsRouter.get("/badauth", (req, res, next) => {
     try {
         return res.json({
@@ -62,7 +62,7 @@ sessionsRouter.get("/badauth", (req, res, next) => {
 })
 
 //google
-sessionsRouter.get("/google", passport.authenticate("google", { scope: ["email", "profile"] }), // SOLO PARA PROBAR
+sessionsRouter.post("/google", passport.authenticate("google", { scope: ["email", "profile"] }), 
 );
 
 //google cb
