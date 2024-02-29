@@ -1,69 +1,26 @@
-import { orders } from "../../data/mongo/manager.mongo.js";
+import { orders, users } from "../../data/mongo/manager.mongo.js";
 //import ordersManager from "../../data/fs/orderFS.js";
 import { Router } from "express";
+import passCb from "../../middlewares/passCb.mid.js"
 
 const ordersRouter = Router();
 
 // Endpoint para crear una orden
-ordersRouter.post("/", async (req, res, next) => {
+ordersRouter.post("/", passCb("jwt"), async (req, res, next) => {
     try {
-        const orderData = req.body;
-        const createdOrder = await orders.create(orderData);
+        const data = {
+            uid: req.uid,
+            pid: req.body.pid
+        }
+        console.log(data)
+        const one = await orders.create(data)
 
-        return res.json({
-            statusCode: 201,
-            response: "Order created successfully",
-            data: createdOrder,
-        });
+        return res.render("orders", { title: "Order Confirmation", order: one });
     } catch (error) {
-        console.error(error);
-        return next(error);
+        return next(error)
     }
 });
 
-// Endpoint para obtener la lista de órdenes
-ordersRouter.get("/", async (req, res, next) => {
-    try {
-        const orderAndPaginate = {
-            limit: req.query.limit || 10,
-            page: req.query.page || 1,
-        };
-
-        const filter = {};
-
-        if (req.query.uid) {
-            filter.uid = new RegExp(req.query.uid.trim(), 'i');
-        }
-
-        let all;
-
-        if (req.query.sort === "desc") {  // Ordenar por fecha de creación en orden descendente
-            all = await orders.read({
-                filter,
-                orderAndPaginate: {
-                    ...orderAndPaginate,
-                    sort: { createdAt: -1 },
-                },
-            });
-        } else {
-            all = await orders.read({ filter, orderAndPaginate });
-        }
-
-        if (all.length > 0) {
-            return res.json({
-                statusCode: 200,
-                response: all,
-            });
-        }
-        return res.json({
-            statusCode: 404,
-            response: all,
-        });
-    } catch (error) {
-        console.error(error);
-        next(error);
-    }
-});
 
 // Endpoint para obtener el total a pagar de una orden por usuario
 ordersRouter.get("/total/:uid", async (req, res, next) => {

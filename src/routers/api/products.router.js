@@ -1,12 +1,14 @@
 import { Router } from "express"
+//import productsManager from "../../data/fs/productFS.js"
 import { products } from "../../data/mongo/manager.mongo.js";
 import isAdmin from "../../middlewares/isAdmin.mid.js";
-//import productsManager from "../../data/fs/productFS.js"
+import propsProducts from "../../middlewares/propsProducts.mid.js"
+import passport from "../../middlewares/passport.mid.js"
 
 const productsRouter = Router()
 
 // Endpoint para crear los productos
-productsRouter.post("/", isAdmin,async (req, res, next) => {
+productsRouter.post("/", passport.authenticate("jwt", { session: false }), isAdmin, propsProducts, async (req, res, next) => {
     try {
         const productData = req.body;
         const createdProductId = await products.create(productData);
@@ -43,7 +45,7 @@ productsRouter.get("/", async (req, res, next) => {
         }
         const all = await products.read({ filter, orderAndPaginate });
 
-        if (all && Array.from (all.docs).length > 0) {
+        if (all && Array.from(all.docs).length > 0) {
             return res.json({
                 statusCode: 200,
                 response: all,
@@ -82,7 +84,7 @@ productsRouter.get("/:eid", async (req, res, next) => {
 });
 
 // Endpoint para actualizar un producto por ID
-productsRouter.put("/:eid",isAdmin, async (req, res, next) => {
+productsRouter.put("/:eid", async (req, res, next) => {
     try {
         const { eid } = req.params;
         const productData = req.body;
@@ -106,7 +108,7 @@ productsRouter.put("/:eid",isAdmin, async (req, res, next) => {
 });
 
 // Endpoint para eliminar un prod por ID
-productsRouter.delete("/:pid", isAdmin,async (req, res, next) => {
+productsRouter.delete("/:pid", async (req, res, next) => {
     try {
         const { pid } = req.params;
         const deletedProduct = await products.destroy(pid);

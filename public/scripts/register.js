@@ -9,7 +9,6 @@ selector.addEventListener("click", async (e) => {
             age: document.querySelector("#age").value,
             photo: document.querySelector("#photo").value,
         }
-        console.log(data)
         const opts = {
             method: "POST",
             headers: { "Content-Type": "application/json" },

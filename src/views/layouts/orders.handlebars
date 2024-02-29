@@ -2,7 +2,28 @@
     <h1>Órdenes</h1>
     <div class="order-table">
         <table class="table">
-            <!-- Contenido de la tabla de órdenes -->
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Productos</th>
+                    <!-- Agrega más columnas según sea necesario -->
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orders}}
+                <tr>
+                    <td>{{this.orderNumber}}</td>
+                    <td>{{this.date}}</td>
+                    <td>
+                        {{#each this.products}}
+                        <p>{{this.name}} - {{this.price}}</p>
+                        {{/each}}
+                    </td>
+                    <!-- Agrega más columnas según sea necesario -->
+                </tr>
+                {{/each}}
+            </tbody>
         </table>
     </div>
 </main>

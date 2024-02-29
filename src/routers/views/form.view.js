@@ -1,9 +1,9 @@
 import { Router } from "express";
-import isAdmin from "../../middlewares/isAdmin.mid.js";
+//import isAdmin from "../../middlewares/isAdmin.mid.js";
 
 const formViewRouter = Router();
 
-formViewRouter.get('/products/form', isAdmin, (req, res) => {
+formViewRouter.get('/products/form', (req, res) => {
     res.render('layouts/form');
 });
 

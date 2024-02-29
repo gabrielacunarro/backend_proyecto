@@ -12,13 +12,5 @@ productsRouter.get("/", async (req, res, next) => {
     }
 });
 
-productsRouter.get("/form", async (req, res, next) => {
-    try {
-        return res.render("layouts/form.handlebars");
-    } catch (error) {
-        next(error);
-    }
-});
 
 export default productsRouter;
-

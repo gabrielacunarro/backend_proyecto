@@ -1,5 +1,5 @@
-const selector = document.querySelector("#login");
-selector.addEventListener("click", async (e) => {
+const loginButton = document.querySelector("#login");
+loginButton.addEventListener("click", async (e) => {
     try {
         e.preventDefault();
         const data = {
@@ -12,16 +12,37 @@ selector.addEventListener("click", async (e) => {
             body: JSON.stringify(data)
         };
         let response = await fetch("/api/sessions/login", opts);
-        response = await response.json();
-        
-        localStorage.setItem('token', response.token);
-        
-        alert(response.message);
-        
-        // Redirecciona a la página principal después del inicio de sesión
-        window.location.href = "/";
+        if (response.ok) {
+            window.location.href = "/"; 
+        } else {
+            const errorData = await response.json();
+            alert(errorData.message || "Login failed"); 
+        }
+    } catch (error) {
+        console.log(error);
+        alert("An unexpected error occurred. Please try again later.");
+    }
+});
+
+
+const googleButton = document.querySelector("#google");
+googleButton.addEventListener("click", async (e) => {
+    try {
+
+        let response = await fetch("/api/sessions/google", {
+            method: "POST"
+        });
+        if (response.ok) {
+
+            window.location.href = response.url;
+        } else {
+
+            throw new Error("Failed to initiate Google login");
+        }
     } catch (error) {
         alert(error.message);
     }
 });
+
+
 
