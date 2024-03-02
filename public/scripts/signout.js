@@ -1,24 +1,21 @@
-document.querySelector("#signout").addEventListener("click", async (event) => {
-    event.preventDefault(); // Evitar que el enlace siga su comportamiento predeterminado
-
-    try {
-        const token = localStorage.getItem("token");
-        const opts = {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}` // Agregar el token de autenticación a las cabeceras
-            },
-        };
-        let response = await fetch("/api/sessions/signout", opts);
-        response = await response.json();
-        
-        if (response.statusCode === 200) {
-            alert(response.message);
-            localStorage.removeItem("token");
-            location.replace("/");
+fetch("/api/sessions/", { method: "POST" })
+    .then((res) => res.json())
+    .then((res) => {
+        console.log("Respuesta del servidor:", res); // Para verificar la estructura completa de la respuesta
+        if (res.statusCode === 200) {
+            const session = res.session;
+            if (session) {
+                const role = session.role;
+                console.log("Rol del usuario:", role);
+                // Aquí puedes usar el rol para realizar las acciones necesarias, como eliminar botones según el rol
+            } else {
+                console.log("La propiedad 'session' está ausente en la respuesta.");
+            }
+        } else {
+            console.log("Se recibió un estado de respuesta diferente a 200.");
         }
-    } catch (error) {
-        console.log(error);
-    }
-});
+    })
+    .catch((error) => {
+        console.error("Ocurrió un error al procesar la respuesta:", error);
+    });
+

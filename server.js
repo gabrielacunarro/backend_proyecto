@@ -67,7 +67,7 @@ server.use(expressSession({
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-        ttl: 7*24*60*60, // por siete dias
+        ttl: 7 * 24 * 60 * 60, // por siete dias
         mongoUrl: process.env.DB_LINK
     })
 }))

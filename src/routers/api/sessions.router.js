@@ -21,6 +21,12 @@ sessionsRouter.post("/register", has8char, passCbMid("register"), async (req, re
 //login
 sessionsRouter.post("/login", passCbMid("login"), async (req, res, next) => {
     try {
+
+                // Suponiendo que el rol del usuario está disponible en req.user.role después de la autenticación
+                const { role } = req.user;
+
+                // Establecer el rol del usuario en la sesión
+                req.session.role = role;
         return res.cookie("token", req.token, {
             maxAge: 60 * 60 * 24 * 7, httpOnly: true
         }).json({
@@ -34,7 +40,7 @@ sessionsRouter.post("/login", passCbMid("login"), async (req, res, next) => {
 
 
 //signout
-sessionsRouter.post("/signout", passCbMid("jwt"), async (req, res, next) => { // aca agregar isAuth
+sessionsRouter.post("/signout", passCbMid("jwt"), async (req, res, next) => { 
     try {
         return res.clearCookie("token").json({
             statusCode: 200,
@@ -57,7 +63,7 @@ sessionsRouter.get("/badauth", (req, res, next) => {
 })
 
 //sigonut cb
-sessionsRouter.get("/signout/cb", (req,res,next)=>{
+sessionsRouter.get("/signout/cb", (req, res, next) => {
     try {
         return res.json({
             statusCode: 400,
@@ -83,5 +89,18 @@ sessionsRouter.get("/google/cb", passport.authenticate("google", { session: fals
     }
 });
 
+sessionsRouter.post("/", passCbMid("jwt"), async (req, res, next) => {
+    try {
+        return res.json({
+            statusCode: 200,
+            message: "Logged in successfully",
+            session: {
+                role: req.session.role 
+            }
+        });
+    } catch (error) {
+        return next(error);
+    }
+});
 
 export default sessionsRouter;

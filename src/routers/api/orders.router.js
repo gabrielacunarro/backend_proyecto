@@ -1,5 +1,4 @@
 import { orders, users } from "../../data/mongo/manager.mongo.js";
-//import ordersManager from "../../data/fs/orderFS.js";
 import { Router } from "express";
 import passCb from "../../middlewares/passCb.mid.js"
 
@@ -9,7 +8,7 @@ const ordersRouter = Router();
 ordersRouter.post("/", passCb("jwt"), async (req, res, next) => {
     try {
         const data = {
-            uid: req.uid,
+            uid: req.user.uid,
             pid: req.body.pid
         }
         console.log(data)
@@ -20,7 +19,6 @@ ordersRouter.post("/", passCb("jwt"), async (req, res, next) => {
         return next(error)
     }
 });
-
 
 // Endpoint para obtener el total a pagar de una orden por usuario
 ordersRouter.get("/total/:uid", async (req, res, next) => {
@@ -62,7 +60,6 @@ ordersRouter.get("/", async (req, res, next) => {
         next(error);
     }
 });
-
 
 // Endpoint para obtener una orden por ID
 ordersRouter.get("/:oid", async (req, res, next) => {
