@@ -7,23 +7,28 @@
                     <th>#</th>
                     <th>Fecha</th>
                     <th>Productos</th>
+                    <th>Cantidad</th> <!-- Nueva columna -->
+                    <th>Estado</th> <!-- Nueva columna -->
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="orders-body">
                 {{#each orders}}
                 <tr>
-                    <td>{{this.orderNumber}}</td>
-                    <td>{{this.date}}</td>
+                    <td>{{this._id}}</td>
+                    <td>{{this.createdAt}}</td>
                     <td>
-                        {{#each this.products}}
-                        <p>{{this.name}} - {{this.price}}</p>
+                        {{#each this.docs}}
+                        <p>{{this.pid.title}} - {{this.pid.price}}</p>
                         {{/each}}
                     </td>
+                    <td>{{this.quantity}}</td> <!-- Nueva celda -->
+                    <td>{{this.state}}</td> <!-- Nueva celda -->
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </div>
 </main>
+
 
 <script src="/scripts/orders.js"></script>

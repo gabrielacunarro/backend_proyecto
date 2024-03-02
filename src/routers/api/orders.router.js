@@ -1,6 +1,8 @@
 import { orders, users } from "../../data/mongo/manager.mongo.js";
 import { Router } from "express";
-import passCbMid from "../../middlewares/passCb.mid.js"
+import passCbMid from "../../middlewares/passCb.mid.js" 
+import isAuth from "../../middlewares/isAuth.mid.js"
+
 
 const ordersRouter = Router();
 
@@ -57,6 +59,26 @@ ordersRouter.get("/total/:uid", async (req, res, next) => {
         next(error);
     }
 });
+
+// Ruta para obtener las órdenes del usuario logueado
+ordersRouter.get("/", isAuth, async (req, res, next) => {
+    try {
+        // Verificar si el usuario está autenticado
+        if (!req.user) {
+            return res.status(401).json({ message: "You are not logged in" });
+        }
+
+        // Obtener las órdenes del usuario logueado
+        const userOrders = await orders.find({ uid: req.user._id });
+
+        // Devolver las órdenes como respuesta
+        return res.json(userOrders);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 
 // Endpoint para eliminar una orden por ID
 ordersRouter.delete("/:oid", async (req, res, next) => {
