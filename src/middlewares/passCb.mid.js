@@ -10,10 +10,10 @@ export default (strategy) => {
             if (!user) {
                 return res.json({
                     statusCode: info.statusCode || 401,
-                    message: "Already Signed Out" || info.toString(),
+                    message: info.message || info.toString(),
                 });
             }
-            req.user = user;
+            res.user = user;
             return next();
         })(req, res, next);
     };

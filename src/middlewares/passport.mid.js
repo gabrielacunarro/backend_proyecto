@@ -18,7 +18,7 @@ passport.use("register", new LocalStrategy(
                 let user = await users.create(data)
                 return done(null,user)
             }else{
-                return done(null, false, {messages: "Already exist"})
+                return done(null, false, {message: "Already exist"})
             }
         } catch (error) {
             return done(error)

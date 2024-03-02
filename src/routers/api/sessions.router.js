@@ -21,12 +21,7 @@ sessionsRouter.post("/register", has8char, passCbMid("register"), async (req, re
 //login
 sessionsRouter.post("/login", passCbMid("login"), async (req, res, next) => {
     try {
-
-                // Suponiendo que el rol del usuario está disponible en req.user.role después de la autenticación
-                const { role } = req.user;
-
-                // Establecer el rol del usuario en la sesión
-                req.session.role = role;
+        
         return res.cookie("token", req.token, {
             maxAge: 60 * 60 * 24 * 7, httpOnly: true
         }).json({
@@ -102,5 +97,6 @@ sessionsRouter.post("/", passCbMid("jwt"), async (req, res, next) => {
         return next(error);
     }
 });
+
 
 export default sessionsRouter;
