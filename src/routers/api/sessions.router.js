@@ -26,7 +26,8 @@ sessionsRouter.post("/login", passCbMid("login"), async (req, res, next) => {
             maxAge: 60 * 60 * 24 * 7, httpOnly: true
         }).json({
             statusCode: 200,
-            message: "Logged in!"
+            message: "Logged in!",
+
         });
     } catch (error) {
         return next(error);

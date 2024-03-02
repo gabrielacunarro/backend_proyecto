@@ -80,20 +80,24 @@ passport.use("google",
 );
 passport.use("jwt", new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies["token"]]),
-    secretOrKey: SECRET
-}, async (payload, done) => {
+    secretOrKey: SECRET,
+    passReqToCallback: true 
+}, async (req, payload, done) => { 
     try {
-        const user = await users.readByEmail(payload.email)
+        const user = await users.readByEmail(payload.email);
         if (user) {
-            user.password = null
-            return done(null, user)
+            if (req && req.session) {
+                req.session.role = user.role;
+            }
+            user.password = null;
+            return done(null, user);
         } else {
-            return done(null, false)
+            return done(null, false);
         }
     } catch (error) {
-        return done(error)
+        return done(error);
     }
-}))
+}));
 
 
 export default passport;

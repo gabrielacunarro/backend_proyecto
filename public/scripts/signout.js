@@ -47,12 +47,15 @@ fetch("/api/sessions/", { method: "POST" })
                 signoutButton.parentNode.removeChild(signoutButton);
             }
         }
+
         if (res.session.role === 1) {
+            // Ocultar botones que no necesita un usuario común
             const ordersButton = document.querySelector("#ordersbtn");
             if (ordersButton) {
                 ordersButton.style.display = "none";
             }
         } else if (res.session.role === 0) {
+            // Ocultar botones que no necesita un administrador
             const formButton = document.querySelector("#formbtn");
             if (formButton) {
                 formButton.style.display = "none";

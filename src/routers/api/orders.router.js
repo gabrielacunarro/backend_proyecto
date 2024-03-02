@@ -1,11 +1,11 @@
 import { orders, users } from "../../data/mongo/manager.mongo.js";
 import { Router } from "express";
-import passcb from "../../middlewares/passCb.mid.js"
+import passCbMid from "../../middlewares/passCb.mid.js"
 
 const ordersRouter = Router();
 
 // Endpoint para crear una orden
-ordersRouter.post("/", passcb("jwt"), async (req, res, next) => {
+ordersRouter.post("/", passCbMid("jwt"), async (req, res, next) => {
     try {
         if (!req.user || req.user.role !== 0) {
             return res.status(403).json({ message: "You do not have permission to create orders" });
@@ -57,8 +57,6 @@ ordersRouter.get("/total/:uid", async (req, res, next) => {
         next(error);
     }
 });
-
-
 
 // Endpoint para eliminar una orden por ID
 ordersRouter.delete("/:oid", async (req, res, next) => {
