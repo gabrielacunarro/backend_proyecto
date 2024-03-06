@@ -16,9 +16,13 @@ selector.addEventListener("click", async (e) => {
         }
         let response = await fetch("/api/sessions/register", opts);
         response = await response.json();
+        if (response.statusCode === 201) {
+            alert(response.message)
+            window.location.href = "/sessions/login";
+        } else {
+            alert(response.message)
+        }
 
-        alert(response.message)
-        window.location.href = "/sessions/login";
     } catch (error) {
         alert(error.message);
     }

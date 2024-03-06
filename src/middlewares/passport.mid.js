@@ -99,5 +99,4 @@ passport.use("jwt", new JwtStrategy({
     }
 }));
 
-
 export default passport;

@@ -6,11 +6,11 @@ export default (req, res, next) => {
         const userData = verifyToken(token);
         if (userData) {
             return next();
-        } else {
-            const error = new Error("Bad auth from middleware");
-            error.statusCode = 401;
-            throw error;
         }
+        const error = new Error("Bad auth from middleware");
+        error.statusCode = 401;
+        throw error;
+
     } catch (error) {
         return next(error);
     }

@@ -36,7 +36,6 @@ productsRouter.get("/", async (req, res, next) => {
             lean: true
         }
         const filter = {}
-        console.log(req.query.title)
         if (req.query.title) {
             filter.title = new RegExp(req.query.title.trim(), 'i')
         }
