@@ -1,17 +1,32 @@
-<main>
-    <h1>Eleva tu estilo con Essence Selecto</h1>
-    <h2> Hasta 6 cuotas sin interés!</h2>
-    <div class="d-flex flex-wrap justify-content-evenly custom-margin">
-        {{#each productList}}
-        <div class="card" style="width: 18rem;">
-            <img src="{{this.photo}}" class="card-img-top" alt="{{this.name}}">
-            <div class="card-body">
-                <h5 class="card-title">{{this.title}}</h5>
-                <p class="card-text">{{this.description}}</p>
-                <a href="#" class="btn btn-primary">Ver más</a>
-            </div>
+<main class="flex-grow-1 w-100 d-flex flex-column">
+    <section id="background">
+        <h1 class="title">Eleva tu estilo con Essence Selecto</h1>
+    </section>
+    <h2 class="subtitle mt-4 mb-2 text-center">Nuestros perfumes</h2>
+    <span class="m-auto d-flex justify-content-end align-items-center">
+        <div class="input-group" style="width: 300px;">
+            <input id="text" type="text" class="form-control rounded-end" placeholder="Buscar..." />
+            <button id="search" class="btn btn- rounded-start" type="button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </span>
+    <section id="perfumes" class="d-flex flex-wrap justify-content-evenly w-100 mt-2 mb-4">
+        {{#each products}}
+        <div class="card m-2 anchor" style="width: 360px">
+            <img src="{{this.photo}}" style="height: 200px" class="card-img-top object-fit-cover"
+                alt="{{this.title}}" />
+            <h5 class="p-2 text-center card-title">{{this.title}}</h5>
+            <p class="p-2 text-center card-description" style="font-size: 14px; margin-top: 0;">{{this.description}}</p>
+            <p class="p-2 text-center card-price">Precio: ${{this.price}}</p>
+            <p class="p-2 text-center card-stock">Stock: {{this.stock}}</p>
         </div>
         {{/each}}
-    </div>
-</main>
 
+    </section>
+    <span class="w-100 d-flex justify-content-center">
+        <i id="prev" class="fas fa-arrow-left btn btn- fs-5 m-4 mt-0" style="font-size: 24px; cursor: pointer;"></i>
+        <i id="next" class="fas fa-arrow-right btn btn- fs-5 m-4 mt-0" style="font-size: 24px; cursor: pointer;"></i>
+    </span>
+</main>
+<script src="/scripts/index.js"></script>

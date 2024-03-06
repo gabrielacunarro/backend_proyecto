@@ -5,7 +5,7 @@ const collection = "products" // en plural, en minuscula y descriptivo
 const schema = new Schema({
     title: { type: String, required: true, index: true },
     description: { type: String },
-    photo: { type: String, default: "ver" },
+    photo: { type: String, default: "https://i.imgur.com/mREdOOd.png" },
     price: { type: Number, default: 10 },
     stock: { type: Number, default: 50 }
 

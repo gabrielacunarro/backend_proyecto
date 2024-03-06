@@ -1,9 +1,9 @@
 <main>
     <h1>User Registration</h1>
-    <form action="/auth/register" method="post" class="w-50 m-auto my-5">
+    <form method="post" class="w-50 m-auto my-5">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+            <input type="text" class="form-control" id="name" name="name">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -11,7 +11,7 @@
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password" required clear>
         </div>
         <div class="mb-3">
             <label for="age" class="form-label">Age</label>
@@ -19,10 +19,16 @@
         </div>
         <div class="mb-3">
             <label for="photo" class="form-label">Photo</label>
-            <input type="url" class="form-control" id="photo" name="photo" required>
+            <input type="url" class="form-control" id="photo" name="photo">
         </div>
-        <button id="registerButton" type="button" class="w-100 btn btn-primary">Register</button>
+        <button id="register" type="submit" class="w-100 btn btn-primary">Register</button>
+        <div class="row">
+            <div class="col">
+                <button id="google" class="w-100 btn btn-danger" onclick="loginWithGoogle()"><i
+                        class="fab fa-google"></i></button>
+            </div>
+        </div>
+        </div>
     </form>
 </main>
-
-
+<script src="/scripts/register.js"></script>

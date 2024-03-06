@@ -1,0 +1,34 @@
+<main>
+    <h1>Órdenes</h1>
+    <div class="order-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Productos</th>
+                    <th>Cantidad</th> <!-- Nueva columna -->
+                    <th>Estado</th> <!-- Nueva columna -->
+                </tr>
+            </thead>
+            <tbody id="orders-body">
+                {{#each orders}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td>{{this.createdAt}}</td>
+                    <td>
+                        {{#each this.docs}}
+                        <p>{{this.pid.title}} - {{this.pid.price}}</p>
+                        {{/each}}
+                    </td>
+                    <td>{{this.quantity}}</td> <!-- Nueva celda -->
+                    <td>{{this.state}}</td> <!-- Nueva celda -->
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+
+<script src="/scripts/orders.js"></script>

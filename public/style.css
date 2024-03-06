@@ -1,3 +1,4 @@
+/* Estilos generales */
 * {
     margin: 0;
     padding: 0;
@@ -5,7 +6,7 @@
     text-decoration: none;
 }
 
-/* fondo pag principal y scrollbar*/
+/* Fondo página principal y scrollbar */
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin: 0;
@@ -21,7 +22,7 @@ body::-webkit-scrollbar {
     display: none;
 }
 
-/*barra de navegacion BS*/
+/* Barra de navegación */
 .navbar {
     position: sticky;
     top: 0;
@@ -50,51 +51,67 @@ body::-webkit-scrollbar {
     background-color: #fff;
 }
 
-
 .navbar-brand img {
     width: 50px;
     height: auto;
 }
 
-.custom-margin {
-    margin: 100px 10px;
+/* Contenido principal */
+main {
+    text-align: center;
 }
 
-/* titulo de web */
+/* Título de la página */
 h1 {
-    font-size: 36px;
+    font-size: 35px;
     font-weight: bold;
-    margin: 20px 0;
+    margin: 0;
     color: #333;
     font-style: oblique;
     background-color: #f8f8f8;
-    padding: 10px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-h2 {
-    font-size: 18px;
-    font-style: italic;
-}
-
-/* estilos de las cards */
-
+/* Tarjetas (Cards) */
 .card {
     margin: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease;
 }
 
+.card img {
+    width: 50%;
+    height: auto;
+    object-fit: inherit;
+    margin: 0 auto;
+}
+
+
 .card:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* estilos main, form y botones */
-
-main {
-    text-align: center;
+/* Botones */
+.card button,
+a.btn.btn-primary {
+    max-width: 40%;
+    background-color: #606060;
+    transition: background-color 0.3s ease-in-out;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #fff;
+    margin-bottom: 10px;
 }
 
+.card button:hover,
+a.btn.btn-primary:hover {
+    background-color: #333;
+}
+
+/* Formulario */
 form {
     max-width: 500px;
     margin: auto;
@@ -116,18 +133,90 @@ input {
     box-sizing: border-box;
 }
 
-#registerButton, #loginButton, #newEvent {
+/* Botones de formulario */
+#register, #login, #create, #google  {
     margin-top: 35px;
-    max-width: 40%;
+    max-width: 50%;
     background-color: #606060;
     transition: background-color 0.3s ease-in-out;
+    outline: none !important;
+    border: 1px solid transparent !important;
 }
 
-#registerButton:hover, #loginButton:hover, #newEvent:hover {
+#register:hover, #login:hover, #create:hover, #google:hover {
     background-color: #333;
 }
 
-/* Estilos del footer */
+/* Estilos para el botón de búsqueda (lupa) */
+.input-group button {
+    border-radius: 0;
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Elimina el borde */
+    color: #606060; /* Color de la lupa */
+    transition: color 0.3s ease-in-out; /* Transición para el cambio de color */
+    padding: 0; /* Elimina el relleno del botón */
+    width: 40px; /* Establece el ancho del botón */
+    height: 40px; /* Establece la altura del botón */
+    font-size: 16px; /* Ajusta el tamaño del texto del botón según sea necesario */
+    line-height: 1; /* Ajusta la altura de la línea de texto dentro del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre la lupa */
+    margin-left: -40px; /* Ajusta el margen izquierdo para alinear con el campo de búsqueda */
+}
+
+.input-group button:hover {
+    color: #333; /* Cambia el color de la lupa al pasar el cursor sobre ella */
+}
+
+
+/* Estilos para las flechas */
+#prev,
+#next {
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Elimina el borde */
+    color: #606060; /* Color de la flecha */
+    transition: color 0.3s ease-in-out; /* Transición para el cambio de color */
+    padding: 0; /* Elimina el relleno del botón */
+    width: 40px; /* Establece el ancho del botón */
+    height: 40px; /* Establece la altura del botón */
+    font-size: 16px; /* Ajusta el tamaño del texto del botón según sea necesario */
+    line-height: 1; /* Ajusta la altura de la línea de texto dentro del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre las flechas */
+    border-radius: 0; /* Establece el borde del botón como cuadrado */
+    margin: 0 10px; /* Ajusta el margen entre las flechas según sea necesario */
+}
+
+#prev:hover,
+#next:hover {
+    color: #333; /* Cambia el color de la flecha al pasar el cursor sobre ella */
+}
+
+#prev,
+#next {
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Elimina el borde */
+    color: #606060; /* Color de la flecha */
+    transition: color 0.3s ease-in-out; /* Transición para el cambio de color */
+    padding: 0; /* Elimina el relleno del botón */
+    width: 40px; /* Establece el ancho del botón */
+    height: 40px; /* Establece la altura del botón */
+    font-size: 16px; /* Ajusta el tamaño del texto del botón según sea necesario */
+    line-height: 1; /* Ajusta la altura de la línea de texto dentro del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre las flechas */
+    border-radius: 0; /* Establece el borde del botón como cuadrado */
+    margin: 0 10px; /* Ajusta el margen entre las flechas según sea necesario */
+}
+
+/* Estilos para el subtítulo */
+.subtitle {
+    font-size: 32px; /* Tamaño de fuente más pequeño */
+    margin-top: 2rem; /* Margen superior */
+    margin-bottom: 1rem; /* Margen inferior */
+    text-align: center; /* Alinear al centro */
+}
+
+
+
+/* Pie de página */
 .footer {
     position: fixed; 
     bottom: 0; 
@@ -150,3 +239,4 @@ input {
 .red-social a:hover {
     color: #b3b3b3;
 }
+
