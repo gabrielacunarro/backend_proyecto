@@ -12,14 +12,14 @@ fetch("/api/sessions/", { method: "POST" })
             }
             const signoutButton = document.querySelector("#signout");
             signoutButton.addEventListener("click", async (event) => {
-                event.preventDefault(); // Evitar que el enlace siga su comportamiento predeterminado
+                event.preventDefault(); 
                 try {
                     const token = localStorage.getItem("token");
                     const opts = {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": `Bearer ${token}` // Agregar el token de autenticación a las cabeceras
+                            "Authorization": `Bearer ${token}` 
                         },
                     };
                     let response = await fetch("/api/sessions/signout", opts);
@@ -48,13 +48,13 @@ fetch("/api/sessions/", { method: "POST" })
             }
         }
 
-        if (res.session.role === 1) {
+        if (res.session && res.session.role === 1) {
             // Ocultar botones que no necesita un usuario común
             const ordersButton = document.querySelector("#ordersbtn");
             if (ordersButton) {
                 ordersButton.style.display = "none";
             }
-        } else if (res.session.role === 0) {
+        } else if (res.session && res.session.role === 0) {
             // Ocultar botones que no necesita un administrador
             const formButton = document.querySelector("#formbtn");
             if (formButton) {
@@ -63,4 +63,3 @@ fetch("/api/sessions/", { method: "POST" })
         }
         
     });
-

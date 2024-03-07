@@ -12,7 +12,7 @@ import MongoStore from "connect-mongo";
 import sessionsViewRouter from './src/routers/views/sessions.view.js';
 import formViewRouter from "./src/routers/views/form.view.js";
 import ordersViewRouter from "./src/routers/views/orders.view.js";
-import router from "./src/routers/index.router.js";
+import IndexRouter from "./src/routers/index.router.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
 import dbConnection from "./src/utils/db.js";
@@ -79,7 +79,8 @@ server.use(express.static(__dirname + "/public"));
 server.use(morgan("dev"));
 
 //routers
-server.use('/', router);
+const router = new IndexRouter ()
+server.use('/', router.getRouter());
 server.use(errorHandler);
 server.use(pathHandler); // siempre a lo ultimo
 
