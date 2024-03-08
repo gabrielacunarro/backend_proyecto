@@ -25,7 +25,7 @@ fetch("/api/sessions/", { method: "POST" })
                     let response = await fetch("/api/sessions/signout", opts);
                     response = await response.json();
                     if (response.statusCode === 200) {
-                        alert(response.message);
+                        alert("Signout!");
                         localStorage.removeItem("token");
                         location.replace("/");
                     }
@@ -48,18 +48,18 @@ fetch("/api/sessions/", { method: "POST" })
             }
         }
 
-        if (res.session && res.session.role === 1) {
+        if (res.role === 1) {
             // Ocultar botones que no necesita un usuario común
             const ordersButton = document.querySelector("#ordersbtn");
             if (ordersButton) {
                 ordersButton.style.display = "none";
             }
-        } else if (res.session && res.session.role === 0) {
+        } else if (res.role === 0) {
             // Ocultar botones que no necesita un administrador
             const formButton = document.querySelector("#formbtn");
             if (formButton) {
                 formButton.style.display = "none";
             }
         }
-        
+
     });

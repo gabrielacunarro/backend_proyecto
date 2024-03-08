@@ -7,7 +7,7 @@ import CustomRouter from "../CustomRouter.js";
 export default class SessionsRouter extends CustomRouter {
     init() {
         //register
-        this.create("/register",["PUBLIC"] ,has8char, passCbMid("register"), async (req, res, next) => {
+        this.create("/register", ["PUBLIC"], has8char, passCbMid("register"), async (req, res, next) => {
             try {
                 return res.success201("Registered!");
             } catch (error) {
@@ -16,20 +16,23 @@ export default class SessionsRouter extends CustomRouter {
         })
 
         //login
-        this.create("/login", ["USER"],passCbMid("login"), async (req, res, next) => {
+        this.create("/login", ["PUBLIC"], passCbMid("login"), async (req, res, next) => {
             try {
 
                 return res.cookie("token", req.token, {
                     maxAge: 60 * 60 * 24 * 7, httpOnly: true
-                }).success200("Logged in!");
+                }).json({
+                    statusCode: 200,
+                    message: "Logged in!",
+
+                });
             } catch (error) {
                 return next(error);
             }
         });
 
-
         //signout
-        this.create("/signout", passCbMid("jwt"), async (req, res, next) => {
+        this.create("/signout", ["USER", "ADMIN", "PREM"], passCbMid("jwt"), async (req, res, next) => {
             try {
                 return res.clearCookie("token").success200("Signed out!");
             } catch (error) {
@@ -69,15 +72,14 @@ export default class SessionsRouter extends CustomRouter {
             }
         });
 
-        this.create("/", passCbMid("jwt"), async (req, res, next) => {
+        this.create("/", ["USER", "ADMIN", "PREM"], passCbMid("jwt"), async (req, res, next) => {
             try {
-                return res.success200("Logged in successfully", { session: { role: req.session.role } });
+                const role = req.user.role;
+                return res.success200("Logged in successfully", { session: { role } });
             } catch (error) {
                 return next(error);
             }
         });
-
     }
-
 }
 
