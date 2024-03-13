@@ -77,7 +77,6 @@ export default class SessionsRouter extends CustomRouter {
             }
         });
 
-
     }
 
 }

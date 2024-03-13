@@ -8,9 +8,9 @@ export default (strategy) => {
                 return next(error);
             }
             if (!user) {
-                return res.json({
-                    statusCode: info.statusCode || 401,
-                    message: info.message || info.toString(),
+                return res.status(401).json({
+                    statusCode: 401,
+                    message: info.message || "Unauthorized",
                 });
             }
             req.user = user;

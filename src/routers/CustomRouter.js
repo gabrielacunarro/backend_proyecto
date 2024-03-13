@@ -63,7 +63,7 @@ export default class CustomRouter {
                 return res.error403();
             }
         } catch (error) {
-            return res.error400("Bad Auth by token");
+            return res.error401();
         }
     };
 
