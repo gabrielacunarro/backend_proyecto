@@ -69,9 +69,9 @@ export default class SessionsRouter extends CustomRouter {
             }
         });
 
-        this.create("/", ["USER", "ADMIN", "PREM"],passCbMid("jwt"), async (req, res, next) => {
+        this.create("/", ["USER", "ADMIN"],passCbMid("jwt"), async (req, res, next) => {
             try {
-                return res.success200("Logged in successfully", { session: { role: req.session.role } });
+                return res.success200({ session: { role: req.session.role } });
             } catch (error) {
                 return next(error);
             }
