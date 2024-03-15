@@ -8,7 +8,7 @@ import isAuth from "../../middlewares/isAuth.mid.js"
 export default class OrdersRouter extends CustomRouter {
     init() {
         // Endpoint para crear una orden
-        this.create("/", passCbMid("jwt"), async (req, res, next) => {
+        this.create("/", ["USER"],passCbMid("jwt"), async (req, res, next) => {
             try {
                 if (!req.user || req.user.role !== 0) {
                     return res.status(403).json({ message: "You do not have permission to create orders" });
@@ -25,7 +25,7 @@ export default class OrdersRouter extends CustomRouter {
 
         //Endpoint para obtener order
 
-        this.read("/", async (req, res, next) => {
+        this.read("/",["USER"], async (req, res, next) => {
             try {
                 const filter = {};
                 if (req.query.uid) {
@@ -39,7 +39,7 @@ export default class OrdersRouter extends CustomRouter {
         });
 
         // Endpoint para obtener el total a pagar de una orden por usuario
-        this.read("/total/:uid", async (req, res, next) => {
+        this.read("/total/:uid",["USER"], async (req, res, next) => {
             try {
                 const { uid } = req.params;
                 const report = await orders.report(uid);
@@ -52,7 +52,7 @@ export default class OrdersRouter extends CustomRouter {
         });
 
         // Ruta para obtener las órdenes del usuario logueado
-        this.read("/", isAuth, async (req, res, next) => {
+        this.read("/", ["USER"], async (req, res, next) => {
             try {
 
                 if (!req.user) {
@@ -70,7 +70,7 @@ export default class OrdersRouter extends CustomRouter {
 
 
         // Endpoint para eliminar una orden por ID
-        this.destroy("/:oid", async (req, res, next) => {
+        this.destroy("/:oid",["USER"], async (req, res, next) => {
             try {
                 const { oid } = req.params;
                 const one = await orders.destroy(oid);
@@ -86,7 +86,7 @@ export default class OrdersRouter extends CustomRouter {
         });
 
         // Endpoint para actualizar una orden por ID
-        this.update("/:oid", async (req, res, next) => {
+        this.update("/:oid",["USER"], async (req, res, next) => {
             try {
                 const { oid } = req.params;
                 const { quantity, state } = req.body;
