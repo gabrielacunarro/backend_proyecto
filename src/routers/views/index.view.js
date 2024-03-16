@@ -6,9 +6,9 @@ import sessionsRouter from "../views/sessions.view.js";
 
 export default class ViewsRouter extends CustomRouter {
     init() {
-        this.router.use("/products", productsRouter);
-        this.router.use("/orders", OrdersViewRouter);
-        this.router.use("/sessions", sessionsRouter);
+        this.use("/products", productsRouter);
+        this.use("/orders", OrdersViewRouter);
+        this.use("/sessions", sessionsRouter);
         this.read("/", ["PUBLIC"],async (req, res, next) => {
             try {
                 const orderAndPaginate = {
