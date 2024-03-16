@@ -1,16 +1,23 @@
-import { Router } from "express"
-import usersRouter from "./users.router.js"
-import productsRouter from "./products.router.js"
-import ordersRouter from "./orders.router.js"
-import sessionsRouter from "./sessions.router.js"
+import UsersRouter from "./users.router.js"
+import ProductsRouter from "./products.router.js"
+import OrdersRouter from "./orders.router.js"
+import SessionsRouter from "./sessions.router.js"
 import passport from "../../middlewares/passport.mid.js"
+import CustomRouter from "../CustomRouter.js"
 
-const apiRouter = Router()
+const product = new ProductsRouter();
+const order = new OrdersRouter();
+const session = new SessionsRouter();
+const user = new UsersRouter();
 
-//definir los enrutadores de los recursos
-apiRouter.use("/users", usersRouter)
-apiRouter.use("/products", productsRouter)
-apiRouter.use("/orders", passport.authenticate("jwt",{session: false, failureRedirect: "/api/sessions/badauth"}), ordersRouter) // proteje todas las rutas de ordenes
-apiRouter.use("/sessions", sessionsRouter)
+export default class ApiRouter extends CustomRouter {
+    init() {
+        this.router.use("/users", user.getRouter())
+        this.router.use("/products", product.getRouter())
+        this.router.use("/orders", passport.authenticate("jwt", { session: false, failureRedirect: "/api/sessions/badauth" }), order.getRouter())
+        this.router.use("/sessions", session.getRouter())
+    }
+}
 
-export default apiRouter;
+
+

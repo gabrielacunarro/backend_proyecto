@@ -12,11 +12,13 @@ loginButton.addEventListener("click", async (e) => {
             body: JSON.stringify(data)
         };
         let response = await fetch("/api/sessions/login", opts);
-        if (response.ok) {
-            window.location.href = "/"; 
+        if (!response.ok) {
+            alert("Login failed"); 
+            window.location.href = "/sessions/login"; 
+
         } else {
-            const errorData = await response.json();
-            alert(errorData.message || "Login failed"); 
+            alert("Log in!")
+            window.location.href = "/"; 
         }
     } catch (error) {
         console.log(error);
