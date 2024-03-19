@@ -10,6 +10,7 @@ import expressSession from "express-session"
 import sessionFileStore from "session-file-store"
 import MongoStore from "connect-mongo";
 import sessionsViewRouter from './src/routers/views/sessions.view.js';
+import cors from "cors"
 import formViewRouter from "./src/routers/views/form.view.js";
 import ordersViewRouter from "./src/routers/views/orders.view.js";
 import IndexRouter from "./src/routers/index.router.js";
@@ -73,14 +74,18 @@ server.use(expressSession({
     })
 }))
 
-
+server.use(
+    cors({
+        origin: true,
+        credentials: true,
+    }))
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(__dirname + "/public"));
 server.use(morgan("dev"));
 
 //routers
-const router = new IndexRouter ()
+const router = new IndexRouter()
 server.use('/', router.getRouter());
 server.use(errorHandler);
 server.use(pathHandler); // siempre a lo ultimo
