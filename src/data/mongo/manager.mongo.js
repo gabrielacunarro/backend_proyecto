@@ -16,7 +16,8 @@ class MongoManager {
         } catch (error) {
             throw error;
         }
-    }
+    };
+
     async read(obj) {
         try {
             let { filter, orderAndPaginate } = obj || {};// desestructurar, obj es un objeto con 2 propiedades filter = consulta para el filtro y sort = con el obj de ordenamiento
@@ -32,7 +33,8 @@ class MongoManager {
         } catch (error) {
             throw error;
         }
-    }
+    };
+    
     async readOne(id) {
         try {
             const one = await this.model.findById(id)
@@ -114,8 +116,4 @@ class MongoManager {
 
 }
 
-const users = new MongoManager(User)
-const products = new MongoManager(Product)
-const orders = new MongoManager(Order)
-const comments = new MongoManager(Comment)
-export { users, products, orders, comments }
+export default MongoManager;

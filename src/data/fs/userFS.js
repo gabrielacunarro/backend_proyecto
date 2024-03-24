@@ -26,11 +26,6 @@ class UserManager {
         return idGenerator.digest('hex').slice(0, 8);
     }
 
-    #generateWarningMessage(missingProps) {
-        const missingMessages = missingProps.map(prop => `The user has not been created as the "${prop}" property is missing.`);
-        return `Warning: ${missingMessages.join(". ")}`;
-    }
-
     async checkAndCreateDataFolder() {
         try {
             // Intenta acceder a la carpeta
@@ -59,20 +54,23 @@ class UserManager {
             UserManager.#users.push(user);
 
             await this.saveUsers();
+
+            return id; // Devuelve el ID del usuario creado
         } catch (error) {
             console.error(`Error creating user: ${error.message}`);
-            throw {
-                statusCode: 500,
-                response: {
-                    message: `Error creating user: ${error.message}`,
-                },
-            };
+            throw error;
         }
     }
 
-    read() {
+    read(obj) {
         try {
-            return UserManager.#users;
+            const { filter } = obj || {};
+            // Aplica el filtro y devuelve la lista de usuarios
+            return UserManager.#users.filter(user => {
+                // Implementa tu lógica de filtrado aquí
+                // por ahora, devuelve todos los usuarios sin filtrar
+                return true;
+            });
         } catch (error) {
             console.error(`Error reading users: ${error.message}`);
             throw {
@@ -86,13 +84,7 @@ class UserManager {
 
     readOne(id) {
         try {
-            const user = UserManager.#users.find(user => user.id === id);
-
-            if (!user) {
-                console.log(`User with ID ${id}: not found!`);
-            }
-
-            return user || null;
+            return UserManager.#users.find(user => user.id === id) || null;
         } catch (error) {
             console.error(`Error reading user: ${error.message}`);
             throw {
@@ -167,24 +159,19 @@ class UserManager {
 
     update(id, data) {
         try {
-            if (!UserManager.#users || UserManager.#users.length === 0) {
-                return false;
-            }
-
             const userIndex = UserManager.#users.findIndex(user => user.id === id);
 
             if (userIndex !== -1) {
-
                 UserManager.#users[userIndex] = { ...UserManager.#users[userIndex], ...data };
                 this.saveUsers().then(() => {
                     console.log(`User with ID ${id} has been successfully updated.`);
                 }).catch(error => {
                     console.error(`Error saving users after updating user: ${error.message}`);
                 });
-                return true;
+                return UserManager.#users[userIndex]; // Devuelve los datos del usuario actualizados
             }
 
-            return false;
+            return null;
         } catch (error) {
             console.error(`Error updating user: ${error.message}`);
             throw {
@@ -195,6 +182,7 @@ class UserManager {
             };
         }
     }
+
     readByEmail(email) {
         try {
             const lowercasedEmail = email.toLowerCase();
@@ -209,6 +197,7 @@ class UserManager {
 
 const usersManager = new UserManager();
 export default usersManager;
+
 
 
 

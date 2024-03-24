@@ -4,7 +4,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt"
 import { createHash, verifyHash } from "../utils/hash.util.js";
 import { createToken } from "../utils/token.util.js";
-import { users } from "../data/mongo/manager.mongo.js"
+import  users  from "../data/mongo/users.mongo.js"
 const { GOOGLE_ID, GOOGLE_CLIENT, SECRET } = process.env
 
 passport.use("register", new LocalStrategy(

@@ -1,5 +1,5 @@
 import CustomRouter from "../CustomRouter.js";
-import { products } from "../../data/mongo/manager.mongo.js";
+import  products  from "../../data/mongo/products.mongo.js";
 import productsRouter from "../views/products.view.js";
 import OrdersViewRouter from "../views/orders.view.js";
 import sessionsRouter from "../views/sessions.view.js";

@@ -163,4 +163,5 @@ class MemoryOrdersManager {
 
 const memoryOrdersManager = new MemoryOrdersManager();
 
+export default memoryOrdersManager;
 

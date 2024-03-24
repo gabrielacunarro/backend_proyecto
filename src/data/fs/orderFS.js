@@ -27,7 +27,7 @@ class OrdersManager {
         }
     }
 
-    async createOrder(data) {
+    async create(data) {
         try {
             const id = this.#generateOrderId();
             const order = {
@@ -38,92 +38,119 @@ class OrdersManager {
                 state: data.state,
             };
 
-            const orders = await this.loadOrders();
+            const orders = await this.load();
             orders.push(order);
 
-            await this.saveOrders(orders);
+            await this.save(orders);
 
+            return id;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+    async read() {
+        try {
             return {
-                statusCode: 201,
+                statusCode: 200,
                 response: {
-                    id: id,
-                    message: "Order has been successfully created.",
+                    data: await this.load(),
                 },
             };
         } catch (error) {
-            console.error(`Error creating order: ${error.message}`);
+            console.error(`Error reading orders: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
-                    message: `Error creating order: ${error.message}`,
+                    message: `Error reading orders: ${error.message}`,
                 },
             };
         }
     }
 
-    async loadOrders() {
+    async readOne(id) {
         try {
-            const data = await fs.readFile(OrdersManager.#ordersFile, 'utf8');
-            return JSON.parse(data) || [];
-        } catch (error) {
-            if (error.code === 'ENOENT' || error.message === 'Unexpected end of JSON input') {
-                return [];
-            } else {
-                console.error('Error loading orders:', error.message);
-                throw error;
-            }
-        }
-    }
+            const orders = await this.load();
+            const order = orders.find(order => order.id === id);
 
-    async saveOrders(orders) {
-        try {
-            const data = JSON.stringify(orders, null, 2);
-            await fs.writeFile(OrdersManager.#ordersFile, data, { encoding: 'utf8' });
-        } catch (error) {
-            console.error('Error saving orders:', error.message);
-            throw error;
-        }
-    }
-
-    async readOrders() {
-        try {
-            return await this.loadOrders();
-        } catch (error) {
-            console.error(`Error reading orders: ${error.message}`);
-            throw error;
-        }
-    }
-
-    async readOrderById(oid) {
-        try {
-            const orders = await this.loadOrders();
-            return orders.find(order => order.id === oid) || null;
-        } catch (error) {
-            console.error(`Error reading order by ID: ${error.message}`);
-            throw error;
-        }
-    }
-
-    async updateOrder(oid, quantity, state) {
-        try {
-            const orders = await this.loadOrders();
-            const orderIndex = orders.findIndex(order => order.id === oid);
-
-            if (orderIndex !== -1) {
-                orders[orderIndex].quantity = quantity;
-                orders[orderIndex].state = state;
-                await this.saveOrders(orders);
+            if (order) {
                 return {
                     statusCode: 200,
                     response: {
-                        message: `Order with ID ${oid} has been successfully updated in file system.`,
+                        data: order,
                     },
                 };
             } else {
                 return {
                     statusCode: 404,
                     response: {
-                        message: `Order with ID ${oid} not found in file system. No order has been updated.`,
+                        message: `Order with ID ${id} not found.`,
+                    },
+                };
+            }
+        } catch (error) {
+            console.error(`Error reading order: ${error.message}`);
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error reading order: ${error.message}`,
+                },
+            };
+        }
+    }
+
+    async destroy(id) {
+        try {
+            const orders = await this.load();
+            const filteredOrders = orders.filter(order => order.id !== id);
+
+            if (orders.length !== filteredOrders.length) {
+                await this.save(filteredOrders);
+                return {
+                    statusCode: 200,
+                    response: {
+                        message: `Order with ID ${id} has been successfully deleted.`,
+                    },
+                };
+            } else {
+                return {
+                    statusCode: 404,
+                    response: {
+                        message: `Order with ID ${id} not found. No order has been deleted.`,
+                    },
+                };
+            }
+        } catch (error) {
+            console.error(`Error deleting order: ${error.message}`);
+            throw {
+                statusCode: 500,
+                response: {
+                    message: `Error deleting order: ${error.message}`,
+                },
+            };
+        }
+    }
+
+    async update(id, newData) {
+        try {
+            const orders = await this.load();
+            const orderIndex = orders.findIndex(order => order.id === id);
+
+            if (orderIndex !== -1) {
+                orders[orderIndex] = { ...orders[orderIndex], ...newData };
+                await this.save(orders);
+                return {
+                    statusCode: 200,
+                    response: {
+                        message: `Order with ID ${id} has been successfully updated.`,
+                    },
+                };
+            } else {
+                return {
+                    statusCode: 404,
+                    response: {
+                        message: `Order with ID ${id} not found. No order has been updated.`,
                     },
                 };
             }
@@ -138,40 +165,32 @@ class OrdersManager {
         }
     }
 
-    async destroyOrder(oid) {
+    async load() {
         try {
-            const orders = await this.loadOrders();
-            const orderIndex = orders.findIndex(order => order.id === oid);
-
-            if (orderIndex !== -1) {
-                orders.splice(orderIndex, 1);
-                await this.saveOrders(orders);
-                return {
-                    statusCode: 200,
-                    response: {
-                        message: `Order with ID ${oid} has been successfully deleted from file system.`,
-                    },
-                };
-            } else {
-                return {
-                    statusCode: 404,
-                    response: {
-                        message: `Order with ID ${oid} not found in file system. No order has been deleted.`,
-                    },
-                };
-            }
+            const data = await fs.readFile(OrdersManager.#ordersFile, 'utf8');
+            return JSON.parse(data) || [];
         } catch (error) {
-            console.error(`Error destroying order: ${error.message}`);
-            throw {
-                statusCode: 500,
-                response: {
-                    message: `Error destroying order: ${error.message}`,
-                },
-            };
+            if (error.code === 'ENOENT' || error.message === 'Unexpected end of JSON input') {
+                return [];
+            } else {
+                console.error('Error loading orders:', error.message);
+                throw error;
+            }
+        }
+    }
+
+    async save(orders) {
+        try {
+            const data = JSON.stringify(orders, null, 2);
+            await fs.writeFile(OrdersManager.#ordersFile, data, { encoding: 'utf8' });
+        } catch (error) {
+            console.error('Error saving orders:', error.message);
+            throw error;
         }
     }
 }
 
 const ordersManager = new OrdersManager();
 export default ordersManager;
+
 

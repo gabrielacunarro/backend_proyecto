@@ -1,4 +1,4 @@
-import { users } from "../data/mongo/manager.mongo.js"
+import  users  from "../data/mongo/users.mongo.js"
 import isValidPassUtils from "../utils/isValidPass.utils.js"
 
 async function isValidPass(req, res, next){

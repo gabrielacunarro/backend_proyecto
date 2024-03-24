@@ -1,0 +1,34 @@
+[
+  {
+    "id": "fcb03a2f",
+    "title": "Prueba 24/3",
+    "description": "xxxxxxxx",
+    "photo": "https://i.imgur.com/LkDwkKR.png",
+    "price": 50,
+    "stock": 2
+  },
+  {
+    "id": "ae3c29d4",
+    "title": "Prueba fs",
+    "description": "xxxxxxxx",
+    "photo": "https://i.imgur.com/LkDwkKR.png",
+    "price": 50,
+    "stock": 2
+  },
+  {
+    "id": "fad36ac3",
+    "title": "Prueba fs3",
+    "description": "xxxxxxxx",
+    "photo": "https://i.imgur.com/LkDwkKR.png",
+    "price": 50,
+    "stock": 2
+  },
+  {
+    "id": "d4e9c259",
+    "title": "Prueba dev4",
+    "description": "xxxxxxxx",
+    "photo": "https://i.imgur.com/LkDwkKR.png",
+    "price": 50,
+    "stock": 2
+  }
+]

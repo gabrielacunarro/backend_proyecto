@@ -16,7 +16,7 @@ class ProductManager {
     }
 
     #generateProductId() {
-        return crypto.randomBytes(4).toString('hex');
+        return crypto.randomBytes(12).toString('hex');
     }
 
     #generateWarningMessage(missingProps, title) {
@@ -55,7 +55,8 @@ class ProductManager {
                 description: data.description,
                 photo: data.photo,
                 price: data.price,
-                stock: data.stock
+                stock: data.stock,
+                date: data.date || new Date(),
             };
 
             const products = await this.loadProducts();
@@ -73,21 +74,30 @@ class ProductManager {
                 },
             };
         }
-    }
+    };
+
 
     async loadProducts() {
         try {
+            // Agrega un console.log para verificar que la función se esté ejecutando correctamente
+            console.log("Cargando productos desde el sistema de archivos (FS)...");
+
             const data = await fs.readFile(ProductManager.#productsFile, 'utf8');
+
+            // Agrega un console.log para verificar que el archivo se esté leyendo correctamente
+            console.log("Datos del archivo JSON leídos correctamente:", data);
+
             return JSON.parse(data) || [];
         } catch (error) {
             if (error.code === 'ENOENT' || error.message === 'Unexpected end of JSON input') {
                 return [];
             } else {
-                console.error('Error loading products:', error.message);
+                console.error('Error al cargar productos desde el sistema de archivos (FS):', error.message);
                 throw error;
             }
         }
     }
+
 
     async saveProducts(products) {
         try {
@@ -99,11 +109,35 @@ class ProductManager {
         }
     }
 
-    async read() {
+    async read({ filter, orderAndPaginate }) {
         try {
-            return await this.loadProducts();
+            let products = await this.loadProducts();
+            console.log("Productos cargados desde el sistema de archivos (FS):", products);
+
+            // Filtrar los productos si se proporciona un filtro
+            if (filter && filter.title) {
+                products = products.filter(product => product.title.includes(filter.title));
+            }
+
+            // Ordenar los productos si se proporciona un criterio de ordenamiento
+            if (orderAndPaginate && orderAndPaginate.sort === 'title') {
+                products.sort((a, b) => a.title.localeCompare(b.title));
+            }
+
+            // Paginar los productos si se proporcionan criterios de paginación
+            let totalCount = products.length;
+            if (orderAndPaginate && orderAndPaginate.page && orderAndPaginate.limit) {
+                const { page, limit } = orderAndPaginate;
+                const startIndex = (page - 1) * limit;
+                const endIndex = Math.min(startIndex + limit, totalCount);
+                products = products.slice(startIndex, endIndex);
+            }
+
+            return {
+                totalCount,
+                products
+            };
         } catch (error) {
-            console.error(`Error reading products: ${error.message}`);
             throw error;
         }
     }

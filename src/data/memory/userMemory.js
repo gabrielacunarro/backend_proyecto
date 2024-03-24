@@ -189,37 +189,6 @@ class UserManager {
             };
         }
     }
-    // Buscar usuario por email
-    readByEmail(email, next) {
-        try {
-            const user = this.#users.find(user => user.email === email);
-
-            if (user) {
-                return {
-                    statusCode: 200,
-                    response: {
-                        data: user,
-                    },
-                };
-            } else {
-                return {
-                    statusCode: 404,
-                    response: {
-                        message: `User with email ${email} not found.`,
-                    },
-                };
-            }
-        } catch (error) {
-            console.error(`Error reading user by email: ${error.message}`);
-            next(error);
-            return {
-                statusCode: 500,
-                response: {
-                    message: `Error reading user by email: ${error.message}`,
-                },
-            };
-        }
-    }
 
 }
 

@@ -1,10 +1,11 @@
+import crypto from 'crypto';
+
 class ProductManager {
     static #products = [];
 
     create(data) {
         const requiredProps = ["title", "photo", "price", "stock"];
 
-        // Verifico si están todas las propiedades de cada producto, caso contrario, lanzo una advertencia/error de creación.
         const missingProps = requiredProps.filter(prop => !(prop in data));
 
         if (missingProps.length > 0) {
@@ -17,7 +18,7 @@ class ProductManager {
             };
         } else {
             try {
-                const id = ProductManager.#products.length === 0 ? 1 : ProductManager.#products[ProductManager.#products.length - 1].id + 1;
+                const id = crypto.randomBytes(8).toString('hex');
 
                 const product = {
                     id,
@@ -28,14 +29,9 @@ class ProductManager {
                 };
 
                 ProductManager.#products.push(product);
+                console.log(ProductManager.#products)
 
-                return {
-                    statusCode: 201,
-                    response: {
-                        id: id,
-                        message: "Product has been successfully created.",
-                    },
-                };
+                return id;
             } catch (error) {
                 console.error(`Error creating product: ${error.message}`);
                 throw {
@@ -48,28 +44,42 @@ class ProductManager {
         }
     }
 
-    read() {
+    // MEMORY
+    read(obj) {
+        console.log("BBBB")
         try {
-            return {
-                statusCode: 200,
-                response: {
-                    data: ProductManager.#products,
-                },
-            };
+            let { filter, orderAndPaginate } = obj || {};
+            let products = ProductManager.#products; // Acceso directo a los datos en memoria
+
+            // Aplicar filtro si se proporciona
+            if (filter && filter.title) {
+                products = products.filter(product => product.title.includes(filter.title));
+            }
+
+            // Aplicar ordenamiento si se proporciona
+            if (orderAndPaginate && orderAndPaginate.sort === 'title') {
+                products.sort((a, b) => a.title.localeCompare(b.title));
+            }
+
+            // Paginar si se proporciona
+            if (orderAndPaginate && orderAndPaginate.page && orderAndPaginate.limit) {
+                const { page, limit } = orderAndPaginate;
+                const startIndex = (page - 1) * limit;
+                const endIndex = page * limit;
+                products = products.slice(startIndex, endIndex);
+            }
+            console.log(products)
+            // Devolver la respuesta en el formato esperado por el controlador
+            return products
         } catch (error) {
-            console.error(`Error reading products: ${error.message}`);
-            throw {
-                statusCode: 500,
-                response: {
-                    message: `Error reading products: ${error.message}`,
-                },
-            };
+            throw error;
         }
     }
 
+
     readOne(id) {
         try {
-            const product = ProductManager.#products.find(product => product.id === Number(id));
+            const product = ProductManager.#products.find(product => product.id === id);
 
             if (product) {
                 return {
@@ -99,7 +109,7 @@ class ProductManager {
 
     destroy(id) {
         try {
-            const index = ProductManager.#products.findIndex(product => product.id === Number(id));
+            const index = ProductManager.#products.findIndex(product => product.id === id);
 
             if (index !== -1) {
                 ProductManager.#products.splice(index, 1);
@@ -130,10 +140,10 @@ class ProductManager {
 
     update(id, data) {
         try {
-            const index = ProductManager.#products.findIndex(product => product.id === Number(id));
+            const index = ProductManager.#products.findIndex(product => product.id === id);
 
             if (index !== -1) {
-                // Actualizar el producto con los nuevos datos
+
                 ProductManager.#products[index] = { ...ProductManager.#products[index], ...data };
                 return {
                     statusCode: 200,
@@ -163,4 +173,4 @@ class ProductManager {
 
 const productManager = new ProductManager();
 
-export default productManager
+export default productManager;
