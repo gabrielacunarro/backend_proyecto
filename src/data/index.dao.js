@@ -1,11 +1,10 @@
-import argsUtil from "../utils/args.util.js";
-console.log(argsUtil);
+import dbConnection from "../utils/db.js";
 
-const environment = "dev" //argsUtil.env;
+const persistence = process.env.persistence || "MONGO"
 
 let dao = {};
 
-switch (environment) {
+switch (persistence) {
     case "test":
         // Utiliza MEMORY
         console.log("MEMORY CONNECTED");
@@ -21,17 +20,11 @@ switch (environment) {
         dao = { products: productsFs };
         break;
 
-    case "prod":
-        // Utiliza MONGO
-        try {
-            //await dbConnection(); 
-            console.log("Connected to MongoDB");
-
-            const { default: productsMongo } = await import("./mongo/products.mongo.js");
-            dao = { products: productsMongo };
-        } catch (error) {
-            console.error("Error connecting to MongoDB:", error);
-        }
+    default:
+        dbConnection()
+        const { default: ProductsMongo } = await import("./mongo/products.mongo.js");
+        const { default: UsersMongo } = await import("./mongo/users.mongo.js")
+        dao = { products: ProductsMongo, users: UsersMongo }
         break;
 
 }

@@ -13,16 +13,16 @@ class ProductManager {
         const requiredProps = ["title", "photo", "price", "stock"];
         const missingProps = requiredProps.filter(prop => !(prop in data));
         return missingProps;
-    }
+    };
 
     #generateProductId() {
         return crypto.randomBytes(12).toString('hex');
-    }
+    };
 
     #generateWarningMessage(missingProps, title) {
         const missingMessages = missingProps.map(prop => `The product has not been created as the "${prop}" property is missing for "${title}".`);
         return `Warning: ${missingMessages.join(". ")}`;
-    }
+    };
 
     async checkAndCreateDataFolder() {
         const dataFolder = path.dirname(ProductManager.#productsFile);
@@ -36,7 +36,7 @@ class ProductManager {
                 console.error('Error creating folder:', mkdirError.message);
             }
         }
-    }
+    };
 
     async create(data) {
         try {
@@ -79,13 +79,7 @@ class ProductManager {
 
     async loadProducts() {
         try {
-            // Agrega un console.log para verificar que la función se esté ejecutando correctamente
-            console.log("Cargando productos desde el sistema de archivos (FS)...");
-
             const data = await fs.readFile(ProductManager.#productsFile, 'utf8');
-
-            // Agrega un console.log para verificar que el archivo se esté leyendo correctamente
-            console.log("Datos del archivo JSON leídos correctamente:", data);
 
             return JSON.parse(data) || [];
         } catch (error) {
@@ -96,8 +90,7 @@ class ProductManager {
                 throw error;
             }
         }
-    }
-
+    };
 
     async saveProducts(products) {
         try {
@@ -107,24 +100,20 @@ class ProductManager {
             console.error('Error saving products:', error.message);
             throw error;
         }
-    }
+    };
 
     async read({ filter, orderAndPaginate }) {
         try {
             let products = await this.loadProducts();
-            console.log("Productos cargados desde el sistema de archivos (FS):", products);
 
-            // Filtrar los productos si se proporciona un filtro
             if (filter && filter.title) {
                 products = products.filter(product => product.title.includes(filter.title));
             }
 
-            // Ordenar los productos si se proporciona un criterio de ordenamiento
             if (orderAndPaginate && orderAndPaginate.sort === 'title') {
                 products.sort((a, b) => a.title.localeCompare(b.title));
             }
 
-            // Paginar los productos si se proporcionan criterios de paginación
             let totalCount = products.length;
             if (orderAndPaginate && orderAndPaginate.page && orderAndPaginate.limit) {
                 const { page, limit } = orderAndPaginate;
@@ -140,7 +129,7 @@ class ProductManager {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     async readOne(id) {
         try {
@@ -150,7 +139,7 @@ class ProductManager {
             console.error(`Error reading product by ID: ${error.message}`);
             throw error;
         }
-    }
+    };
 
     async update(id, data) {
         try {
@@ -173,7 +162,7 @@ class ProductManager {
                 },
             };
         }
-    }
+    };
 
     async destroy(id) {
         try {
@@ -194,9 +183,9 @@ class ProductManager {
                 response: {
                     message: `Error destroying product: ${error.message}`,
                 },
-            };
+            }
         }
-    }
+    };
 }
 
 const productsManager = new ProductManager();

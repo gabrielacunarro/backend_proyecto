@@ -1,19 +1,18 @@
-import ProductDTO from "../dto/product.dto.js";
-import dao from "../data/index.dao.js";
+import CommentDTO from "../dto/comment.dto.js"
+import dao from "../data/index.dao.js"
 
-const { products } = dao;
+const { comments } = dao
 
-class ProductsRep {
+class CommentsRep {
     constructor() {
-        this.model = products;
+        this.model = comments;
     }
-
-    create = async (data) => await this.model.create(new ProductDTO(data));
+    create = async (data) => await this.model.create(new CommentDTO(data));
     read = async ({ filter, orderAndPaginate }) => await this.model.read({ filter, orderAndPaginate })
     readOne = async (id) => await this.model.readOne(id)
     update = async (id, data) => await this.model.update(id, data)
     destroy = async (id) => await this.model.destroy(id)
 }
 
-const repository = new ProductsRep();
-export default repository;
+const repository = new CommentsRep();
+export default repository

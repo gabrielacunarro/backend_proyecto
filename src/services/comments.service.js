@@ -1,15 +1,15 @@
-import  comments  from "../data/mongo/comments.mongo.js"
+import  repository  from "../repositories/comments.repositories.js"
 
 class CommentsService {
     constructor() {
-        this.model = comments
+        this.repository = repository;
     }
-    create = async (data) => await this.model.create(data)
-    read = async ({ filter, orderAndPaginate }) => await this.model.read({ filter, orderAndPaginate })
-    readOne = async (id) => await this.model.readOne(id)
-    update = async (data) => await this.model.update(id, data)
-    destroy = async (id) => await this.model.destroy(id)
+    create = async (data) => await this.repository.create(data);
+    read = async ({ filter, orderAndPaginate }) => await this.repository.read({ filter, orderAndPaginate })
+    readOne = async (id) => await this.repository.readOne(id)
+    update = async (id, data) => await this.repository.update(id, data)
+    destroy = async (id) => await this.repository.destroy(id)
 }
 
 const service = new CommentsService();
-export default service
+export default service;

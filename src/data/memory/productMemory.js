@@ -44,32 +44,25 @@ class ProductManager {
         }
     }
 
-    // MEMORY
     read(obj) {
-        console.log("BBBB")
         try {
             let { filter, orderAndPaginate } = obj || {};
-            let products = ProductManager.#products; // Acceso directo a los datos en memoria
+            let products = ProductManager.#products;
 
-            // Aplicar filtro si se proporciona
             if (filter && filter.title) {
                 products = products.filter(product => product.title.includes(filter.title));
             }
 
-            // Aplicar ordenamiento si se proporciona
             if (orderAndPaginate && orderAndPaginate.sort === 'title') {
                 products.sort((a, b) => a.title.localeCompare(b.title));
             }
 
-            // Paginar si se proporciona
             if (orderAndPaginate && orderAndPaginate.page && orderAndPaginate.limit) {
                 const { page, limit } = orderAndPaginate;
                 const startIndex = (page - 1) * limit;
                 const endIndex = page * limit;
                 products = products.slice(startIndex, endIndex);
             }
-            console.log(products)
-            // Devolver la respuesta en el formato esperado por el controlador
             return products
         } catch (error) {
             throw error;
@@ -172,5 +165,4 @@ class ProductManager {
 }
 
 const productManager = new ProductManager();
-
 export default productManager;
