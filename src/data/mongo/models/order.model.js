@@ -12,8 +12,6 @@ const schema = new Schema(
     { timestamps: true }
 );
 
-//midleware pre
-
 schema.pre("find", function () {this.populate("uid", "-password -createdAt -updatedAt -__v")})
 schema.pre("find", function () {this.populate("pid", "title price")})
 

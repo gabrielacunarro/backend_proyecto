@@ -167,80 +167,62 @@ input {
     line-height: 1;
     cursor: pointer;
     margin-left: -40px;
+}
 
-    .input-group button:hover {
-        color: #333;
-    }
+.input-group button:hover {
+    color: #333;
+}
 
+/* Estilos para las flechas */
+#prev,
+#next {
+    background-color: transparent;
+    border: none;
+    color: #606060;
+    transition: color 0.3s ease-in-out;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 0;
+    margin: 0 10px;
+}
 
-    /* Estilos para las flechas */
-    #prev,
-    #next {
-        background-color: transparent;
-        border: none;
-        color: #606060;
-        transition: color 0.3s ease-in-out;
-        padding: 0;
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-        line-height: 1;
-        cursor: pointer;
-        border-radius: 0;
-        margin: 0 10px;
+#prev:hover,
+#next:hover {
+    color: #333;
+}
 
-        #prev:hover,
-        #next:hover {
-            color: #333;
-        }
+/* Estilos para el subtítulo */
+.subtitle {
+    font-size: 32px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
 
-        #prev,
-        #next {
-            background-color: transparent;
-            border: none;
-            color: #606060;
-            transition: color 0.3s ease-in-out;
-            padding: 0;
-            width: 40px;
-            height: 40px;
-            font-size: 16px;
-            line-height: 1;
-            cursor: pointer;
-            border-radius: 0;
-            margin: 0 10px;
-        }
+/* Pie de página */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(46, 46, 46);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
 
-        /* Estilos para el subtítulo */
-        .subtitle {
-            font-size: 32px;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
+.red-social a {
+    display: inline-block;
+    font-size: 20px;
+    margin: 0 10px;
+    color: #fff;
+    text-decoration: none;
+}
 
-
-        /* Pie de página */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgb(46, 46, 46);
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .red-social a {
-            display: inline-block;
-            font-size: 20px;
-            margin: 0 10px;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .red-social a:hover {
-            color: #b3b3b3;
-        }
-    }
+.red-social a:hover {
+    color: #b3b3b3;
 }

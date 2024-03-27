@@ -32,12 +32,9 @@ class ProductsController {
                 orderAndPaginate.sort.title = 1
             }
             const all = await this.service.read({ filter, orderAndPaginate });
-            console.log("esto es all " +all)
-            console.log(all)
             if (all) {
                 return res.success200(all);
             }
-            console.log("aca estamos")
             return res.error404(all)
         } catch (error) {
             console.error(error);

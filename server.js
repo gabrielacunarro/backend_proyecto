@@ -52,16 +52,16 @@ server.use(cookieParser(env.SECRET_KEY));
 // )
 
 // FILE STORE
-// server.use(expressSession({
-//     secret: env.SECRET_KEY,
-//     resave: true,
-//     saveUninitialized: true,
-//     store: new FileStore({
-//         path:"./src/data/fs/files/sessions",
-//         ttl:10000,
-//         retries: 2
-//     }),
-// }))
+server.use(expressSession({
+    secret: env.SECRET_KEY,
+    resave: true,
+    saveUninitialized: true,
+    store: new FileStore({
+        path:"./src/data/fs/files/sessions",
+        ttl:10000,
+        retries: 2
+    }),
+}))
 
 //MONGO STORAGE
 server.use(expressSession({
