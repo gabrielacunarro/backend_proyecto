@@ -1,4 +1,3 @@
-import { Router } from "express";
 import has8char from "../../middlewares/has8char.mid.js";
 import passport from "../../middlewares/passport.mid.js";
 import passCbMid from "../../middlewares/passCb.mid.js";
@@ -7,7 +6,7 @@ import CustomRouter from "../CustomRouter.js";
 export default class SessionsRouter extends CustomRouter {
     init() {
         //register
-        this.create("/register",["PUBLIC"], has8char, passCbMid("register"), async (req, res, next) => {
+        this.create("/register", ["PUBLIC"], has8char, passCbMid("register"), async (req, res, next) => {
             try {
                 return res.success201("Registered!");
             } catch (error) {
@@ -16,7 +15,7 @@ export default class SessionsRouter extends CustomRouter {
         })
 
         //login
-        this.create("/login",["PUBLIC"], passCbMid("login"), async (req, res, next) => {
+        this.create("/login", ["PUBLIC"], passCbMid("login"), async (req, res, next) => {
             try {
 
                 return res.cookie("token", req.token, {
@@ -29,7 +28,7 @@ export default class SessionsRouter extends CustomRouter {
 
 
         //signout
-        this.create("/signout",["USER", "ADMIN", "PREM"], passCbMid("jwt"), async (req, res, next) => {
+        this.create("/signout", ["USER", "ADMIN", "PREM"], passCbMid("jwt"), async (req, res, next) => {
             try {
                 return res.clearCookie("token").success200("Signed out!");
             } catch (error) {
@@ -55,7 +54,7 @@ export default class SessionsRouter extends CustomRouter {
         })
 
         //google
-        this.read("/google", passport.authenticate("google", { scope: ["email", "profile"] }),
+        this.create("/google",["PUBLIC"], passport.authenticate("google", { scope: ["email", "profile"] }),
         );
 
         //google cb
@@ -69,7 +68,7 @@ export default class SessionsRouter extends CustomRouter {
             }
         });
 
-        this.create("/", ["USER", "ADMIN"],passCbMid("jwt"), async (req, res, next) => {
+        this.create("/", ["USER", "ADMIN"], passCbMid("jwt"), async (req, res, next) => {
             try {
                 return res.success200({ session: { role: req.session.role } });
             } catch (error) {

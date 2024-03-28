@@ -23,7 +23,6 @@ const server = express();
 const PORT = env.PORT || 8080;
 const ready = () =>
     console.log("Server on port " + PORT);
-dbConnection()
 const httpServer = createServer(server);
 const socketServer = new Server(httpServer);
 httpServer.listen(PORT, ready);
@@ -42,14 +41,14 @@ const FileStore = sessionFileStore(expressSession)
 
 server.use(cookieParser(env.SECRET_KEY));
 //MEMORY STORE
-// server.use(
-//     expressSession({
-//         secret: env.SECRET_KEY,
-//         resave: true,
-//         saveUninitialized: true,
-//         cookie: {maxAge:60000},
-//     })
-// )
+server.use(
+    expressSession({
+        secret: env.SECRET_KEY,
+        resave: true,
+        saveUninitialized: true,
+        cookie: {maxAge:60000},
+    })
+)
 
 // FILE STORE
 server.use(expressSession({

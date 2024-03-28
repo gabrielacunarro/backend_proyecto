@@ -2,23 +2,22 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt"
-import { createHash, verifyHash } from "../utils/hash.util.js";
+import { verifyHash } from "../utils/hash.util.js";
 import { createToken } from "../utils/token.util.js";
-import  users  from "../data/mongo/users.mongo.js"
 const { GOOGLE_ID, GOOGLE_CLIENT, SECRET } = process.env
+import repository from "../repositories/users.repositories.js";
 
 passport.use("register", new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
         try {
-            let one = await users.readByEmail(email)
+            let one = await repository.readByEmail(email)
             if (!one) {
                 let data = req.body;
-                data.password = createHash(password)
-                let user = await users.create(data)
-                return done(null,user)
-            }else{
-                return done(null, false, {message: "Already exist"})
+                let user = await repository.create(data)
+                return done(null, user)
+            } else {
+                return done(null, false, { message: "Already exist" })
             }
         } catch (error) {
             return done(error)
@@ -29,7 +28,7 @@ passport.use("login", new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
         try {
-            const user = await users.readByEmail(email)
+            const user = await repository.readByEmail(email)
             if (user && verifyHash(password, user.password)) {
                 const token = createToken({ email, role: user.role })
                 req.token = token
@@ -51,22 +50,24 @@ passport.use("google",
             passReqToCallback: true
         },
         async (req, accessToken, refreshToken, profile, done) => {
+            console.log("holaaa")
             try {
-                let user = await users.readByEmail(profile.id);
+                let user = await repository.readByEmail(profile._id);
+
                 const sessionData = {
-                    email: profile.id,
+                    email: profile._id,
                     role: null
                 };
                 if (user) {
                     sessionData.role = user.role;
                 } else {
                     const newUser = {
-                        email: profile.id,
+                        email: profile._id,
                         name: profile.name.givenName,
                         photo: profile.coverPhoto,
-                        password: createHash(profile.id)
+                        password: createHash(profile._id)
                     };
-                    user = await users.create(newUser);
+                    user = await repository.create(newUser);
                     sessionData.role = user.role;
                 }
                 req.session.email = sessionData.email;
@@ -81,10 +82,10 @@ passport.use("google",
 passport.use("jwt", new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies["token"]]),
     secretOrKey: SECRET,
-    passReqToCallback: true 
-}, async (req, payload, done) => { 
+    passReqToCallback: true
+}, async (req, payload, done) => {
     try {
-        const user = await users.readByEmail(payload.email);
+        const user = await repository.readByEmail(payload.email);
         if (user) {
             if (req && req.session) {
                 req.session.role = user.role;

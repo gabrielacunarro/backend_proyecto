@@ -1,11 +1,11 @@
 import dbConnection from "../utils/db.js";
 
-const persistence = process.env.persistence || "MONGO"
+const persistence = process.env.PERSISTENCE || "MONGO"
 
 let dao = {};
 
 switch (persistence) {
-    case "test":
+    case "dev":
         // Utiliza MEMORY
         console.log("MEMORY CONNECTED");
         const { default: productManager } = await import("./memory/productMemory.js");
@@ -13,7 +13,7 @@ switch (persistence) {
         console.log(productManager)
         break;
 
-    case "dev":
+    case "test":
         // Utiliza FS
         console.log("FS CONNECTED");
         const { default: productsFs } = await import("./fs/productFS.js");

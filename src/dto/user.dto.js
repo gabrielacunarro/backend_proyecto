@@ -3,13 +3,16 @@ import { createHash } from "../utils/hash.util.js"
 
 class UserDTO {
     constructor(data) {
-        process.env.PERSISTENCE !== "MONGO" && (this._id = crypto.randomBytes(12).toString("hex"))
-        this.email = data.email
-        this.password = createHash(data.password)
-        this.role = data.role || "USER"
-        process.env.PERSISTENCE !== "MONGO" && (createdAt = new Date());
-        process.env.PERSISTENCE !== "MONGO" && (updatedAt = new Date());
+        if (process.env.PERSISTENCE !== "MONGO") {
+            this._id = crypto.randomBytes(12).toString("hex");
+            this.createdAt = new Date();
+            this.updatedAt = new Date();
+        }
+        this.name = data.name;
+        this.email = data.email;
+        this.password = createHash(data.password);
+        this.role = data.role || "0";
     }
 }
 
-export default UserDTO
+export default UserDTO;

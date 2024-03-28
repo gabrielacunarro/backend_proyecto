@@ -13,12 +13,12 @@ loginButton.addEventListener("click", async (e) => {
         };
         let response = await fetch("/api/sessions/login", opts);
         if (!response.ok) {
-            alert("Login failed"); 
-            window.location.href = "/sessions/login"; 
+            alert("Login failed");
+            window.location.href = "/sessions/login";
 
         } else {
             alert("Log in!")
-            window.location.href = "/"; 
+            window.location.href = "/";
         }
     } catch (error) {
         console.log(error);
@@ -30,7 +30,7 @@ loginButton.addEventListener("click", async (e) => {
 const googleButton = document.querySelector("#google");
 googleButton.addEventListener("click", async (e) => {
     try {
-
+        e.preventDefault();
         let response = await fetch("/api/sessions/google", {
             method: "POST"
         });
