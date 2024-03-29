@@ -1,5 +1,5 @@
 import CustomRouter from "../CustomRouter.js";
-import { create, read, readOne, update, destroy } from "../../controllers/comments.control.js";
+import { create, read, readOne, update, destroy } from "../../controllers/comments.controller.js";
 
 class CommentsRouter extends CustomRouter {
     init() {

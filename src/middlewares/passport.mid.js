@@ -6,6 +6,7 @@ import { verifyHash } from "../utils/hash.util.js";
 import { createToken } from "../utils/token.util.js";
 const { GOOGLE_ID, GOOGLE_CLIENT, SECRET } = process.env
 import repository from "../repositories/users.repositories.js";
+import service from "../services/users.services.js";
 
 passport.use("register", new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
@@ -15,6 +16,9 @@ passport.use("register", new LocalStrategy(
             if (!one) {
                 let data = req.body;
                 let user = await repository.create(data)
+                if (user) {
+                    service.register(data)
+                }
                 return done(null, user)
             } else {
                 return done(null, false, { message: "Already exist" })

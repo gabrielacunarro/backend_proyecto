@@ -5,6 +5,8 @@ class SessionController {
         this.service = service;
     }
     register = async (req, res, next) => {
+        const { email, name, verifiedCode } = req.user
+        await this.service.register({ email, name, verifiedCode })
         try {
             return res.json({
                 statusCode: 201,
@@ -14,6 +16,7 @@ class SessionController {
             return next(error)
         }
     };
+
     login = async (req, res, next) => {
         try {
             return res.cookie("token", req.token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true }).json({
@@ -24,6 +27,7 @@ class SessionController {
             return next(error)
         }
     };
+
     signout = async (req, res, next) => {
         try {
             return res.clearCookie("token").json({
@@ -34,7 +38,28 @@ class SessionController {
             return next(error)
         }
     };
+
+    verifyAccount = async (req, res, next) => {
+        try {
+            const { email, verifiedCode } = req.body
+            const user = await service.readByEmail(email)
+            if (user && user.verifiedCode === verifiedCode) {
+                await service.update(user._id, { verified: true })
+                return res.json({
+                    statusCode: 200,
+                    message: "User verified successfully"
+                })
+            } else
+                return res.json({
+                    statusCode: 400,
+                    message: "Incorrect verification code. Please make sure you enter the correct code"
+                })
+
+        } catch (error) {
+            return next(error)
+        }
+    }
 }
 const controller = new SessionController();
-const { register, login, signout } = controller;
-export { register, login, signout };
+const { register, login, signout, verifyAccount } = controller;
+export { register, login, signout, verifyAccount };

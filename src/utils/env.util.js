@@ -12,6 +12,8 @@ export default {
     SECRET_KEY: process.env.SECRET_KEY,
     TOKEN_EXPIRATION_TIME: 604800,
     GOOGLE_ID: process.env.GOOGLE_ID,
-    GOOGLE_CLIENT: process.env.GOOGLE_CLIENT
+    GOOGLE_CLIENT: process.env.GOOGLE_CLIENT,
+    GOOGLE_EMAIL: process.env.GOOGLE_EMAIL,
+    GOOGLE_PASS: process.env.GOOGLE_PASS
 };
 

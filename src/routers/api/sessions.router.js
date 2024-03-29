@@ -2,12 +2,15 @@ import has8char from "../../middlewares/has8char.mid.js";
 import passport from "../../middlewares/passport.mid.js";
 import passCbMid from "../../middlewares/passCb.mid.js";
 import CustomRouter from "../CustomRouter.js";
+import { verifyAccount } from "../../controllers/sessions.controller.js";
+
 
 export default class SessionsRouter extends CustomRouter {
     init() {
         //register
         this.create("/register", ["PUBLIC"], has8char, passCbMid("register"), async (req, res, next) => {
             try {
+                
                 return res.success201("Registered!");
             } catch (error) {
                 return next(error)
@@ -75,6 +78,8 @@ export default class SessionsRouter extends CustomRouter {
                 return next(error);
             }
         });
+
+        this.create("/verify", ["PUBLIC"], verifyAccount);
 
     }
 
