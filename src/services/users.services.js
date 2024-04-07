@@ -13,7 +13,6 @@ class UsersService {
     destroy = async (id) => await this.repository.destroy(id)
     register = async(data) =>{
         try {
-            console.log("Data to send mail:", data);
             await sendMail(data)
         } catch (error) {
             throw error

@@ -2,7 +2,8 @@
     "scripts": {
         "start": "node ./server.js",
         "dev": "nodemon ./server.js --env dev",
-        "test": "nodemon ./server.js --env test"
+        "test": "nodemon ./server.js --env test",
+        "mocks": "node ./src/data/mocks/users.mock.js"
     },
     "name": "proyecto_backend",
     "description": "Proyecto Backend:",
@@ -36,12 +37,13 @@
         "define-data-property": "^1.1.1",
         "depd": "^2.0.0",
         "destroy": "^1.2.0",
-        "dotenv": "^16.4.0",
+        "dotenv": "^16.4.5",
         "ee-first": "^1.1.1",
         "encodeurl": "^1.0.2",
         "escape-html": "^1.0.3",
         "etag": "^1.8.1",
         "express": "^4.18.2",
+        "express-compression": "^1.0.2",
         "express-handlebars": "^7.1.2",
         "express-session": "^1.18.0",
         "fill-range": "^7.0.1",
@@ -126,6 +128,7 @@
         "yallist": "^4.0.0"
     },
     "devDependencies": {
+        "@faker-js/faker": "^8.4.1",
         "nodemon": "^3.0.2"
     },
     "keywords": [],

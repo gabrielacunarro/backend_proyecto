@@ -6,8 +6,8 @@ class CommentDTO {
         this.text = data.text
         this.pid = data.pid
         this.uid = data.uid
-        process.env.PERSISTENCE !== "MONGO" && (createdAt = new Date());
-        process.env.PERSISTENCE !== "MONGO" && (updatedAt = new Date());
+        process.env.PERSISTENCE !== "MONGO" && (this.createdAt = new Date());
+        process.env.PERSISTENCE !== "MONGO" && (this.updatedAt = new Date());
     }
 }
 

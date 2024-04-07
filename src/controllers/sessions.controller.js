@@ -41,24 +41,32 @@ class SessionController {
 
     verifyAccount = async (req, res, next) => {
         try {
-            const { email, verifiedCode } = req.body
-            const user = await service.readByEmail(email)
-            if (user && user.verifiedCode === verifiedCode) {
-                await service.update(user._id, { verified: true })
-                return res.json({
-                    statusCode: 200,
-                    message: "User verified successfully"
-                })
-            } else
-                return res.json({
-                    statusCode: 400,
-                    message: "Incorrect verification code. Please make sure you enter the correct code"
-                })
+            const { email, verificationCode } = req.body;
+
+            if (!email || !verificationCode) {
+                return res.status(400).json({ message: 'Email and verification code are required.' });
+            }
+
+            const user = await this.service.readByEmail(email);
+
+            if (!user) {
+                return res.status(404).json({ message: 'User not found.' });
+            }
+
+            if (user.verifiedCode !== verificationCode) {
+                return res.status(400).json({ message: 'Incorrect verification code.' });
+            }
+
+            await this.service.update(user._id, { verified: true });
+
+            return res.status(200).json({ message: 'User verified successfully.' });
 
         } catch (error) {
-            return next(error)
+            return res.status(500).json({ message: 'Internal server error while verifying the account.' });
         }
-    }
+    };
+
+
 }
 const controller = new SessionController();
 const { register, login, signout, verifyAccount } = controller;

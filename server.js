@@ -1,3 +1,4 @@
+import "dotenv/config.js";
 import env from "./src/utils/env.util.js"
 import express from "express";
 import { createServer } from "http";
@@ -16,8 +17,7 @@ import ordersViewRouter from "./src/routers/views/orders.view.js";
 import IndexRouter from "./src/routers/index.router.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
-import dbConnection from "./src/utils/db.js";
-import args from "./src/utils/args.util.js";
+
 
 const server = express();
 const PORT = env.PORT || 8080;

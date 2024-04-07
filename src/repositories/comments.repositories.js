@@ -14,5 +14,5 @@ class CommentsRep {
     destroy = async (id) => await this.model.destroy(id)
 }
 
-const repository = new CommentsRep();
-export default repository
+const commentsRepository = new CommentsRep();
+export default commentsRepository

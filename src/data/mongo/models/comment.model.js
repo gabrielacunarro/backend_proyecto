@@ -5,8 +5,8 @@ const collection = "comment";
 const schema = new Schema(
     {
         text: { type: String, required: true },
-        pid: { type: Types.ObjectId, required: true, ref: "products" },
-        uid: { type: Types.ObjectId, required: true, ref: "users" }
+        pid: { type: Types.ObjectId, ref: "products" },
+        uid: { type: Types.ObjectId, ref: "users" }
     },
     { timestamps: true }
 );

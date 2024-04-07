@@ -79,7 +79,7 @@ export default class SessionsRouter extends CustomRouter {
             }
         });
 
-        this.create("/verify", ["PUBLIC"], verifyAccount);
+        this.create("/verify", ["PUBLIC", "USER", "ADMIN"], verifyAccount);
 
     }
 

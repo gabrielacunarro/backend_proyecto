@@ -13,8 +13,9 @@ class UserDTO {
         this.password = createHash(data.password);
         this.role = data.role || "0";
         this.verified = data.verified || false;
-        this.verifiedCode = data.verifiedCode || crypto.randomBytes(12).toString("base64")
+        this.verifiedCode =  data.verifiedCode
     }
 }
+
 
 export default UserDTO;

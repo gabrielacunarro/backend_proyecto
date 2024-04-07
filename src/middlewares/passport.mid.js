@@ -7,6 +7,7 @@ import { createToken } from "../utils/token.util.js";
 const { GOOGLE_ID, GOOGLE_CLIENT, SECRET } = process.env
 import repository from "../repositories/users.repositories.js";
 import service from "../services/users.services.js";
+import crypto from "crypto"
 
 passport.use("register", new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
@@ -15,6 +16,8 @@ passport.use("register", new LocalStrategy(
             let one = await repository.readByEmail(email)
             if (!one) {
                 let data = req.body;
+                data.verifiedCode = crypto.randomBytes(12).toString("base64")
+                
                 let user = await repository.create(data)
                 if (user) {
                     service.register(data)
