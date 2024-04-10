@@ -1,7 +1,5 @@
 import { faker } from '@faker-js/faker';
 import repository from '../../repositories/users.repositories.js';
-import dbConnection from '../../utils/db.js';
-import env from "../../utils/env.util.js"
 import "dotenv/config.js";
 import createComment from './comments.mock.js';
 
@@ -13,11 +11,11 @@ function usersMock() {
     }
 }
 
-async function createMocks() {
+async function createUser() {
     try {
         const data = usersMock();
         const user = await repository.create(data);
-        for(let i=1; i<=10; i++){
+        for (let i = 1; i <= 10; i++) {
             await createComment(user._id);
         }
 
@@ -26,7 +24,7 @@ async function createMocks() {
     }
 }
 
-for(let i=1; i<=10; i++){
-    createMocks();
+for (let i = 1; i <= 10; i++) {
+    createUser();
 }
 console.log("DATA MOCKED! ")

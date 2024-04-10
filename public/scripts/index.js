@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const nextButton = document.getElementById("next");
 
     let currentPage = 0;
-    const totalProducts = 8;
-    const productsPerPage = 4;
+    const totalProducts = 100;
+    const productsPerPage = 5;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
 
     function fetchProducts(filter) {

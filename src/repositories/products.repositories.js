@@ -15,5 +15,5 @@ class ProductsRep {
     destroy = async (id) => await this.model.destroy(id)
 }
 
-const repository = new ProductsRep();
-export default repository;
+const productsRepository = new ProductsRep();
+export default productsRepository;

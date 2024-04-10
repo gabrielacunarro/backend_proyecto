@@ -6,7 +6,7 @@ class ProductDTO {
         argsUtil.env !== "prod" && (this._id = crypto.randomBytes(12).toString('hex'));
         this.title = data.title,
             this.description = data.description,
-            this.photo = data.photo || "https://i.imgur.com/mREdOOd.png",
+            this.photo = data.photo || "https://i.imgur.com/uTunKIb.png",
             this.price = data.price || 10,
             this.stock = data.stock || 50,
             this.date = data.date || new Date()

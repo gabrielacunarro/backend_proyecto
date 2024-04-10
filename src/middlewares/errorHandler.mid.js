@@ -1,11 +1,10 @@
-const errorHandler = (error, req, res, next) => {
+export default (error, req, res, next) => {
 
-    return res.json({
+    return res.status(error.statusCode || 500).json({
         statusCode: error.statusCode || 500,
-        message: `${req.method} ${req.url} ${error.message}`,
-        errorDetails: error,
+        url: `${req.method} ${req.url}`,
+        message: error.message,
     });
 };
 
-export default errorHandler;
 

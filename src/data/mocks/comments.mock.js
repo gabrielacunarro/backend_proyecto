@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker';
 import commentsRepository from '../../repositories/comments.repositories.js';
-import dbConnection from '../../utils/db.js';
 import "dotenv/config.js";
 
 function commentsMock(userId, postId) {
