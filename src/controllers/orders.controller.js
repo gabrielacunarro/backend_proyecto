@@ -1,4 +1,5 @@
 import ordersServices from "../services/orders.services.js"
+import customError from "../utils/errors/customError.js"
 
 class OrdersController {
     constructor() {
@@ -70,7 +71,8 @@ class OrdersController {
             if (one) {
                 return res.success200(`Order with ID ${oid} has been successfully deleted.`);
             } else {
-                return res.error404(`Order with ID ${oid} not found. No order has been deleted.`);
+                const error = customError.new(error.notFound); 
+                throw error;
             }
         } catch (error) {
             return next(error);

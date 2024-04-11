@@ -1,4 +1,5 @@
 import UsersService from "../services/users.services.js"
+import customError from "../utils/errors/customError.js"
 
 class UsersController {
     constructor() {
@@ -51,7 +52,8 @@ class UsersController {
             if (user) {
                 return res.success200(user);
             } else {
-                return res.error404(`User with ID ${uid} not found`);
+                const error = customError.new(error.notFound); 
+                throw error;
             }
         } catch (error) {
             next(error);

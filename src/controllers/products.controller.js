@@ -50,7 +50,8 @@ class ProductsController {
             if (product) {
                 return res.success200(product)
             } else {
-                return res.error404(response)
+                const error = customError.new(error.notFound); 
+                throw error;
             }
         } catch (error) {
             return next(error);
@@ -67,7 +68,8 @@ class ProductsController {
             if (updatedProduct) {
                 return res.success200(`Product with ID ${pid} has been successfully updated.`);
             } else {
-                return res.error404(`Product with ID ${pid} not found. No product has been updated.`);
+                const error = customError.new(error.notFound); 
+                throw error;
             }
         } catch (error) {
             return next(error);
@@ -82,7 +84,8 @@ class ProductsController {
             if (deletedProduct) {
                 return res.success200(`Product with ID ${pid} has been successfully deleted.`);
             } else {
-                return res.error404(`Product with ID ${pid} not found. No product has been deleted.`);
+                const error = customError.new(error.notFound); 
+                throw error;
             }
 
         } catch (error) {
