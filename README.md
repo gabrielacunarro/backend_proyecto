@@ -65,3 +65,21 @@ Estas funcionalidades proporcionan una experiencia de usuario más fluida y efic
 - **Vistas de Inicio de Sesión**: Se han implementado vistas con handlebars para el login del usuario
 
 - **Validación de Credenciales**: Se proporcionan funciones de validación de credenciales como `has8char` e `isValidPass` en el archivo `utils.js`. Estas funciones aseguran que las contraseñas cumplan con los requisitos mínimos de seguridad antes de ser almacenadas en la base de datos.
+
+## Mejoras añadidas:
+
+- **Compresión de Datos**:
+-La aplicación utiliza técnicas de compresión como Gzip y Brotli para optimizar el rendimiento al reducir el tamaño de los datos transferidos entre el servidor y el cliente. Esto mejora la velocidad de carga de la aplicación y reduce el consumo de ancho de banda.
+
+- **Mejora del Error Handler**:
+-Se ha mejorado el manejo de errores en la aplicación para proporcionar mensajes de error más descriptivos y útiles al usuario. Esto ayuda a identificar y solucionar problemas de manera más eficiente, mejorando la experiencia del usuario.
+
+- **Diccionario de errores**:
+-Error 400: Error - Se produce cuando ocurre un error genérico en la aplicación.
+-Error 401: Bad auth - Se produce cuando la autenticación del usuario falla debido a credenciales incorrectas.
+-Error 403: Forbidden - Se produce cuando el cliente intenta acceder a un recurso para el cual no tiene permisos suficientes.
+-Error 404: Not Found - Se produce cuando se intenta acceder a un recurso que no existe en el servidor.
+-Error 500: Fatal - Se produce cuando ocurre un error interno en el servidor que impide completar la solicitud del cliente.
+
+- **Mocks**:
+-Se han incorporado mocks para simular el comportamiento de componentes externos o dependencias durante las pruebas unitarias. Esto permite probar el código de manera aislada y garantizar su funcionamiento correcto en diferentes escenarios.
