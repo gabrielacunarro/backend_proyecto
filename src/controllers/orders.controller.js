@@ -1,5 +1,6 @@
 import ordersServices from "../services/orders.services.js"
 import customError from "../utils/errors/customError.js"
+import errors from "../utils/errors/errors.js"
 
 class OrdersController {
     constructor() {
@@ -9,7 +10,8 @@ class OrdersController {
     create = async (req, res, next) => {
         try {
             if (!req.user || req.user.role !== 0) {
-                return res.status(403).json({ message: "You do not have permission to create orders" });
+                const error = CustomError.new(errors.forbidden);
+                throw error;
             }
             const data = req.body;
             const createdOrder = await this.services.create(data);
@@ -20,6 +22,7 @@ class OrdersController {
             return next(error);
         }
     };
+
 
     read = async (req, res, next) => {
         try {
@@ -71,7 +74,7 @@ class OrdersController {
             if (one) {
                 return res.success200(`Order with ID ${oid} has been successfully deleted.`);
             } else {
-                const error = customError.new(error.notFound); 
+                const error = customError.new(errors.notFound);
                 throw error;
             }
         } catch (error) {

@@ -1,4 +1,6 @@
 import productsServices from "../services/products.services.js"
+import errors from "../utils/errors/errors.js"
+import customError from "../utils/errors/customError.js"
 
 class ProductsController {
     constructor() {
@@ -32,10 +34,11 @@ class ProductsController {
                 orderAndPaginate.sort.title = 1
             }
             const all = await this.service.read({ filter, orderAndPaginate });
-            if (all) {
-                return res.success200(all);
+            if (!all) {
+                const error = customError.new(errors.notFound);
+                throw error;
             }
-            return res.error404(all)
+            return res.success200(all);
         } catch (error) {
             console.error(error);
             next(error);
@@ -50,7 +53,7 @@ class ProductsController {
             if (product) {
                 return res.success200(product)
             } else {
-                const error = customError.new(error.notFound); 
+                const error = customError.new(errors.notFound);
                 throw error;
             }
         } catch (error) {
@@ -68,7 +71,7 @@ class ProductsController {
             if (updatedProduct) {
                 return res.success200(`Product with ID ${pid} has been successfully updated.`);
             } else {
-                const error = customError.new(error.notFound); 
+                const error = customError.new(errors.notFound);
                 throw error;
             }
         } catch (error) {
@@ -84,7 +87,7 @@ class ProductsController {
             if (deletedProduct) {
                 return res.success200(`Product with ID ${pid} has been successfully deleted.`);
             } else {
-                const error = customError.new(error.notFound); 
+                const error = customError.new(errors.notFound);
                 throw error;
             }
 

@@ -1,5 +1,6 @@
 import UsersService from "../services/users.services.js"
 import customError from "../utils/errors/customError.js"
+import errors from "../utils/errors/errors.js"
 
 class UsersController {
     constructor() {
@@ -52,7 +53,7 @@ class UsersController {
             if (user) {
                 return res.success200(user);
             } else {
-                const error = customError.new(error.notFound); 
+                const error = customError.new(errors.notFound);
                 throw error;
             }
         } catch (error) {
@@ -70,7 +71,8 @@ class UsersController {
             if (isUpdated) {
                 return res.success200(`User with ID ${uid} has been successfully updated.`);
             } else {
-                return res.error404(`User with ID ${uid} has been successfully updated.`);
+                const error = customError.new(errors.notFound);
+                throw error;
             }
         } catch (error) {
             next(error);
@@ -85,7 +87,8 @@ class UsersController {
             if (isDeleted) {
                 return res.success200(`User with ID ${id} has been successfully deleted.`);
             } else {
-                return res.error404(`User with ID ${id} has been successfully deleted.`);
+                const error = customError.new(errors.notFound);
+                throw error;
             }
         } catch (error) {
             next(error);
