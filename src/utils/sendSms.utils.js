@@ -1,5 +1,6 @@
 import twilio from "twilio";
 import dotenv from "dotenv";
+import winston from "./logger/winston.utils.js";
 
 dotenv.config(); 
 
@@ -11,9 +12,9 @@ async function sendSms(phone) {
             from: process.env.TWILIO_PHONE,
             to: phone
         });
-        console.log("SMS message sent successfully.");
+        winston.INFO("SMS message sent successfully.");
     } catch (error) {
-        console.error("Error sending SMS message:", error);
+        winston.ERROR("Error sending SMS message:", error);
         throw error;
     }
 }

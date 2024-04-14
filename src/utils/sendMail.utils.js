@@ -4,8 +4,6 @@ debug.enable("nodemailer:*");
 
 async function sendMail(data) {
     try {
-        console.log("Data received in sendMail:", data); ///
-        console.log("Verified code:", data.verifiedCode);///
         const transport = createTransport({
             service: "gmail",
             auth: { user: process.env.GOOGLE_EMAIL, pass: process.env.GOOGLE_PASS },

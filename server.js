@@ -18,12 +18,14 @@ import IndexRouter from "./src/routers/index.router.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
 import compression from "express-compression";
+import winston from "./src/middlewares/winston.js";
+import winstonUtils from "./src/utils/logger/winston.utils.js";
 
 
 const server = express();
 const PORT = env.PORT || 8080;
 const ready = () =>
-    console.log("Server on port " + PORT);
+winstonUtils.INFO("Server on port " + PORT);
 const httpServer = createServer(server);
 const socketServer = new Server(httpServer);
 httpServer.listen(PORT, ready);
@@ -83,6 +85,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(__dirname + "/public"));
 server.use(morgan("dev"));
+server.use(winston)
 server.use(
     compression({
     brotli: { enabled: true, zlib: {} }

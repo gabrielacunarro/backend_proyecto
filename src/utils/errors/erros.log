@@ -1,0 +1,11 @@
+[31mERROR[39m: comment validation failed: text: Path `text` is required.
+[34mERROR[39m: Error connecting to database: The `uri` parameter to `openUri()` must be a string, got "undefined". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
+[34mERROR[39m: Error connecting to database: The `uri` parameter to `openUri()` must be a string, got "undefined". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
+[31mERROR[39m: comment validation failed: text: Path `text` is required.
+[31mERROR[39m: comment validation failed: pid: Cast to ObjectId failed for value "65da1155e16954daasff09fff" (type string) at path "pid" because of "BSONError"
+[31mERROR[39m: logger.error is not a function
+[31mERROR[39m: winston.error is not a function
+[31mERROR[39m: Este es un mensaje de error
+[31mERROR[39m: winston.WARN is not a function
+[31mERROR[39m: Este es un mensaje de error
+[31mERROR[39m: This is an error message

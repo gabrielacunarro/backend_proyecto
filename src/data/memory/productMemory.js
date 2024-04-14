@@ -29,7 +29,6 @@ class ProductManager {
                 };
 
                 ProductManager.#products.push(product);
-                console.log(ProductManager.#products)
 
                 return id;
             } catch (error) {

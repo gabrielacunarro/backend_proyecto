@@ -57,7 +57,6 @@ passport.use("google",
             passReqToCallback: true
         },
         async (req, accessToken, refreshToken, profile, done) => {
-            console.log("holaaa")
             try {
                 let user = await repository.readByEmail(profile._id);
 

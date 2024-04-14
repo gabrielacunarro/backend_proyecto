@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
+import winston from '../../utils/logger/winston.utils.js';
 
 const usersFilePath = path.join('src', 'data', 'fs', 'files', 'users.json');
 const dataFolder = path.join(process.cwd(), 'src', 'data', 'fs');
@@ -105,10 +106,9 @@ class UserManager {
             UserManager.#users = JSON.parse(data);
         } catch (error) {
             if (error.code === 'ENOENT') {
-                console.log('Users file not found. Creating a new one.');
                 await this.saveUsers();
             } else {
-                console.error('Error loading users:', error.message);
+                winston.ERROR('Error loading users:', error.message);
                 throw error;
             }
         }
@@ -117,15 +117,14 @@ class UserManager {
     async saveUsers() {
         try {
             if (UserManager.#users.length === 0) {
-                console.log('No users found. Creating an empty users array.');
                 UserManager.#users = [];
             }
 
             const data = JSON.stringify(UserManager.#users, null, 2);
             await fs.writeFile(UserManager.#usersFile, data, 'utf8');
-            console.log('Users saved successfully.');
+            winston.INFO('Users saved successfully.');
         } catch (error) {
-            console.error('Error saving users:', error.message);
+            winston.ERROR('Error saving users:', error.message);
             throw error;
         }
     }
@@ -137,13 +136,13 @@ class UserManager {
             if (userIndex !== -1) {
                 UserManager.#users.splice(userIndex, 1);
                 this.saveUsers().then(() => {
-                    console.log(`User with ID ${id} has been successfully destroyed.`);
+                    winston.INFO(`User with ID ${id} has been successfully destroyed.`);
                 }).catch(error => {
                     console.error(`Error saving users after destroying user: ${error.message}`);
                 });
                 return true;
             } else {
-                console.log(`User with ID ${id} not found. No user has been destroyed.`);
+                winston.ERROR(`User with ID ${id} not found. No user has been destroyed.`);
                 return false;
             }
         } catch (error) {
@@ -164,9 +163,9 @@ class UserManager {
             if (userIndex !== -1) {
                 UserManager.#users[userIndex] = { ...UserManager.#users[userIndex], ...data };
                 this.saveUsers().then(() => {
-                    console.log(`User with ID ${id} has been successfully updated.`);
+                    winston.INFO(`User with ID ${id} has been successfully updated.`);
                 }).catch(error => {
-                    console.error(`Error saving users after updating user: ${error.message}`);
+                    winston.ERROR(`Error saving users after updating user: ${error.message}`);
                 });
                 return UserManager.#users[userIndex]; // Devuelve los datos del usuario actualizados
             }

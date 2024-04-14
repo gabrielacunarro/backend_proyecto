@@ -21,7 +21,6 @@ loginButton.addEventListener("click", async (e) => {
             window.location.href = "/";
         }
     } catch (error) {
-        console.log(error);
         alert("An unexpected error occurred. Please try again later.");
     }
 });

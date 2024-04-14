@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
+import winston from '../../utils/logger/winston.utils.js';
 
 class ProductManager {
     static #productsFile = 'src/data/fs/files/products.json';
@@ -43,7 +44,7 @@ class ProductManager {
             const missingProps = this.#verifyRequiredProps(data);
 
             if (missingProps.length > 0) {
-                console.log(this.#generateWarningMessage(missingProps, data.title));
+                winston.ERROR(this.#generateWarningMessage(missingProps, data.title));
                 return null;
             }
 

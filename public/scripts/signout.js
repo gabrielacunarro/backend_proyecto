@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                         location.replace("/");
                     }
                 } catch (error) {
-                    console.log(error);
                 }
             });
         } else {
@@ -64,7 +63,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
     } catch (error) {
-        console.log(error);
     }
 
 });

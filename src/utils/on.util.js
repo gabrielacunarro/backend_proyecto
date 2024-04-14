@@ -1,7 +1,11 @@
-process.on("exit", (code) => console.log("El proceso terminó con código " + code));
+import winston from "./logger/winston.utils.js";
 
-process.on("uncaughtException", (error) => console.log("Ha ocurrido un error: " + error.message));
+process.on("exit", (code) => winston.INFO("The process exited with code " + code));
 
-console.log("ID del proceso:", process.pid);
+process.on("uncaughtException", (error) => winston.ERROR("An error occurred: " + error.message));
+
+winston.INFO("Process ID:", process.pid);
 
 process.exit(1);
+
+

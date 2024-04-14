@@ -7,7 +7,6 @@ class CommentsController {
 
     create = async (req, res, next) => {
         try {
-            console.log(req.body)
             const data = req.body;
             data.uid = req.user._id;
             const one = await this.service.create(data);

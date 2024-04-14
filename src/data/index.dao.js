@@ -1,5 +1,6 @@
 import "dotenv/config.js";
 import dbConnection from "../utils/db.js";
+import winston from "../utils/logger/winston.utils.js";
 
 const persistence = process.env.PERSISTENCE || "MONGO"
 
@@ -8,15 +9,15 @@ let dao = {};
 switch (persistence) {
     case "MEMORY":
         // Utiliza MEMORY
-        // console.log("MEMORY CONNECTED");
+        // winston.INFO("MEMORY CONNECTED");
         // const { default: productManager } = await import("./memory/productMemory.js");
         // dao = { products: productManager };
-        // console.log(productManager)
+        // winston.INFO(productManager)
         // break;
 
     case "FS":
         // Utiliza FS
-        // console.log("FS CONNECTED");
+        // winston.INFO("FS CONNECTED");
         // const { default: productsFs } = await import("./fs/productFS.js");
         // dao = { products: productsFs };
         // break;
@@ -28,7 +29,7 @@ switch (persistence) {
         const { default: UsersMongo } = await import("./mongo/users.mongo.js")
         const { default: CommentsMongo } = await import("./mongo/comments.mongo.js")
         dao = { products: ProductsMongo, users: UsersMongo, comments: CommentsMongo }
-        console.log("MONGO CONNECTED");
+        winston.INFO("MONGO CONNECTED");
         break;
 
 }

@@ -75,7 +75,6 @@ class MongoManager {
     async stats({ filter }) {
         try {
             let stats = await this.model.find(filter).explain("executionStats");
-            console.log(stats);
             stats = {
                 quantity: stats.executionStats.nReturned,
                 time: stats.executionStats.excecutionTimeMillis,

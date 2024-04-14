@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker';
 import repository from '../../repositories/users.repositories.js';
 import "dotenv/config.js";
 import createComment from './comments.mock.js';
+import winston from '../../utils/logger/winston.utils.js';
 
 function usersMock() {
     return {
@@ -27,4 +28,4 @@ async function createUser() {
 for (let i = 1; i <= 10; i++) {
     createUser();
 }
-console.log("DATA MOCKED! ")
+winston.INFO("DATA MOCKED! ")
