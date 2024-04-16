@@ -66,8 +66,6 @@ Estas funcionalidades proporcionan una experiencia de usuario más fluida y efic
 
 - **Validación de Credenciales**: Se proporcionan funciones de validación de credenciales como `has8char` e `isValidPass` en el archivo `utils.js`. Estas funciones aseguran que las contraseñas cumplan con los requisitos mínimos de seguridad antes de ser almacenadas en la base de datos.
 
-## Mejoras añadidas:
-
 - **Compresión de Datos**:
 -La aplicación utiliza técnicas de compresión como Gzip y Brotli para optimizar el rendimiento al reducir el tamaño de los datos transferidos entre el servidor y el cliente. Esto mejora la velocidad de carga de la aplicación y reduce el consumo de ancho de banda.
 
@@ -83,3 +81,9 @@ Estas funcionalidades proporcionan una experiencia de usuario más fluida y efic
 
 - **Mocks**:
 -Se han incorporado mocks para simular el comportamiento de componentes externos o dependencias durante las pruebas unitarias. Esto permite probar el código de manera aislada y garantizar su funcionamiento correcto en diferentes escenarios.
+
+## Mejoras añadidas:
+
+## Logger
+
+Se ha integrado un sistema de logging en el proyecto para registrar eventos importantes y errores. El logger utiliza la biblioteca Winston, que proporciona flexibilidad y opciones de configuración avanzadas. Además, el sistema de loggin se ha configurado de manera dinámica para adaptarse al entorno de ejecución.
