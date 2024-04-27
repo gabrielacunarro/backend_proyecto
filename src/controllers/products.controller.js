@@ -67,9 +67,20 @@ class ProductsController {
         try {
             const { pid } = req.params;
             const data = req.body;
-
+    
+            const product = await this.service.readOne(pid);
+            if (!product) {
+                return res.error404(); 
+            }
+    
+            if (req.user.role !== 1) {
+                if (!product.owner_id || !req.user._id.equals(product.owner_id)) {
+                    return res.error403(); 
+                }
+            }
+    
             const updatedProduct = await this.service.update(pid, data);
-
+    
             if (updatedProduct) {
                 return res.success200(`Product with ID ${pid} has been successfully updated.`);
             } else {
@@ -80,10 +91,20 @@ class ProductsController {
             return next(error);
         }
     };
+    
 
     destroy = async (req, res, next) => {
         try {
             const { pid } = req.params;
+
+            const product = await this.service.readOne(pid);
+            if (!product) {
+                return res.error404();
+            }
+            if (req.user.role === 2 && !product.owner_id.equals(req.user._id)) {
+                return res.error403();
+            }
+
             const deletedProduct = await this.service.destroy(pid);
 
             if (deletedProduct) {

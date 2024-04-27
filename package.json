@@ -3,7 +3,10 @@
         "start": "node ./server.js",
         "dev": "nodemon ./server.js --env dev",
         "test": "nodemon ./server.js --env test",
-        "mocks": "node ./src/data/mocks/users.mock.js"
+        "prod": "nodemon ./server.js --env prod",
+        "mocks": "node ./src/data/mocks/users.mock.js",
+        "image": "docker build -t simplex-complex .",
+        "container": "docker run -p 8080:8080 simplex-complex"
     },
     "name": "proyecto_backend",
     "description": "Proyecto Backend:",

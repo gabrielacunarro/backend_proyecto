@@ -20,12 +20,14 @@ import errorHandler from "./src/middlewares/errorHandler.mid.js";
 import compression from "express-compression";
 import winston from "./src/middlewares/winston.js";
 import winstonUtils from "./src/utils/logger/winston.utils.js";
+import cluster from "cluster";
+import { cpus } from "os";
 
 
 const server = express();
 const PORT = env.PORT || 8080;
 const ready = () =>
-winstonUtils.INFO("Server on port " + PORT);
+    winstonUtils.INFO("Server on port " + PORT);
 const httpServer = createServer(server);
 const socketServer = new Server(httpServer);
 httpServer.listen(PORT, ready);
@@ -88,8 +90,8 @@ server.use(morgan("dev"));
 server.use(winston)
 server.use(
     compression({
-    brotli: { enabled: true, zlib: {} }
-}))
+        brotli: { enabled: true, zlib: {} }
+    }))
 
 
 //routers
@@ -99,6 +101,19 @@ server.use(errorHandler);
 server.use(pathHandler); // siempre a lo ultimo
 
 export { socketServer };
+
+const numCPUs = cpus().length;
+
+// if (cluster.isPrimary) {
+//     console.log('primary');
+//     for (let i = 1; i <= numCPUs; i++) {
+//         cluster.fork()
+//     }
+// } else {
+//     console.log('worker', process.pid);
+//     server.listen(9000,()=>
+// console.log("worker ready on port: ",9000))
+// }
 
 
 

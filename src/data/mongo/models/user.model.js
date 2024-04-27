@@ -9,7 +9,7 @@ const schema = new Schema({
     name: { type: String, required: true },
     photo: { type: String, default: "https://imgur.com/mREdOOd" },
     age: { type: Number, default: 18 },
-    role: { type: Number, default: 0 },
+    role: { type: Number, enum: [0, 1, 2], default: 0 },
     verified: { type: Boolean, default: false },
     verifiedCode: { type: String }
 }, { timestamps: true });
