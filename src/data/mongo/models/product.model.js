@@ -8,10 +8,12 @@ const schema = new Schema({
     photo: { type: String, default: "https://i.imgur.com/uTunKIb.png" },
     price: { type: Number, default: 10 },
     stock: { type: Number, default: 50 },
-    owner_id: { type: Types.ObjectId, ref: "users", index: true}
+    owner_id: { type: Types.ObjectId, ref: "users"},
+    role: { type: Number, enum: [1, 2], required:true },
 
 },
-    { timestamps: true }
+    { timestamps: true}
+
 );
 
 schema.plugin(mongoosePaginate);

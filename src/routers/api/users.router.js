@@ -1,6 +1,6 @@
 import CustomRouter from "../CustomRouter.js";
 //import usersManager from "../../data/fs/userFS.js";
-import { create, read, readOne, update, destroy, readByEmail } from "../../controllers/users.controller.js";
+import { create, read, readOne, update, destroy, readByEmail, changeUserRole } from "../../controllers/users.controller.js";
 
 export default class UsersRouter extends CustomRouter {
     init() {
@@ -11,6 +11,7 @@ export default class UsersRouter extends CustomRouter {
         this.update("/:uid", ["ADMIN", "PREM"], update);
         this.destroy("/:id", ["ADMIN", "PREM"], destroy);
         this.read("/readbyemail/:email", ["ADMIN", "PREM"], readByEmail);
+        this.update("/premium/:uid", ["ADMIN"], changeUserRole);
     }
 }
 

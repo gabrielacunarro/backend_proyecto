@@ -35,6 +35,13 @@ class ProductsController {
             if (req.query.title === "desc") {
                 orderAndPaginate.sort.title = 1
             }
+
+            if(req.query.role){
+                filter.role = req.query.role
+            }else{
+                filter.role = 1
+            }
+            
             const all = await this.service.read({ filter, orderAndPaginate });
             if (!all) {
                 const error = customError.new(errors.notFound);
@@ -46,6 +53,7 @@ class ProductsController {
             next(error);
         }
     };
+    
 
     readOne = async (req, res, next) => {
         try {

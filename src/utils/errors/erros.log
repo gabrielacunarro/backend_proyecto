@@ -16,3 +16,22 @@
 [31mERROR[39m: Cannot read properties of undefined (reading 'equals')
 [31mERROR[39m: Cannot read properties of undefined (reading 'toString')
 [31mERROR[39m: Cannot read properties of undefined (reading 'toString')
+[31mERROR[39m: this.services.changeUserRole is not a function
+[31mERROR[39m: this.repository.changeUserRole is not a function
+[31mERROR[39m: Cannot destructure property 'filter' of 'undefined' as it is undefined.
+[31mERROR[39m: req is not defined
+[31mERROR[39m: Cannot read properties of undefined (reading 'equals')
+[31mERROR[39m: this.service.readWithAggregation is not a function
+[31mERROR[39m: Product is not defined
+[31mERROR[39m: Cannot read properties of undefined (reading 'find')
+[31mERROR[39m: Cannot read properties of undefined (reading 'find')
+[31mERROR[39m: Cannot read properties of undefined (reading 'find')
+[31mERROR[39m: Cannot read properties of undefined (reading 'find')
+[31mERROR[39m: Cannot read properties of undefined (reading 'find')
+[31mERROR[39m: Cannot destructure property 'filter' of 'undefined' as it is undefined.
+[31mERROR[39m: Cannot destructure property 'filter' of 'undefined' as it is undefined.
+[31mERROR[39m: products validation failed: uid: Path `uid` is required.
+[31mERROR[39m: products validation failed: uid: Path `uid` is required.
+[31mERROR[39m: products validation failed: uid: Path `uid` is required.
+[31mERROR[39m: products validation failed: uid: Path `uid` is required.
+[31mERROR[39m: Class constructor ObjectId cannot be invoked without 'new'

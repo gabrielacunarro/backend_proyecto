@@ -108,10 +108,32 @@ class UsersController {
         } catch (error) {
             next(error);
         }
-    }
+    };
+
+    changeUserRole = async (req, res, next) => {
+        try {
+            const { uid } = req.params;
+            const { role } = req.body;
+
+            if (![0, 2].includes(role)) {
+                return res.error400("Invalid role. Role must be 0 for user or 2 for premium.");
+            }
+
+            const isUpdated = await this.services.changeUserRole(uid, role);
+
+            if (isUpdated) {
+                return res.success200(`User with ID ${uid} role has been successfully updated.`);
+            } else {
+                const error = customError.new(errors.notFound);
+                throw error;
+            }
+        } catch (error) {
+            next(error);
+        }
+    };
 }
 
 export default UsersController;
 const controller = new UsersController();
-const { create, read, readOne, update, destroy, readByEmail } = controller;
-export { create, read, readOne, update, destroy, readByEmail };
+const { create, read, readOne, update, destroy, readByEmail, changeUserRole } = controller;
+export { create, read, readOne, update, destroy, readByEmail, changeUserRole };
