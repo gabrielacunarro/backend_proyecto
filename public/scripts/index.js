@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <h5 class="p-2 text-center card-title">${product.title}</h5>
                         <p class="p-2 text-center card-price">Precio: ${product.price}</p>
                         <p class="p-2 text-center card-stock">Stock: ${product.stock}</p>
-                        <button class="btn btn-primary addToCart" data-product-id="{{this._id}}">Add to Cart</button>
+                        <button class="btn btn-primary addToCart" data-product-id="${product._id}">Add to Cart</button>
                     </div>
                 </div>
             `;

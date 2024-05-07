@@ -1,4 +1,5 @@
 const loginButton = document.querySelector("#login");
+
 loginButton.addEventListener("click", async (e) => {
     try {
         e.preventDefault();
@@ -13,15 +14,28 @@ loginButton.addEventListener("click", async (e) => {
         };
         let response = await fetch("/api/sessions/login", opts);
         if (!response.ok) {
-            alert("Login failed");
-            window.location.href = "/sessions/login";
-
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to log in',
+                text: 'Please check your credentials and try again.'
+            });
         } else {
-            alert("Log in!")
-            window.location.href = "/";
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Log in successful!",
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = "/";
+            });
         }
     } catch (error) {
-        alert("An unexpected error occurred. Please try again later.");
+        Swal.fire({
+            icon: 'error',
+            title: 'An unexpected error occurred',
+            text: 'Please try again later.'
+        });
     }
 });
 
@@ -34,16 +48,24 @@ googleButton.addEventListener("click", async (e) => {
             method: "POST"
         });
         if (response.ok) {
-
-            window.location.href = response.url;
+            setTimeout(() => {
+                window.location.href = response.url;
+            }, 2000);
         } else {
-
-            throw new Error("Failed to initiate Google login");
+            showErrorAlert('Failed to initiate Google login', 'Please try again later.');
         }
     } catch (error) {
-        alert(error.message);
+        showErrorAlert('An unexpected error occurred while initiating Google login', 'Please try again later.');
     }
 });
+
+function showErrorAlert(title = 'An unexpected error occurred', text = 'Please try again later.') {
+    Swal.fire({
+        icon: 'error',
+        title: title,
+        text: text
+    });
+}
 
 
 

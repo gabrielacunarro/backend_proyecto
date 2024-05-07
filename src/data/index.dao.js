@@ -28,7 +28,8 @@ switch (persistence) {
         const { default: ProductsMongo } = await import("./mongo/products.mongo.js");
         const { default: UsersMongo } = await import("./mongo/users.mongo.js")
         const { default: CommentsMongo } = await import("./mongo/comments.mongo.js")
-        dao = { products: ProductsMongo, users: UsersMongo, comments: CommentsMongo }
+        const { default: OrdersMongo } = await import("./mongo/orders.mongo.js")
+        dao = { products: ProductsMongo, users: UsersMongo, comments: CommentsMongo, orders: OrdersMongo }
         winston.INFO("MONGO CONNECTED");
         break;
 

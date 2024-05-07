@@ -4,19 +4,19 @@ import errors from "../utils/errors/errors.js"
 
 class OrdersController {
     constructor() {
-        this.services = ordersServices
+        this.service = ordersServices
     }
 
     create = async (req, res, next) => {
         try {
             if (!req.user || req.user.role !== 0) {
-                const error = CustomError.new(errors.forbidden);
+                const error = customError.new(errors.forbidden);
                 throw error;
             }
             const data = req.body;
-            const createdOrder = await this.services.create(data);
+            const createdOrder = await this.service.create(data);
 
-            return res.success201("Order created successfully", createdOrder)
+            return res.success201( createdOrder)
         } catch (error) {
             console.error(error);
             return next(error);
@@ -30,7 +30,7 @@ class OrdersController {
             if (req.query.uid) {
                 filter.uid = req.query.uid;
             }
-            const all = await this.services.read({ filter });
+            const all = await this.service.read({ filter });
             return res.success200(all);
         } catch (error) {
             return next(error);
@@ -44,7 +44,7 @@ class OrdersController {
                 return res.status(401).json({ message: "You are not logged in" });
             }
 
-            const userOrders = await this.services.find({ uid: req.user._id });
+            const userOrders = await this.service.find({ uid: req.user._id });
 
             return res.success200(userOrders);
         } catch (error) {
@@ -58,7 +58,7 @@ class OrdersController {
             const { oid } = req.params;
             const { quantity, state } = req.body;
 
-            const updatedOrder = await this.services.update(oid, { quantity, state });
+            const updatedOrder = await this.service.update(oid, { quantity, state });
 
             return res.success200(`Order with ID ${oid} has been successfully updated.`, updatedOrder);
         } catch (error) {
@@ -69,7 +69,7 @@ class OrdersController {
     destroy = async (req, res, next) => {
         try {
             const { oid } = req.params;
-            const one = await this.services.destroy(oid);
+            const one = await this.service.destroy(oid);
 
             if (one) {
                 return res.success200(`Order with ID ${oid} has been successfully deleted.`);
@@ -85,7 +85,7 @@ class OrdersController {
     bills = async (req, res, next) => {
         try {
             const { uid } = req.params;
-            const report = await this.services.report(uid);
+            const report = await this.service.report(uid);
 
             return res.success200(report);
         } catch (error) {

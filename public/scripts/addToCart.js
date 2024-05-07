@@ -1,31 +1,52 @@
-const addToCartBtn = document.querySelector(".addToCart");
+document.addEventListener("DOMContentLoaded", function () {
+    const addToCartButtons = document.querySelectorAll(".addToCart");
 
-addToCartBtn.addEventListener("click", async (event) => {
-    try {
+    addToCartButtons.forEach(button => {
+        button.addEventListener("click", async (event) => {
+            event.preventDefault(); 
 
-        const productId = event.target.dataset.productId;
+            try {
+                const productId = event.target.dataset.productId; 
+                const token = localStorage.getItem("token"); 
 
-        const data = { product_id: productId };
+                const userInfo = JSON.parse(atob(token.split(".")[1]));
+                const data = {
+                    pid: productId, 
+                    uid: userInfo.email, 
+                    quantity: 1, 
+                    state: "paid" 
+                };
 
-        const opts = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-        };
+                const opts = {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}` 
+                    },
+                    body: JSON.stringify(data) 
+                };
 
-        let response = await fetch("/api/cart", opts);
+                let response = await fetch("/api/orders/", opts);
 
-        response = await response.json();
+                if (response.ok) {
+                    // Actualizar el stock del producto en la interfaz de usuario si es necesario
+                    const productStockElement = document.querySelector(`#stock-${productId}`);
+                    if (productStockElement) {
+                        const currentStock = parseInt(productStockElement.textContent);
+                        const updatedStock = currentStock - 1;
+                        productStockElement.textContent = updatedStock;
+                    }
 
-        if (response.statusCode === 401) {
-            alert("Please log in to add products to the cart.");
-        } else {
-
-            location.replace("/cart");
-        }
-    } catch (error) {
-
-        alert("An error occurred while adding the product to the cart.");
-        console.error(error);
-    }
+                    alert("Producto agregado al carrito con éxito.");
+                } else {
+                    alert("Error al agregar el producto al carrito.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Ocurrió un error al agregar el producto al carrito.");
+            }
+        });
+    });
 });
+
+

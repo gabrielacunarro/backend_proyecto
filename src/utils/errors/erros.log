@@ -35,3 +35,39 @@
 [31mERROR[39m: products validation failed: uid: Path `uid` is required.
 [31mERROR[39m: products validation failed: uid: Path `uid` is required.
 [31mERROR[39m: Class constructor ObjectId cannot be invoked without 'new'
+[34mERROR[39m: Error connecting to database: querySrv ECONNREFUSED _mongodb._tcp.gabriela.hvaffst.mongodb.net
+[31mERROR[39m: role is not defined
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: Password is required
+[31mERROR[39m: Password is required
+[31mERROR[39m: Password is required
+[31mERROR[39m: Password is required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: Cast to ObjectId failed for value "null" (type string) at path "_id" for model "products"
+[31mERROR[39m: orders is not iterable
+[31mERROR[39m: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "products"
+[31mERROR[39m: Cast to ObjectId failed for value "null" (type string) at path "_id" for model "products"
+[31mERROR[39m: productService is not defined

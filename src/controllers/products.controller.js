@@ -104,28 +104,28 @@ class ProductsController {
     destroy = async (req, res, next) => {
         try {
             const { pid } = req.params;
-
+    
             const product = await this.service.readOne(pid);
             if (!product) {
                 return res.error404();
             }
-            if (req.user.role === 2 && !product.owner_id.equals(req.user._id)) {
+
+            if (req.user.role === 2 && !req.user._id.equals(product.role)) {
                 return res.error403();
             }
-
+    
             const deletedProduct = await this.service.destroy(pid);
-
+    
             if (deletedProduct) {
                 return res.success200(`Product with ID ${pid} has been successfully deleted.`);
             } else {
                 const error = customError.new(errors.notFound);
                 throw error;
             }
-
         } catch (error) {
             return next(error);
         }
-    }
+    };
 }
 
 export default ProductsController

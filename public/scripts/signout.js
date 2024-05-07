@@ -26,11 +26,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                     let response = await fetch("/api/sessions/signout", opts);
                     response = await response.json();
                     if (response.statusCode === 200) {
-                        alert("Signout!");
-                        localStorage.removeItem("token");
-                        location.replace("/");
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Signout successful!',
+                        }).then(() => {
+                            localStorage.removeItem("token");
+                            location.replace("/");
+                        });
                     }
                 } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An unexpected error occurred',
+                        text: 'Please try again later.'
+                    });
                 }
             });
         } else {
@@ -49,13 +58,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
         if (res.response && res.response.session && res.response.session.role === 1) {
-            // Ocultar botones que no necesita un usuario admin
             const ordersButton = document.querySelector("#ordersbtn");
             if (ordersButton) {
                 ordersButton.style.display = "none";
             }
         } else if (res.response && res.response.session && res.response.session.role === 0) {
-            // Ocultar botones que no necesita un usuario común
             const formButton = document.querySelector("#formbtn");
             if (formButton) {
                 formButton.style.display = "none";
@@ -63,7 +70,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
     } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'An unexpected error occurred',
+            text: 'Please try again later.'
+        });
     }
-
 });
 

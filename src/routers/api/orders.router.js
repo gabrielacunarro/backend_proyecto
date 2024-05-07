@@ -4,10 +4,10 @@ import { create, read, readOne, destroy, update, bills } from "../../controllers
 
 export default class OrdersRouter extends CustomRouter {
     init() {
-        this.create("/", ["USER"], passCbMid("jwt"), create);
-        this.read("/", ["USER"], read);
-        this.read("/", ["USER"], readOne);
-        this.destroy("/:oid", ["USER"], destroy);
+        this.create("/", ["USER", "ADMIN", "PREM"], passCbMid("jwt"), create);
+        this.read("/", ["USER", "ADMIN", "PREM"], read);
+        this.read("/", ["USER", "ADMIN", "PREM"], readOne);
+        this.destroy("/:oid", ["USER", "ADMIN", "PREM"], destroy);
         this.update("/:oid", ["USER"], update);
         this.read("/total/:uid", ["USER"], bills);
     }
