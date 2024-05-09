@@ -71,3 +71,14 @@
 [31mERROR[39m: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "products"
 [31mERROR[39m: Cast to ObjectId failed for value "null" (type string) at path "_id" for model "products"
 [31mERROR[39m: productService is not defined
+[31mERROR[39m: Product is not defined
+[31mERROR[39m: Cannot read properties of undefined (reading 'equals')
+[31mERROR[39m: error is not defined
+[31mERROR[39m: error is not defined
+[31mERROR[39m: user is not defined
+[31mERROR[39m: Cannot read properties of undefined (reading 'role')
+[31mERROR[39m: Cannot read properties of undefined (reading 'role')
+[31mERROR[39m: productsServices.getProductById is not a function
+[31mERROR[39m: id is not defined
+[31mERROR[39m: id is not defined
+[31mERROR[39m: productsServices is not defined

@@ -1,4 +1,6 @@
 import ordersServices from "../services/orders.services.js"
+import productsServices from "../services/products.services.js"
+import usersServices from "../services/users.services.js"
 import customError from "../utils/errors/customError.js"
 import errors from "../utils/errors/errors.js"
 
@@ -9,14 +11,31 @@ class OrdersController {
 
     create = async (req, res, next) => {
         try {
-            if (!req.user || req.user.role !== 0) {
+
+            if (!req.user || req.user.role === 0) {
                 const error = customError.new(errors.forbidden);
                 throw error;
             }
-            const data = req.body;
-            const createdOrder = await this.service.create(data);
+            
+            const { pid } = req.body;
 
-            return res.success201( createdOrder)
+            const product = await productsServices.readOne(pid);
+
+            if (!product) {
+                const error = customError.new(errors.notFound);
+                throw error;
+            }
+
+            const createdByUser = await usersServices.readOne(product.owner_id);
+            console.log(product.owner_id)
+
+            if (createdByUser.role === 1) {
+                const data = req.body;
+                const createdOrder = await this.service.create(data);
+                return res.success201(createdOrder);
+            } else {
+                throw customError.new(errors.forbidden);
+            }
         } catch (error) {
             console.error(error);
             return next(error);
