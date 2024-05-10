@@ -20,8 +20,91 @@ components:
         last_name: Cuñarro
         email: gabi@gmail.com    
         password: hola1234
-  responses:
-    res201:
+    ErrorPayload:
       type: object
       properties:
-        
+        message:
+          type: string
+          description: Error message
+  responses:
+    res201:
+      description: User successfully created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Register'
+    res400:
+      description: Invalid password
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+    res401:
+      description: User already exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+    res404:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+    res500:
+      description: Fatal
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+paths:
+  /api/sessions/register:
+    post:
+      summary: To register a user
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        description: Data of the user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        '201':
+          $ref: '#/components/responses/res201'
+        '400':
+          $ref: '#/components/responses/res400'
+        '401':
+          $ref: '#/components/responses/res401'
+        '404':
+          $ref: '#/components/responses/res404'
+        '500':
+          $ref: '#/components/responses/res500'
+
+
+
