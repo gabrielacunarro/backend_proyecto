@@ -20,6 +20,30 @@ components:
         last_name: Cuñarro
         email: gabi@gmail.com    
         password: hola1234
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        email:
+          type: string
+          description: Email of the user
+        password:
+          type: string
+          description: Password to log
+        role:
+          type: integer
+          description: Role of the user
+      example:
+        name: gabriela
+        last_name: Cuñarro
+        email: gabi@gmail.com
+        password: hola1234
+        role: 1
     ErrorPayload:
       type: object
       properties:
@@ -57,6 +81,18 @@ components:
                 description: Error message
               payload:
                 $ref: '#/components/schemas/ErrorPayload'
+    res403:
+      description: Forbbiden
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
     res404:
       description: Not found
       content:
@@ -81,12 +117,13 @@ components:
                 description: Error message
               payload:
                 $ref: '#/components/schemas/ErrorPayload'
+
 paths:
   /api/sessions/register:
     post:
       summary: To register a user
       tags:
-        - Sessions
+        - User
       requestBody:
         required: true
         description: Data of the user
@@ -101,10 +138,39 @@ paths:
           $ref: '#/components/responses/res400'
         '401':
           $ref: '#/components/responses/res401'
+        '403':
+          $ref: '#/components/responses/res403'
         '404':
           $ref: '#/components/responses/res404'
         '500':
           $ref: '#/components/responses/res500'
+
+  /api/sessions/login:
+    post:
+      summary: Login
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login'
+      responses:
+        '201':
+          $ref: '#/components/responses/res201'
+        '400':
+          $ref: '#/components/responses/res400'
+        '401':
+          $ref: '#/components/responses/res401'
+        '403':
+          $ref: '#/components/responses/res403'
+        '500':
+          $ref: '#/components/responses/res500'
+
+
+
+
 
 
 

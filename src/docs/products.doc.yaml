@@ -20,7 +20,6 @@ components:
         last_name: Cuñarro
         email: gabi@gmail.com    
         password: hola1234
-
     Product:
       type: object
       properties:
@@ -54,14 +53,12 @@ components:
         stock: 50
         owner_id: "7c62406fdd4964eb7c488b08"
         role: 1
-
     ErrorPayload:
       type: object
       properties:
         message:
           type: string
           description: Error message
-
   responses:
     res201:
       description: User successfully created
@@ -69,7 +66,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Register'
-
     res400:
       description: Invalid password
       content:
@@ -82,7 +78,6 @@ components:
                 description: Error message
               payload:
                 $ref: '#/components/schemas/ErrorPayload'
-
     res401:
       description: User already exists
       content:
@@ -95,7 +90,6 @@ components:
                 description: Error message
               payload:
                 $ref: '#/components/schemas/ErrorPayload'
-
     res404:
       description: Not found
       content:
@@ -108,7 +102,6 @@ components:
                 description: Error message
               payload:
                 $ref: '#/components/schemas/ErrorPayload'
-
     res500:
       description: Fatal
       content:
@@ -121,7 +114,6 @@ components:
                 description: Error message
               payload:
                 $ref: '#/components/schemas/ErrorPayload'
-
 paths:
   /api/sessions/register:
     post:
@@ -146,7 +138,6 @@ paths:
           $ref: '#/components/responses/res404'
         '500':
           $ref: '#/components/responses/res500'
-
   /api/products:
     post:
       summary: Create a product
@@ -167,7 +158,6 @@ paths:
           $ref: '#/components/responses/res401'
         '500':
           $ref: '#/components/responses/res500'
-
     get:
       summary: Get all products
       tags:
@@ -183,7 +173,6 @@ paths:
                   $ref: '#/components/schemas/Product'
         '500':
           $ref: '#/components/responses/res500'
-
   /api/products/{id}:
     put:
       summary: Update a product
@@ -213,7 +202,6 @@ paths:
           $ref: '#/components/responses/res404'
         '500':
           $ref: '#/components/responses/res500'
-
     delete:
       summary: Delete a product
       tags:
