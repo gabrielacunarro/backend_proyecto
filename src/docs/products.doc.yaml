@@ -115,29 +115,6 @@ components:
               payload:
                 $ref: '#/components/schemas/ErrorPayload'
 paths:
-  /api/sessions/register:
-    post:
-      summary: To register a user
-      tags:
-        - Sessions
-      requestBody:
-        required: true
-        description: Data of the user
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Register'
-      responses:
-        '201':
-          $ref: '#/components/responses/res201'
-        '400':
-          $ref: '#/components/responses/res400'
-        '401':
-          $ref: '#/components/responses/res401'
-        '404':
-          $ref: '#/components/responses/res404'
-        '500':
-          $ref: '#/components/responses/res500'
   /api/products:
     post:
       summary: Create a product
