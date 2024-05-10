@@ -1,0 +1,27 @@
+components:
+  schemas:
+    Register:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the user
+        last_name:
+          type: string  
+          description: Last name of the user
+        email:
+          type: string
+          description: Email of the user
+        password:
+          type: string
+          description: Password to log
+      example:
+        name: gabriela
+        last_name: Cuñarro
+        email: gabi@gmail.com    
+        password: hola1234
+  responses:
+    res201:
+      type: object
+      properties:
+        

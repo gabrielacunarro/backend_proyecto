@@ -4,6 +4,9 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import __dirname from "./utils.js";
+import options from "./src/utils/swagger.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import { serve, setup } from "swagger-ui-express";
 import morgan from "morgan";
 import { engine } from "express-handlebars";
 import cookieParser from "cookie-parser";
@@ -26,6 +29,10 @@ import { cpus } from "os";
 
 const server = express();
 const PORT = env.PORT || 8080;
+
+const specs = swaggerJSDoc(options)
+server.use("/api/docs", serve, setup(specs))
+
 const ready = () =>
     winstonUtils.INFO("Server on port " + PORT);
 const httpServer = createServer(server);

@@ -27,7 +27,6 @@ class OrdersController {
             }
 
             const createdByUser = await usersServices.readOne(product.owner_id);
-            console.log(product.owner_id)
 
             if (createdByUser.role === 1) {
                 const data = req.body;
@@ -37,7 +36,6 @@ class OrdersController {
                 throw customError.new(errors.forbidden);
             }
         } catch (error) {
-            console.error(error);
             return next(error);
         }
     };
@@ -67,7 +65,6 @@ class OrdersController {
 
             return res.success200(userOrders);
         } catch (error) {
-            console.error(error);
             return res.error500("Internal server error");
         }
     };
@@ -108,7 +105,6 @@ class OrdersController {
 
             return res.success200(report);
         } catch (error) {
-            console.error(error);
             next(error);
         }
     };

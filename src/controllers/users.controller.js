@@ -14,7 +14,6 @@ class UsersController {
 
             return res.success201("User successfully created.");
         } catch (error) {
-            console.error(error);
             next(error);
         }
     };
@@ -40,7 +39,6 @@ class UsersController {
             }
             return res.error404(all);
         } catch (error) {
-            console.error(error);
             next(error);
         }
     };

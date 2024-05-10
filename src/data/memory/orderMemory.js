@@ -37,7 +37,7 @@ class MemoryOrdersManager {
                     },
                 };
             } catch (error) {
-                console.error(`Error creating order: ${error.message}`);
+                winston.error(`Error creating order: ${error.message}`);
                 throw {
                     statusCode: 500,
                     response: {
@@ -57,7 +57,7 @@ class MemoryOrdersManager {
                 },
             };
         } catch (error) {
-            console.error(`Error reading orders: ${error.message}`);
+            winston.error(`Error reading orders: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -87,7 +87,7 @@ class MemoryOrdersManager {
                 };
             }
         } catch (error) {
-            console.error(`Error reading order: ${error.message}`);
+            winston.error(`Error reading order: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -118,7 +118,7 @@ class MemoryOrdersManager {
                 };
             }
         } catch (error) {
-            console.error(`Error deleting order: ${error.message}`);
+            winston.error(`Error deleting order: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -150,7 +150,7 @@ class MemoryOrdersManager {
                 };
             }
         } catch (error) {
-            console.error(`Error updating order: ${error.message}`);
+            winston.error(`Error updating order: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {

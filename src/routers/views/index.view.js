@@ -34,7 +34,6 @@ export default class ViewsRouter extends CustomRouter {
                     response: all,
                 })
             } catch (error) {
-                console.error(error);
                 next(error);
             }
         })

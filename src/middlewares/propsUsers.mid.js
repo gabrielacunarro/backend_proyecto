@@ -9,7 +9,6 @@ function propsUsers(req, res, next) {
         propsUsersUtils(req.body, req.method, req.originalUrl);
         return next();
     } catch (error) {
-        console.error('propsUsers error:', error);
         return next(error);
     }
 }

@@ -21,7 +21,7 @@ async function createUser() {
         }
 
     } catch (error) {
-        console.error("Error:", error);
+        winston.error("Error:", error);
     }
 }
 

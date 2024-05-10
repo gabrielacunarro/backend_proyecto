@@ -15,7 +15,7 @@ class ProductsController {
 
             return res.success201(createdProduct);
         } catch (error) {
-            console.error("Error in POST /products:", error);
+            winston.error("Error in POST /products:", error);
             return next(error);
         }
     };
@@ -49,7 +49,7 @@ class ProductsController {
             }
             return res.success200(all);
         } catch (error) {
-            console.error(error);
+            winston.error(error);
             next(error);
         }
     };
