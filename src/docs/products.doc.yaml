@@ -1,0 +1,236 @@
+components:
+  schemas:
+    Register:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the user
+        last_name:
+          type: string  
+          description: Last name of the user
+        email:
+          type: string
+          description: Email of the user
+        password:
+          type: string
+          description: Password to log
+      example:
+        name: gabriela
+        last_name: Cuñarro
+        email: gabi@gmail.com    
+        password: hola1234
+
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the product
+        description:
+          type: string
+          description: Description of the product
+        photo:
+          type: string
+          description: URL of the product photo
+        price:
+          type: number
+          description: Price of the product
+        stock:
+          type: integer
+          description: Available stock of the product
+        owner_id:
+          type: string
+          description: ID of the product owner
+        role:
+          type: integer
+          description: Role required to access the product
+          enum: [1, 2]
+      example:
+        title: T-shirt
+        description: Cotton T-shirt with print.
+        photo: https://example.com/tshirt.jpg
+        price: 19.99
+        stock: 50
+        owner_id: "7c62406fdd4964eb7c488b08"
+        role: 1
+
+    ErrorPayload:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+
+  responses:
+    res201:
+      description: User successfully created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Register'
+
+    res400:
+      description: Invalid password
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+
+    res401:
+      description: User already exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+
+    res404:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+
+    res500:
+      description: Fatal
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+
+paths:
+  /api/sessions/register:
+    post:
+      summary: To register a user
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        description: Data of the user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        '201':
+          $ref: '#/components/responses/res201'
+        '400':
+          $ref: '#/components/responses/res400'
+        '401':
+          $ref: '#/components/responses/res401'
+        '404':
+          $ref: '#/components/responses/res404'
+        '500':
+          $ref: '#/components/responses/res500'
+
+  /api/products:
+    post:
+      summary: Create a product
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          $ref: '#/components/responses/res201'
+        '400':
+          $ref: '#/components/responses/res400'
+        '401':
+          $ref: '#/components/responses/res401'
+        '500':
+          $ref: '#/components/responses/res500'
+
+    get:
+      summary: Get all products
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Successfully retrieved list of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/responses/res500'
+
+  /api/products/{id}:
+    put:
+      summary: Update a product
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the product to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          $ref: '#/components/responses/res201'
+        '400':
+          $ref: '#/components/responses/res400'
+        '401':
+          $ref: '#/components/responses/res401'
+        '404':
+          $ref: '#/components/responses/res404'
+        '500':
+          $ref: '#/components/responses/res500'
+
+    delete:
+      summary: Delete a product
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the product to delete
+      responses:
+        '204':
+          description: Product deleted successfully
+        '401':
+          $ref: '#/components/responses/res401'
+        '404':
+          $ref: '#/components/responses/res404'
+        '500':
+          $ref: '#/components/responses/res500'
