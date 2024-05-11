@@ -31,7 +31,7 @@ selector.addEventListener("click", async (e) => {
 const googleButton = document.querySelector("#google");
 googleButton.addEventListener("click", async (e) => {
     try {
-
+        e.preventDefault()
         let response = await fetch("/api/sessions/google", {
             method: "POST"
         });
@@ -41,6 +41,25 @@ googleButton.addEventListener("click", async (e) => {
         } else {
 
             throw new Error("Failed to initiate Google login");
+        }
+    } catch (error) {
+        alert(error.message);
+    }
+});
+
+const githubButton = document.querySelector("#github");
+githubButton.addEventListener("click", async (e) => {
+    try {
+        e.preventDefault()
+        let response = await fetch("/api/sessions/github", {
+            method: "POST"
+        });
+        if (response.ok) {
+
+            window.location.href = response.url;
+        } else {
+
+            throw new Error("Failed to initiate Github login");
         }
     } catch (error) {
         alert(error.message);

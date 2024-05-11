@@ -45,6 +45,25 @@ googleButton.addEventListener("click", async (e) => {
     try {
         e.preventDefault();
         let response = await fetch("/api/sessions/google", {
+            method: "GET"
+        });
+        if (response.ok) {
+            setTimeout(() => {
+                window.location.href = "http://localhost:8080/api/sessions/google";
+            }, 2000);
+        } else {
+            showErrorAlert('Failed to initiate Google login', 'Please try again later.');
+        }
+    } catch (error) {
+        showErrorAlert('An unexpected error occurred while initiating Google login', 'Please try again later.');
+    }
+});
+
+const githubButton = document.querySelector("#github");
+githubButton.addEventListener("click", async (e) => {
+    try {
+        e.preventDefault();
+        let response = await fetch("/api/sessions/github", {
             method: "POST"
         });
         if (response.ok) {
@@ -52,10 +71,10 @@ googleButton.addEventListener("click", async (e) => {
                 window.location.href = response.url;
             }, 2000);
         } else {
-            showErrorAlert('Failed to initiate Google login', 'Please try again later.');
+            showErrorAlert('Failed to initiate Github login', 'Please try again later.');
         }
     } catch (error) {
-        showErrorAlert('An unexpected error occurred while initiating Google login', 'Please try again later.');
+        showErrorAlert('An unexpected error occurred while initiating Github login', 'Please try again later.');
     }
 });
 

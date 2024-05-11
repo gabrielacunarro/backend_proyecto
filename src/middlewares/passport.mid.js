@@ -1,9 +1,9 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
-import { Strategy as GithubStrategy } from "passport-google-oauth2";
+import { Strategy as GithubStrategy } from "passport-github2";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt"
-import { verifyHash } from "../utils/hash.util.js";
+import { verifyHash, createHash } from "../utils/hash.util.js";
 import { createToken } from "../utils/token.util.js";
 const { GOOGLE_ID, GOOGLE_CLIENT, SECRET, GITHUB_CLIENT, GITHUB_ID } = process.env
 import repository from "../repositories/users.repositories.js";
@@ -60,7 +60,7 @@ passport.use("google",
         async (req, accessToken, refreshToken, profile, done) => {
             try {
                 let user = await repository.readByEmail(profile._id);
-
+                console.log(profile)
                 const sessionData = {
                     email: profile._id,
                     role: null
@@ -97,7 +97,6 @@ passport.use(
         },
         async (req, accessToken, refreshToken, profile, done) => {
             try {
-                console.log(profile);
                 let user = await repository.readByEmail(profile.id + "@github.com");
                 if (!user) {
                     user = {

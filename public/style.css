@@ -137,7 +137,8 @@ input {
 #register,
 #login,
 #create,
-#google {
+#google,
+#github {
     margin-top: 35px;
     max-width: 50%;
     background-color: #606060;
@@ -149,7 +150,8 @@ input {
 #register:hover,
 #login:hover,
 #create:hover,
-#google:hover {
+#google:hover,
+#github:hover {
     background-color: #333;
 }
 

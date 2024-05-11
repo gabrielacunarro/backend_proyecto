@@ -99,3 +99,7 @@
 [31mERROR[39m: E11000 duplicate key error collection: -dev.carts index: uid_1 dup key: { uid: ObjectId('6637e30a021a52438b178563') }
 [31mERROR[39m: Cannot read properties of undefined (reading 'findIndex')
 [31mERROR[39m: E11000 duplicate key error collection: -dev.carts index: uid_1 dup key: { uid: ObjectId('6637e30a021a52438b178563') }
+[31mERROR[39m: createHash is not defined
+[31mERROR[39m: createHash is not defined
+[31mERROR[39m: data and salt arguments required
+[31mERROR[39m: data and salt arguments required

@@ -10,7 +10,7 @@ export default class SessionsRouter extends CustomRouter {
         //register
         this.create("/register", ["PUBLIC"], has8char, passCbMid("register"), async (req, res, next) => {
             try {
-                
+
                 return res.success201("Registered!");
             } catch (error) {
                 return next(error)
@@ -56,29 +56,29 @@ export default class SessionsRouter extends CustomRouter {
             }
         })
 
-// google
-this.create("/google", ["PUBLIC"], passport.authenticate("google", { scope: ["email", "profile"] }));
+        // google
+        this.read("/google", ["PUBLIC"], passport.authenticate("google", { scope: ["email", "profile"] }));
 
-// google cb
-this.read("/google/cb", passport.authenticate("google", { session: false, failureRedirect: "/api/sessions/badauth" }), async (req, res, next) => {
-    try {
-        res.redirect("/");
-    } catch (error) {
-        return next(error);
-    }
-});
+        // google cb
+        this.read("/google/cb", ["PUBLIC"], passport.authenticate("google", { session: false, failureRedirect: "/api/sessions/badauth" }), async (req, res, next) => {
+            try {
+                res.redirect("/");
+            } catch (error) {
+                return next(error);
+            }
+        });
 
-// github
-this.create("/github", ["PUBLIC"], passport.authenticate("github", { scope: ["user", "email"] }));
+        // github
+        this.create("/github", ["PUBLIC"], passport.authenticate("github", { scope: ["user", "email"] }));
 
-// github cb
-this.read("/github/cb", passport.authenticate("github", { session: false, failureRedirect: "/api/sessions/badauth" }), async (req, res, next) => {
-    try {
-        res.redirect("/");
-    } catch (error) {
-        return next(error);
-    }
-});
+        // github cb
+        this.read("/github/cb", ["PUBLIC"], passport.authenticate("github", { session: false, failureRedirect: "/api/sessions/badauth" }), async (req, res, next) => {
+            try {
+                res.redirect("/");
+            } catch (error) {
+                return next(error);
+            }
+        });
 
 
         this.create("/", ["USER", "ADMIN", "PREM"], passCbMid("jwt"), async (req, res, next) => {
