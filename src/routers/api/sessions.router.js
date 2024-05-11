@@ -56,20 +56,30 @@ export default class SessionsRouter extends CustomRouter {
             }
         })
 
-        //google
-        this.create("/google",["PUBLIC"], passport.authenticate("google", { scope: ["email", "profile"] }),
-        );
+// google
+this.create("/google", ["PUBLIC"], passport.authenticate("google", { scope: ["email", "profile"] }));
 
-        //google cb
-        this.read("/google/cb", passport.authenticate("google", { session: false, failureRedirect: "/api/sessions/badauth" }), async (req, res, next) => {
-            try {
+// google cb
+this.read("/google/cb", passport.authenticate("google", { session: false, failureRedirect: "/api/sessions/badauth" }), async (req, res, next) => {
+    try {
+        res.redirect("/");
+    } catch (error) {
+        return next(error);
+    }
+});
 
-                res.redirect("/");
+// github
+this.create("/github", ["PUBLIC"], passport.authenticate("github", { scope: ["user", "email"] }));
 
-            } catch (error) {
-                return next(error);
-            }
-        });
+// github cb
+this.read("/github/cb", passport.authenticate("github", { session: false, failureRedirect: "/api/sessions/badauth" }), async (req, res, next) => {
+    try {
+        res.redirect("/");
+    } catch (error) {
+        return next(error);
+    }
+});
+
 
         this.create("/", ["USER", "ADMIN", "PREM"], passCbMid("jwt"), async (req, res, next) => {
             try {

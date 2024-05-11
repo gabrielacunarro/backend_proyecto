@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert("Error al agregar el producto al carrito.");
                 }
             } catch (error) {
-                console.error("Error:", error);
                 alert("Ocurrió un error al agregar el producto al carrito.");
             }
         });

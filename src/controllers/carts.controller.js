@@ -1,6 +1,5 @@
 import cartsServices from "../services/carts.services.js";
 import productsServices from "../services/products.services.js";
-import usersServices from "../services/users.services.js";
 import customError from "../utils/errors/customError.js";
 import errors from "../utils/errors/errors.js";
 
@@ -44,7 +43,6 @@ class CartsController {
             }
             
             const filter = { uid: req.user._id };
-            console.log("Filtro:", filter);
 
             const userCart = await this.service.read({ filter });
     
@@ -57,10 +55,6 @@ class CartsController {
             return next(error);
         }
     };
-    
-    
-    
-    
     update = async (req, res, next) => {
         try {
             const { cid } = req.params;

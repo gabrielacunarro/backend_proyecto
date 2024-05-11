@@ -1,10 +1,11 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+import { Strategy as GithubStrategy } from "passport-google-oauth2";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt"
 import { verifyHash } from "../utils/hash.util.js";
 import { createToken } from "../utils/token.util.js";
-const { GOOGLE_ID, GOOGLE_CLIENT, SECRET } = process.env
+const { GOOGLE_ID, GOOGLE_CLIENT, SECRET, GITHUB_CLIENT, GITHUB_ID } = process.env
 import repository from "../repositories/users.repositories.js";
 import service from "../services/users.services.js";
 import crypto from "crypto"
@@ -17,7 +18,7 @@ passport.use("register", new LocalStrategy(
             if (!one) {
                 let data = req.body;
                 data.verifiedCode = crypto.randomBytes(12).toString("base64")
-                
+
                 let user = await repository.create(data)
                 if (user) {
                     service.register(data)
@@ -78,6 +79,37 @@ passport.use("google",
                 }
                 req.session.email = sessionData.email;
                 req.session.role = sessionData.role;
+                return done(null, user);
+            } catch (error) {
+                return done(error);
+            }
+        }
+    )
+);
+passport.use(
+    "github",
+    new GithubStrategy(
+        {
+            passReqToCallback: true,
+            clientID: GITHUB_ID,
+            clientSecret: GITHUB_CLIENT,
+            callbackURL: "http://localhost:8080/api/sessions/github/cb",
+        },
+        async (req, accessToken, refreshToken, profile, done) => {
+            try {
+                console.log(profile);
+                let user = await repository.readByEmail(profile.id + "@github.com");
+                if (!user) {
+                    user = {
+                        email: profile.id + "@github.com",
+                        name: profile.displayName || profile.username,
+                        photo: profile.photos[0].value,
+                        password: createHash(profile.id),
+                    };
+                    user = await repository.create(user);
+                }
+                req.session.email = user.email;
+                req.session.role = user.role;
                 return done(null, user);
             } catch (error) {
                 return done(error);

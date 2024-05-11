@@ -9,17 +9,14 @@ class SessionController {
             const { email, name, verifiedCode } = req.user;
             const createdUser = await this.service.register({ email, name, verifiedCode });
     
-            // Obtener el ID del usuario creado
             const userId = createdUser._id;
     
-            // Devolver solo el ID del usuario en la respuesta
             return res.status(201).json({ userId: userId });
         } catch (error) {
             next(error);
         }
     };
     
-
     login = async (req, res, next) => {
         try {
             return res.cookie("token", req.token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true }).json({

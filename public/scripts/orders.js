@@ -7,20 +7,17 @@ window.addEventListener('DOMContentLoaded', async () => {
             throw new Error('No se encontraron órdenes');
         }
         
-        const orders = data.response.docs; // Obtener el array de órdenes
+        const orders = data.response.docs; 
 
-        const ordersBody = document.getElementById('orders-body'); // Obtener el cuerpo de la tabla
+        const ordersBody = document.getElementById('orders-body'); 
 
         orders.forEach(order => {
-            const orderRow = document.createElement('tr'); // Crear una fila para cada orden
+            const orderRow = document.createElement('tr'); 
 
-            // Obtener el título del producto
             const productTitle = order.pid ? order.pid.title : 'N/A';
 
-            // Obtener la cantidad agregada al carrito
             const quantity = order.quantity || 'N/A';
 
-            // Obtener el estado de la orden
             const state = order.state || 'N/A';
 
             // Crear celdas para cada propiedad de la orden y agregarlas a la fila
@@ -32,11 +29,10 @@ window.addEventListener('DOMContentLoaded', async () => {
                 <td>${state}</td>
             `;
 
-            ordersBody.appendChild(orderRow); // Agregar la fila al cuerpo de la tabla
+            ordersBody.appendChild(orderRow); 
         });
     } catch (error) {
-        console.error('Error al obtener las órdenes:', error);
-        // Aquí podrías mostrar un mensaje de error en tu interfaz de usuario
+        throw error('Error al obtener las órdenes:', error);
     }
 });
 

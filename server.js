@@ -112,14 +112,14 @@ export { socketServer };
 const numCPUs = cpus().length;
 
 // if (cluster.isPrimary) {
-//     console.log('primary');
+//     winston.info('primary');
 //     for (let i = 1; i <= numCPUs; i++) {
 //         cluster.fork()
 //     }
 // } else {
-//     console.log('worker', process.pid);
+//     winston.info('worker', process.pid);
 //     server.listen(9000,()=>
-// console.log("worker ready on port: ",9000))
+// winston.info("worker ready on port: ",9000))
 // }
 
 
