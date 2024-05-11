@@ -4,6 +4,7 @@ import OrdersRouter from "./orders.router.js"
 import SessionsRouter from "./sessions.router.js"
 import LoggersRouter from "./loggers.router.js";
 import commentsRouter from "./comments.router.js"
+import CartsRouter from "./carts.router.js";
 import passport from "../../middlewares/passport.mid.js"
 import CustomRouter from "../CustomRouter.js"
 
@@ -12,6 +13,7 @@ const order = new OrdersRouter();
 const session = new SessionsRouter();
 const user = new UsersRouter();
 const loggers = new LoggersRouter();
+const carts = new CartsRouter();
 
 export default class ApiRouter extends CustomRouter {
     init() {
@@ -21,6 +23,7 @@ export default class ApiRouter extends CustomRouter {
         this.use("/sessions", session.getRouter())
         this.use("/comments", commentsRouter)
         this.use("/loggers", loggers.getRouter())
+        this.use("/carts", carts.getRouter())
     }
 }
 

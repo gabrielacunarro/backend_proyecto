@@ -1,4 +1,4 @@
-import service from "../services/comments.service.js";
+import service from "../services/comments.services.js";
 
 class CommentsController {
     constructor() {

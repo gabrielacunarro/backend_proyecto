@@ -47,7 +47,7 @@ class OrdersController {
             if (req.query.uid) {
                 filter.uid = req.query.uid;
             }
-            const all = await this.service.read({ filter });
+            const all = await this.service.read({ filter: {uid: req.user._id} });
             return res.success200(all);
         } catch (error) {
             return next(error);
