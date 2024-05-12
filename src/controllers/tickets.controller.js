@@ -66,10 +66,6 @@ class TicketsController {
             return next(error);
         }
     };
-    
-    
-    
-    
 }
 
 export default TicketsController;

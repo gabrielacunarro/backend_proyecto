@@ -12,7 +12,7 @@ class OrdersController {
     create = async (req, res, next) => {
         try {
 
-            if (!req.user || req.user.role === 0) {
+            if (!req.user ) {
                 const error = customError.new(errors.forbidden);
                 throw error;
             }
