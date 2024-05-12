@@ -3,10 +3,10 @@ import commentsRepository from '../../repositories/comments.repositories.js';
 import winston from '../../utils/logger/winston.utils.js';
 import "dotenv/config.js";
 
-function commentsMock(userId, postId) {
+function commentsMock(uid, postId) {
     return {
         text: faker.music.songName(),
-        user_id: userId,
+        user_id: uid,
         pid: postId
     };
 }

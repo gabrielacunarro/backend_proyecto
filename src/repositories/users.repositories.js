@@ -13,7 +13,7 @@ class UsersRep {
     readByEmail = async (email) => await this.model.readByEmail(email)
     update = async (id, data) => await this.model.update(id, data)
     destroy = async (id) => await this.model.destroy(id)
-    changeUserRole = async (userId, newRole) => this.model.update(userId, { role: newRole });
+    changeUserRole = async (uid, newRole) => this.model.update(uid, { role: newRole });
 }
 
 const repository = new UsersRep();

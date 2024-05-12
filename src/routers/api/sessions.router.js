@@ -2,7 +2,7 @@ import has8char from "../../middlewares/has8char.mid.js";
 import passport from "../../middlewares/passport.mid.js";
 import passCbMid from "../../middlewares/passCb.mid.js";
 import CustomRouter from "../CustomRouter.js";
-import { verifyAccount } from "../../controllers/sessions.controller.js";
+import { verifyAccount, updatePassword  } from "../../controllers/sessions.controller.js";
 
 
 export default class SessionsRouter extends CustomRouter {
@@ -90,8 +90,7 @@ export default class SessionsRouter extends CustomRouter {
         });
 
         this.create("/verify", ["PUBLIC", "USER", "ADMIN"], verifyAccount);
-
+        this.update("/password", ["PUBLIC", "USER", "ADMIN"], updatePassword );
     }
-
 }
 

@@ -18,12 +18,12 @@ class UsersService {
             throw error
         }
     };
-    changeUserRole = async (userId, newRole) => {
+    changeUserRole = async (uid, newRole) => {
         try {
             if (![0, 2].includes(newRole)) {
                 throw new Error("Invalid role. Role must be 0 for user or 2 for premium.");
             }
-            const isUpdated = await this.repository.changeUserRole(userId, newRole);
+            const isUpdated = await this.repository.changeUserRole(uid, newRole);
 
             return isUpdated;
         } catch (error) {
