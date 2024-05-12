@@ -54,20 +54,26 @@ class OrdersController {
         }
     };
 
+    //ver
     readOne = async (req, res, next) => {
         try {
-
-            if (!req.user) {
-                return res.status(401).json({ message: "You are not logged in" });
+            const oid = req.body;
+    
+            if (!oid) {
+                return res.status(400).json({ message: "OID parameter is required" });
             }
-
-            const userOrders = await this.service.find({ uid: req.user._id });
-
-            return res.success200(userOrders);
+            const order = await this.service.readOne(oid);
+            // if (!order) {
+            //     return res.status(404).json({ message: "Order not found" });
+            // }
+    
+            return res.status(200).json(order);
         } catch (error) {
-            return res.error500("Internal server error");
+            return next(error);
         }
     };
+    
+    
 
     update = async (req, res, next) => {
         try {

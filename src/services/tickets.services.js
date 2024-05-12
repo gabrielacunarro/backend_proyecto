@@ -1,4 +1,4 @@
-import ticketRepository from "../repositories/tickets.repositories.js"; // Asegúrate de importar el repositorio adecuado para los tickets
+import ticketRepository from "../repositories/tickets.repositories.js"
 
 class TicketService {
     constructor() {
@@ -7,9 +7,7 @@ class TicketService {
 
     create = async (data) => await this.repository.create(data);
     read = async ({ filter }) => await this.repository.read({ filter });
-    readOne = async (id) => await this.repository.readOne(id);
-    update = async (id, data) => await this.repository.update(id, data);
-    destroy = async (id) => await this.repository.destroy(id);
+    findOne = async (oid) => await this.repository.findOne(oid);
 }
 
 const ticketService = new TicketService();

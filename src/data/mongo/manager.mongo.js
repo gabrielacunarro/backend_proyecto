@@ -43,7 +43,7 @@ class MongoManager {
         } catch (error) {
             throw error
         }
-    }
+    };
     async update(id, data) {
         try {
             const opt = { new: true } // este obj de config opcional devuelve el objeto luego de la modificacion
@@ -53,7 +53,7 @@ class MongoManager {
         } catch (error) {
             throw error;
         }
-    }
+    };
     async destroy(id) {
         try {
             const one = await this.model.findByIdAndDelete(id)
@@ -62,7 +62,7 @@ class MongoManager {
         } catch (error) {
             throw error;
         }
-    }
+    };
     async readByEmail(email) {
         try {
             const user = await this.model.findOne({ email });
@@ -70,8 +70,7 @@ class MongoManager {
         } catch (error) {
             throw error;
         }
-    }
-
+    };
     async stats({ filter }) {
         try {
             let stats = await this.model.find(filter).explain("executionStats");
@@ -83,8 +82,7 @@ class MongoManager {
         } catch (error) {
             throw error
         }
-    }
-
+    };
     async report(uid) {
         try {
             const report = await this.model.aggregate([
@@ -111,8 +109,15 @@ class MongoManager {
         } catch (error) {
             throw error
         }
-    }
-
+    };
+    async findOne(criteria) {
+        try {
+            const one = await this.model.findOne(criteria)
+            return one
+        } catch (error) {
+            throw error
+        }
+    };
 }
 
 export default MongoManager;

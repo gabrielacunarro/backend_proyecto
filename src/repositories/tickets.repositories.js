@@ -10,9 +10,7 @@ class TicketRepository {
 
     create = async (data) => await this.model.create(new TicketDTO(data));
     read = async ({ filter }) => await this.model.read({ filter });
-    readOne = async (id) => await this.model.readOne(id);
-    update = async (id, data) => await this.model.update(id, data);
-    destroy = async (id) => await this.model.destroy(id);
+    findOne = async (oid) => await this.model.findOne({ oid: oid });
 }
 
 const ticketRepository = new TicketRepository();

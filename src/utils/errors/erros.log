@@ -142,3 +142,62 @@
 [31mERROR[39m: data and hash arguments required
 [31mERROR[39m: data and hash arguments required
 [31mERROR[39m: oldPassword is not defined
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: ticketService is not defined
+[31mERROR[39m: ticketService is not defined
+[31mERROR[39m: ticketId is not defined
+[31mERROR[39m: tickets validation failed: orderId: Path `orderId` is required., user: Path `user` is required.
+[31mERROR[39m: tickets validation failed: orderId: Path `orderId` is required., user: Path `user` is required.
+[31mERROR[39m: tickets validation failed: orderId: Path `orderId` is required., user: Path `user` is required.
+[31mERROR[39m: tickets validation failed: orderId: Path `orderId` is required., user: Path `user` is required.
+[31mERROR[39m: tickets validation failed: orderId: Path `orderId` is required., user: Path `user` is required.
+[31mERROR[39m: tickets validation failed: orderId: Path `orderId` is required.
+[31mERROR[39m: tickets validation failed: oid: Path `oid` is required.
+[31mERROR[39m: tickets validation failed: oid: Path `oid` is required., user: Path `user` is required.
+[31mERROR[39m: tickets validation failed: oid: Path `oid` is required.
+[31mERROR[39m: tickets validation failed: oid: Path `oid` is required.
+[31mERROR[39m: tickets validation failed: oid: Path `oid` is required.
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: this.service.readOneByOrderId is not a function
+[31mERROR[39m: id is not defined
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: undefined }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: undefined }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: undefined }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ orderId: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: this.service.findOne is not a function
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: mongoose is not defined
+[31mERROR[39m: Class constructor ObjectId cannot be invoked without 'new'
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: new ObjectId('07a36b6c192add018c094e1a') }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: new ObjectId('07a36b6c192add018c094e1a') }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "tickets"
+[31mERROR[39m: _id is not defined
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "Ticket"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "Ticket"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "Ticket"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "Ticket"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "Ticket"
+[31mERROR[39m: Ticket validation failed: oid: Path `oid` is required.
+[31mERROR[39m: Ticket validation failed: oid: Path `oid` is required.
+[31mERROR[39m: oid is not defined
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: { oid: '07a36b6c192add018c094e1a' } }" (type Object) at path "_id" for model "Ticket"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "Ticket"
+[31mERROR[39m: Cast to ObjectId failed for value "{ oid: '07a36b6c192add018c094e1a' }" (type Object) at path "_id" for model "Ticket"
+[31mERROR[39m: this.model.find is not a function
+[31mERROR[39m: this.service.find is not a function
+[31mERROR[39m: createdTicket is not defined

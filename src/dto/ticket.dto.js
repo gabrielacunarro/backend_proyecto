@@ -10,6 +10,7 @@ class TicketDTO {
         this.total = data.total || 0; 
         this.createdAt = new Date();
         this.updatedAt = new Date();
+        this.oid = data.oid;
     }
 }
 
