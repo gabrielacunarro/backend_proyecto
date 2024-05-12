@@ -117,16 +117,16 @@ components:
                 description: Error message
               payload:
                 $ref: '#/components/schemas/ErrorPayload'
-
 paths:
-  /api/sessions/register:
+  /users:
     post:
-      summary: To register a user
+      summary: Create a new user
+      description: Creates a new user with the provided data.
+      operationId: createUser
       tags:
-        - User
+        - Users
       requestBody:
         required: true
-        description: Data of the user
         content:
           application/json:
             schema:
@@ -138,35 +138,108 @@ paths:
           $ref: '#/components/responses/res400'
         '401':
           $ref: '#/components/responses/res401'
+        '500':
+          $ref: '#/components/responses/res500'
+
+    get:
+      summary: Get all users
+      description: Retrieves a list of all users.
+      operationId: getUsers
+      tags:
+        - Users
+      responses:
+        '200':
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
         '403':
           $ref: '#/components/responses/res403'
+        '500':
+          $ref: '#/components/responses/res500'
+
+  /users/{uid}:
+    get:
+      summary: Get user by ID
+      description: Retrieves a single user by their ID.
+      operationId: getUserById
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          description: ID of the user to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '404':
           $ref: '#/components/responses/res404'
         '500':
           $ref: '#/components/responses/res500'
 
-  /api/sessions/login:
-    post:
-      summary: Login
+    put:
+      summary: Update user
+      description: Updates the details of an existing user.
+      operationId: updateUser
       tags:
-        - User
+        - Users
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          description: ID of the user to update.
+          schema:
+            type: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/login'
+              $ref: '#/components/schemas/User'
       responses:
-        '201':
-          $ref: '#/components/responses/res201'
+        '200':
+          $ref: '#/components/responses/res200'
         '400':
           $ref: '#/components/responses/res400'
         '401':
           $ref: '#/components/responses/res401'
-        '403':
-          $ref: '#/components/responses/res403'
+        '404':
+          $ref: '#/components/responses/res404'
         '500':
           $ref: '#/components/responses/res500'
+
+    delete:
+      summary: Delete user
+      description: Deletes an existing user.
+      operationId: deleteUser
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          description: ID of the user to delete.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User deleted successfully.
+        '404':
+          $ref: '#/components/responses/res404'
+        '500':
+          $ref: '#/components/responses/res500'
+
+
 
 
 

@@ -18,7 +18,6 @@ class UsersController {
         }
     };
 
-    //ver order y paginado , falla el read
     read = async (req, res, next) => {
         try {
             const orderAndPaginate = {

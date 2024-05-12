@@ -1,0 +1,115 @@
+/api/carts:
+  post:
+    summary: Create a new cart
+    tags:
+      - Carts
+    security:
+      - jwtAuth: []
+    responses:
+      '201':
+        $ref: '#/components/responses/cart/res201'
+      '400':
+        $ref: '#/components/responses/cart/res400'
+      '401':
+        $ref: '#/components/responses/cart/res401'
+      '500':
+        $ref: '#/components/responses/cart/res500'
+  get:
+    summary: Get all the products in the cart
+    tags:
+      - Carts
+    security:
+      - jwtAuth: []
+    responses:
+      '200':
+        description: Successfully retrieved list products in the active cart
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Cart'
+      '500':
+        $ref: '#/components/responses/cart/res500'
+
+/api/carts/{cid}:
+  put:
+    summary: Update a cart
+    tags:
+      - Carts
+    parameters:
+      - in: path
+        name: cid
+        required: true
+        schema:
+          type: string
+        description: ID of the cart to update
+    security:
+      - jwtAuth: []
+    responses:
+      '200':
+        $ref: '#/components/responses/cart/res201'
+      '400':
+        $ref: '#/components/responses/cart/res400'
+      '401':
+        $ref: '#/components/responses/cart/res401'
+      '404':
+        $ref: '#/components/responses/cart/res404'
+      '500':
+        $ref: '#/components/responses/cart/res500'
+  delete:
+    summary: Delete a cart
+    tags:
+      - Carts
+    parameters:
+      - in: path
+        name: cid
+        required: true
+        schema:
+          type: string
+        description: ID of the cart to delete
+    security:
+      - jwtAuth: []
+    responses:
+      '204':
+        description: Cart deleted successfully
+      '401':
+        $ref: '#/components/responses/cart/res401'
+      '404':
+        $ref: '#/components/responses/cart/res404'
+      '500':
+        $ref: '#/components/responses/cart/res500'
+
+components:
+  responses:
+    cart:
+      res201:
+        description: Cart successfully created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      res400:
+        description: Invalid request payload
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorPayload'
+      res401:
+        description: Unauthorized request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorPayload'
+      res404:
+        description: Cart not found
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorPayload'
+      res500:
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorPayload'
