@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from 'jsonwebtoken';
-import  users  from "../data/mongo/users.mongo.js";
+import users from "../data/mongo/users.mongo.js";
 
 export default class CustomRouter {
     constructor() {
@@ -69,28 +69,28 @@ export default class CustomRouter {
 
     create(path, policies, ...cbs) {
         if (!Array.isArray(policies)) {
-            policies = []; 
+            policies = [];
         }
         this.router.post(path, this.responses, this.policies(policies), ...this.applyCbs(cbs));
     }
 
     read(path, policies, ...cbs) {
         if (!Array.isArray(policies)) {
-            policies = []; 
+            policies = [];
         }
         this.router.get(path, this.responses, this.policies(policies), ...this.applyCbs(cbs));
     }
 
     update(path, policies, ...cbs) {
         if (!Array.isArray(policies)) {
-            policies = []; 
+            policies = [];
         }
         this.router.put(path, this.responses, this.policies(policies), ...this.applyCbs(cbs));
     }
 
     destroy(path, policies, ...cbs) {
         if (!Array.isArray(policies)) {
-            policies = []; 
+            policies = [];
         }
         this.router.delete(path, this.responses, this.policies(policies), ...this.applyCbs(cbs));
     }
@@ -98,4 +98,10 @@ export default class CustomRouter {
     use(path, ...cbs) {
         this.router.use(path, this.responses, ...this.applyCbs(cbs));
     }
+
+    get(path, ...cbs) {
+        const handlers = this.applyCbs(cbs);
+        this.router.use(path, this.responses, ...handlers);
+    }
+    
 }

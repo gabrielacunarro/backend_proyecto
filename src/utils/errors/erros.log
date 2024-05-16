@@ -201,3 +201,13 @@
 [31mERROR[39m: this.model.find is not a function
 [31mERROR[39m: this.service.find is not a function
 [31mERROR[39m: createdTicket is not defined
+[31mERROR[39m: this.model.readByEmail is not a function
+[31mERROR[39m: this.model.readByEmail is not a function
+[31mERROR[39m: this.model.readByEmail is not a function
+[31mERROR[39m: this.model.readByEmail is not a function
+[31mERROR[39m: this.model.readByEmail is not a function
+[31mERROR[39m: this.model.readByEmail is not a function
+[31mERROR[39m: this.model.readByEmail is not a function
+[31mERROR[39m: log is not defined
+[31mERROR[39m: res.error201 is not a function
+[31mERROR[39m: Cannot destructure property 'filter' of 'undefined' as it is undefined.

@@ -4,7 +4,14 @@
         "dev": "nodemon ./server.js --env dev",
         "test": "nodemon ./server.js --env test",
         "prod": "nodemon ./server.js --env prod",
+        "mocha": "mocha ./test/mocha",
+        "chai": "mocha ./test/chai",
+        "super": "mocha ./test/supertest",
         "mocks": "node ./src/data/mocks/users.mock.js",
+        "simplex": "artillery quick --count 40 --num 50 \"http://localhost:8080/simplex\" -o ./test/quick/simplex.json",
+        "complex": "artillery quick --count 40 --num 50 \"http://localhost:8080/complex\" -o ./test/quick/complex.json",
+        "performance": "artillery run ./test/flow/flow.yml --output ./test/flow/flow.yml.json",
+        "report": "artillery report ./test/flow/flow.json",
         "image": "docker build -t simplex-complex .",
         "container": "docker run -p 8080:8080 simplex-complex"
     },
@@ -18,6 +25,7 @@
         "accepts": "^1.3.8",
         "anymatch": "^3.1.3",
         "array-flatten": "^1.1.1",
+        "artillery-plugin-metrics-by-endpoint": "^1.6.0",
         "balanced-match": "^1.0.2",
         "bcrypt": "^5.1.1",
         "binary-extensions": "^2.2.0",
@@ -138,7 +146,11 @@
     },
     "devDependencies": {
         "@faker-js/faker": "^8.4.1",
-        "nodemon": "^3.0.2"
+        "artillery": "^2.0.12",
+        "chai": "^5.1.1",
+        "mocha": "^10.4.0",
+        "nodemon": "^3.0.2",
+        "supertest": "^7.0.0"
     },
     "keywords": [],
     "author": "Gabriela Cuñarro <gabrielacunarro@gmail.com>",

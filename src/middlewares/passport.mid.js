@@ -60,7 +60,6 @@ passport.use("google",
         async (req, accessToken, refreshToken, profile, done) => {
             try {
                 let user = await repository.readByEmail(profile._id);
-                console.log(profile)
                 const sessionData = {
                     email: profile._id,
                     role: null

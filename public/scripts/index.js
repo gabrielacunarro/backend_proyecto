@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(products => {
                 renderProducts(products);
             })
-            .catch(error => console.error('Error fetching products:', error));
+            .catch(error => winston.error('Error fetching products:', error));
     }
     
 

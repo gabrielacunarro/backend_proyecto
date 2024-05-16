@@ -12,7 +12,7 @@ class UsersController {
             const data = req.body;
             await this.services.create(data);
 
-            return res.success201("User successfully created.");
+            return res.success201("User successfully created.", data);
         } catch (error) {
             next(error);
         }
@@ -32,11 +32,12 @@ class UsersController {
                 orderAndPaginate.sort.name = 1
             }
             const all = await this.services.read({ filter, orderAndPaginate });
-
-            if (all.length > 0) {
-                return res.success200(all);
+            
+            if (all.length < 0) {
+                return res.success404(all);
             }
-            return res.error404(all);
+
+            return res.success201(all);
         } catch (error) {
             next(error);
         }

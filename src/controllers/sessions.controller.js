@@ -62,7 +62,6 @@ class SessionController {
 updatePassword = async (req, res, next) => {
     try {
         const { email, password, newPassword } = req.body; 
-        console.log(newPassword)
 
         const user = await this.service.readByEmail(email);
         if (!user) {

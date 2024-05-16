@@ -1,0 +1,28 @@
+config:
+  plugins:
+    metrics-by-endpoint: {}
+  target: "http://localhost:8080"  # La URL base del servidor
+  phases:
+    - duration: 10  # Duración total de la prueba en segundos
+      arrivalRate: 10  # Tasa de llegada de nuevas solicitudes por segundo
+
+scenarios:
+  - name: "Login, read and signout Stress Test"
+    flow:
+      - log: login
+      - post:
+          url: "/sessions/login"
+          json:
+            email: gabi@gmail.com
+            password: hola1234
+      - log: read
+      - get:
+          url: "/api/products"
+          json:
+            text: testing read
+          capture: 
+            - json: "$.response._id"
+              as: "nid"
+      # - log: signout
+      # - post:
+      #     url: "/sessions/signout"
