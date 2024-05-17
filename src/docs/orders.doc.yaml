@@ -1,0 +1,189 @@
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        pid:
+          type: string
+          description: ID of the product
+        quantity:
+          type: integer
+          description: Quantity of the product
+        state:
+          type: string
+          description: State of the order
+      example:
+        pid: "65e669187c45f729d04ae49a"
+        quantity: 2
+        state: "pending"
+    ErrorPayload:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+  responses:
+    res201:
+      description: Order successfully created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Order'
+    res400:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+    res401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+    res403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+    res404:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+    res500:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Error message
+              payload:
+                $ref: '#/components/schemas/ErrorPayload'
+paths:
+  /orders:
+    post:
+      summary: Create a new order
+      description: Creates a new order with the provided data.
+      operationId: createOrder
+      tags:
+        - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          $ref: '#/components/responses/res201'
+        '400':
+          $ref: '#/components/responses/res400'
+        '401':
+          $ref: '#/components/responses/res401'
+        '403':
+          $ref: '#/components/responses/res403'
+        '500':
+          $ref: '#/components/responses/res500'
+
+    get:
+      summary: Get all orders
+      description: Retrieves a list of all orders.
+      operationId: getOrders
+      tags:
+        - Orders
+      responses:
+        '200':
+          description: A list of orders.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        '500':
+          $ref: '#/components/responses/res500'
+
+  /orders/{oid}:
+    get:
+      summary: Get order by ID
+      description: Retrieves a single order by its ID.
+      operationId: getOrderById
+      tags:
+        - Orders
+      parameters:
+        - in: path
+          name: oid
+          required: true
+          description: ID of the order to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          $ref: '#/components/responses/res404'
+        '500':
+          $ref: '#/components/responses/res500'
+
+    put:
+      summary: Update order
+      description: Updates the details of an existing order.
+      operationId: updateOrder
+      tags:
+        - Orders
+      parameters:
+        - in: path
+          name: oid
+          required: true
+          description: ID of the order to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          $ref: '#/components/responses/res200'
+        '400':
+          $ref: '#/components/responses/res400'
+        '401':
+          $ref: '#/components/responses/res401'
+        '404':
+          $ref: '#/components/responses/res404'

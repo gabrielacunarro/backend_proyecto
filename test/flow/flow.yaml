@@ -1,0 +1,40 @@
+config:
+  plugins:
+    metrics-by-endpoint: {}
+  target: "http://localhost:8080"  
+  phases:
+    - duration: 30  
+      arrivalRate: 20
+
+scenarios:
+  - name: "Login Scenario"
+    flow:
+      - log: login
+      - post:
+          url: "/sessions/login"
+          json:
+            email: gabi@gmail.com
+            password: hola1234
+          expect:
+            - statusCode: 200
+
+  - name: "Read Products Scenario"
+    flow:
+      - log: read
+      - get:
+          url: "/api/products"
+          json:
+            text: testing read
+          capture: 
+            - json: "$.response._id"
+              as: "pid"
+          expect:
+            - statusCode: 200
+
+  - name: "Signout Scenario"
+    flow:
+      - log: signout
+      - post:
+          url: "/api/sessions/signout"
+          expect:
+            - statusCode: 200

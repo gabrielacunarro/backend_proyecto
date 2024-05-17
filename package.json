@@ -10,8 +10,8 @@
         "mocks": "node ./src/data/mocks/users.mock.js",
         "simplex": "artillery quick --count 40 --num 50 \"http://localhost:8080/simplex\" -o ./test/quick/simplex.json",
         "complex": "artillery quick --count 40 --num 50 \"http://localhost:8080/complex\" -o ./test/quick/complex.json",
-        "performance": "artillery run ./test/flow/flow.yml --output ./test/flow/flow.yml.json",
-        "report": "artillery report ./test/flow/flow.json",
+        "performance": "artillery run ./test/flow/flow.yaml --output ./test/flow/flow.yml.json",
+        "report": "artillery report ./test/flow/flow.yml.json",
         "image": "docker build -t simplex-complex .",
         "container": "docker run -p 8080:8080 simplex-complex"
     },
