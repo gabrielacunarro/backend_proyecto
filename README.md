@@ -86,10 +86,7 @@ Estas funcionalidades proporcionan una experiencia de usuario más fluida y efic
 
 Se ha integrado un sistema de logging en el proyecto para registrar eventos importantes y errores. El logger utiliza la biblioteca Winston, que proporciona flexibilidad y opciones de configuración avanzadas. Además, el sistema de loggin se ha configurado de manera dinámica para adaptarse al entorno de ejecución.
 
-## Mejoras añadidas:
-
-
-## Gestión de Roles y Permisos
+- **Gestión de Roles y Permisos**:
 Se ha establecido un nuevo rol para el schema del usuario llamado "premium" (role=2), el cual estará habilitado también para gestionar sus productos.
 Se ha modificado el schema de producto para contar con un campo "owner_id", el cual hará referencia al id de la persona que creó el producto (admin o premium).
 Se han modificado los permisos para que:
@@ -97,3 +94,17 @@ Un usuario premium solo pueda actualizar/borrar los productos que le pertenecen.
 El admin pueda actualizar/borrar cualquier producto, aún si es de otro owner.
 Se ha implementado una nueva ruta en el router de api/users, la cual permitirá cambiar el rol de un usuario, de "user" (cero) a "premium" (dos) y viceversa.
 Se ha modificado la lógica para leer productos para que un usuario premium NO pueda ver sus productos en la tienda.
+
+## Mejoras añadidas:
+
+## Pruebas con Supertest, Mocha, y Chai
+Se han agregado pruebas unitarias utilizando Supertest, Mocha y Chai para verificar la funcionalidad de los endpoints de la API.
+Las pruebas cubren la autenticación de usuarios, la creación, lectura, actualización y eliminación de productos y usuarios, así como la gestión de sesiones y la validación de credenciales.
+Se han implementado aserciones para garantizar que los endpoints respondan correctamente con los códigos de estado esperados y los datos adecuados.
+Se han manejado problemas de sincronización y asincronía para asegurar que las pruebas se ejecuten de manera adecuada.
+
+## Pruebas de Estrés con Artillery
+Se han añadido pruebas de estrés utilizando Artillery para evaluar el rendimiento del sistema bajo carga.
+Las pruebas de estrés incluyen escenarios como el inicio de sesión, la lectura de productos y la finalización de la sesión.
+Estas pruebas ayudan a identificar posibles cuellos de botella y a optimizar el rendimiento del sistema para manejar un gran volumen de usuarios concurrentes.
+Con estas mejoras, el proyecto ha ganado en seguridad, funcionalidad y rendimiento, proporcionando una experiencia de usuario más robusta y satisfactoria.
