@@ -1,0 +1,1 @@
+recordar punto  api/products prem leer todos los prods de la tienda menos los de el $ne (usar operador de mongo)

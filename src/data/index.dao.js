@@ -16,11 +16,10 @@ switch (persistence) {
     // break;
 
     case "FS":
-    // Utiliza FS
-    // winston.INFO("FS CONNECTED");
-    // const { default: productsFs } = await import("./fs/productFS.js");
-    // dao = { products: productsFs };
-    // break;
+    winston.INFO("FS CONNECTED");
+    const { default: productsFs } = await import("./fs/productFS.js");
+    dao = { products: productsFs };
+    break;
 
     default:
         //"MONGO"
