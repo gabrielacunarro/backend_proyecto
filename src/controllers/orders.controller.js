@@ -63,9 +63,9 @@ class OrdersController {
                 return res.status(400).json({ message: "OID parameter is required" });
             }
             const order = await this.service.readOne(oid);
-            // if (!order) {
-            //     return res.status(404).json({ message: "Order not found" });
-            // }
+            if (!order) {
+                return res.status(404).json({ message: "Order not found" });
+            }
     
             return res.status(200).json(order);
         } catch (error) {
