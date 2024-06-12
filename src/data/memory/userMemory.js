@@ -32,7 +32,7 @@ class UserManager {
                     },
                 };
             } catch (error) {
-                winston.error(`Error creating user: ${error.message}`);
+                winston.ERROR(`Error creating user: ${error.message}`);
                 next(error);
                 return {
                     statusCode: 500,
@@ -53,7 +53,7 @@ class UserManager {
                 },
             };
         } catch (error) {
-            winston.error(`Error reading users: ${error.message}`);
+            winston.ERROR(`Error reading users: ${error.message}`);
             next(error);
             return {
                 statusCode: 500,
@@ -84,7 +84,7 @@ class UserManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error reading user: ${error.message}`);
+            winston.ERROR(`Error reading user: ${error.message}`);
             next(error);
             return {
                 statusCode: 500,
@@ -116,7 +116,7 @@ class UserManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error deleting user: ${error.message}`);
+            winston.ERROR(`Error deleting user: ${error.message}`);
             next(error);
             return {
                 statusCode: 500,
@@ -148,7 +148,7 @@ class UserManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error updating user: ${error.message}`);
+            winston.ERROR(`Error updating user: ${error.message}`);
             next(error);
             return {
                 statusCode: 500,
@@ -179,7 +179,7 @@ class UserManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error reading user by email: ${error.message}`);
+            winston.ERROR(`Error reading user by email: ${error.message}`);
             next(error);
             return {
                 statusCode: 500,

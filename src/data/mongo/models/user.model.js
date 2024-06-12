@@ -6,7 +6,12 @@ const collection = "users";
 const schema = new Schema({
     name: { type: String, required: true },
     last_name: { type: String },
-    email: { type: String, required: true, unique: true, index: true },
+    email: { type: String, required: true, unique: true, index: true,validate: {
+        validator: (value) => {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        },
+        message: props => `${props.value} its not a valid email`
+    } },
     password: { type: String, required: true },
     photo: { type: String, default: "https://imgur.com/mREdOOd" },
     age: { type: Number, default: 18 },

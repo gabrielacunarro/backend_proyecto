@@ -4,67 +4,93 @@ document.addEventListener("DOMContentLoaded", function () {
     const nextButton = document.getElementById("next");
 
     let currentPage = 0;
-    const totalProducts = 100;
+    let totalProducts = 0;
     const productsPerPage = 5;
-    const totalPages = Math.ceil(totalProducts / productsPerPage);
+    let totalPages = 0;
 
     function fetchProducts(filter) {
-        let filtro = filter ? "?" + filter : ""; 
+        let filtro = filter ? "?" + filter : "";
         fetch('/api/products' + filtro)
             .then(response => response.json())
-            .then(products => {
-                renderProducts(products);
+            .then(productsData => {
+                totalProducts = productsData.response.totalDocs; 
+                totalPages = Math.ceil(totalProducts / productsPerPage); 
+                renderProducts(productsData.response.docs); 
+                updatePaginationButtons(); 
             })
-            .catch(error => winston.error('Error fetching products:', error));
+            .catch(error => console.error('Error fetching products:', error));
     }
-    
 
     function renderProducts(products) {
         productsSection.innerHTML = "";
 
-        const productsArray = products.response.docs;
         const startIndex = currentPage * productsPerPage;
         const endIndex = startIndex + productsPerPage;
-        const productsToRender = productsArray.slice(startIndex, endIndex);
+        const productsToRender = products.slice(startIndex, endIndex);
 
         productsToRender.forEach(product => {
             const cardHtml = `
                 <div class="card m-2 anchor" style="width: 360px">
+                    <div class="card-header"><i>6 cuotas sin interés<i>
+                    </div>
                     <img src="${product.photo}" style="height: 240px" class="card-img-top object-fit-cover" alt="${product.title}" />
                     <div class="card-body">
                         <h5 class="p-2 text-center card-title">${product.title}</h5>
                         <p class="p-2 text-center card-price">Precio: ${product.price}</p>
-                        <p class="p-2 text-center card-stock">Stock: ${product.stock}</p>
-                        <button class="btn btn-primary addToCart" data-product-id="${product._id}">Add to Cart</button>
+                        <button class="btn btn-primary viewMore" data-product-id="${product._id}" data-toggle="modal" data-target="#productModal">View More</button>
                     </div>
                 </div>
             `;
             productsSection.insertAdjacentHTML("beforeend", cardHtml);
         });
 
+        const viewMoreButtons = document.querySelectorAll(".viewMore");
+        viewMoreButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                const productId = button.dataset.productId;
+                window.location.href = `/products/${productId}`;
+            });
+        });
+    }
+
+    function updatePaginationButtons() {
+        prevButton.disabled = currentPage === 0;
+        nextButton.disabled = currentPage === totalPages - 1;
     }
 
     function goToPrevPage() {
         if (currentPage > 0) {
             currentPage--;
             fetchProducts();
+            updatePaginationButtons(); 
+            console.log("Prev page, currentPage:", currentPage);
         }
     }
 
     function goToNextPage() {
         const maxPage = totalPages - 1;
-        if (currentPage < maxPage) {
+
+        console.log("Current Page:", currentPage);
+        console.log("Max Page:", maxPage);
+
+        const lastProductIndex = (currentPage + 1) * productsPerPage;
+
+        if (lastProductIndex < totalProducts) {
             currentPage++;
             fetchProducts();
+            updatePaginationButtons(); 
+        } else {
+            console.log("No hay más productos para mostrar en la siguiente página");
         }
     }
+
     const params = new URLSearchParams(location.search);
     const selector = document.querySelector("#text");
     selector.value = params.get("title");
     document.querySelector("#search").addEventListener("click", async (event) => {
         try {
             const text = selector.value;
-            fetchProducts('title='+text)
+            fetchProducts('title=' + text);
         } catch (error) {
             alert(error.message);
         }
@@ -73,6 +99,5 @@ document.addEventListener("DOMContentLoaded", function () {
     prevButton.addEventListener("click", goToPrevPage);
     nextButton.addEventListener("click", goToNextPage);
 
-    // Llama a fetchProducts sin pasar un filtro al cargar la página
     fetchProducts();
 });

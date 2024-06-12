@@ -10,15 +10,26 @@ class ProductsController {
     create = async (req, res, next) => {
         try {
             const data = req.body;
-            winston.INFO(JSON.stringify(data))
-            const createdProduct = await this.service.create(data);
-
-            return res.success201(createdProduct);
+            const userRole = req.user.role; 
+            const userId = req.user._id; 
+    
+            const productData = {
+                ...data,
+                role: userRole, 
+                owner_id: userId 
+            };
+    
+            winston.INFO(JSON.stringify(productData));
+    
+            const createdProduct = await this.service.create(productData);
+    
+            return res.status(201).json({ message: 'Product created successfully', createdProduct });
         } catch (error) {
-            winston.error("Error in POST /products:", error);
+            winston.ERROR("Error POST /products:", error);
             return next(error);
         }
     };
+    
 
     read = async (req, res, next) => {
         try {
@@ -49,7 +60,7 @@ class ProductsController {
             }
             return res.success200(all);
         } catch (error) {
-            winston.error(error);
+            winston.ERROR(error);
             next(error);
         }
     };

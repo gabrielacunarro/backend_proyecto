@@ -1,16 +1,22 @@
 import { Router } from "express";
-import productsManager from "../../data/fs/productFS.js";
+import { readOne } from "../../controllers/products.controller.js";
 
-const productsRouter = Router();
 
-productsRouter.get("/", async (req, res, next) => {
+const productsViewRouter = Router();
+
+productsViewRouter.get("/:pid", async (req, res, next) => {
     try {
-        const all = await productsManager.read();
-        return res.render('layouts/index.handlebars', { productList: all });
+        const { pid } = req.params;
+        const product = await readOne({ params: { pid } }, { success200: (data) => data });
+
+        if (product) {
+            res.render('layouts/detail', { product });
+        } else {
+            res.status(404).send('Product not found');
+        }
     } catch (error) {
         next(error);
     }
 });
 
-
-export default productsRouter;
+export default productsViewRouter;

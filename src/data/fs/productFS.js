@@ -34,7 +34,7 @@ class ProductManager {
             try {
                 await fs.mkdir(dataFolder, { recursive: true });
             } catch (mkdirError) {
-                winston.error('Error creating folder:', mkdirError.message);
+                winston.ERROR('Error creating folder:', mkdirError.message);
             }
         }
     };
@@ -67,7 +67,7 @@ class ProductManager {
 
             return id;
         } catch (error) {
-            winston.error(`Error creating product: ${error.message}`);
+            winston.ERROR(`Error creating product: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -87,7 +87,7 @@ class ProductManager {
             if (error.code === 'ENOENT' || error.message === 'Unexpected end of JSON input') {
                 return [];
             } else {
-                winston.error('Error al cargar productos desde el sistema de archivos (FS):', error.message);
+                winston.ERROR('Error al cargar productos desde el sistema de archivos (FS):', error.message);
                 throw error;
             }
         }
@@ -98,7 +98,7 @@ class ProductManager {
             const data = JSON.stringify(products, null, 2);
             await fs.writeFile(ProductManager.#productsFile, data, { encoding: 'utf8' });
         } catch (error) {
-            winston.error('Error saving products:', error.message);
+            winston.ERROR('Error saving products:', error.message);
             throw error;
         }
     };
@@ -137,7 +137,7 @@ class ProductManager {
             const products = await this.loadProducts();
             return products.find(product => product.id === id) || null;
         } catch (error) {
-            winston.error(`Error reading product by ID: ${error.message}`);
+            winston.ERROR(`Error reading product by ID: ${error.message}`);
             throw error;
         }
     };
@@ -155,7 +155,7 @@ class ProductManager {
 
             return false;
         } catch (error) {
-            winston.error(`Error updating product: ${error.message}`);
+            winston.ERROR(`Error updating product: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -178,7 +178,7 @@ class ProductManager {
                 return false;
             }
         } catch (error) {
-            winston.error(`Error destroying product: ${error.message}`);
+            winston.ERROR(`Error destroying product: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {

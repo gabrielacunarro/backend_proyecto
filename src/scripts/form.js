@@ -16,24 +16,24 @@ document.addEventListener("DOMContentLoaded", function () {
             const opts = {
                 method: "POST",
                 headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(data)
             };
-            
 
             let response = await fetch("/api/products", opts);
-            response = await response.json();
+            
+            if (!response.ok) {
+                // Manejo de errores HTTP
+                throw new Error('Network response was not ok');
+            }
 
-            alert(response.message);
+            let result = await response.json();
+
+            alert(result.message);
         } catch (error) {
             alert(error.message);
         }
     });
 });
-
-
-
-
 

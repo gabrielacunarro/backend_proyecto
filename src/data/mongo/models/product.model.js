@@ -9,7 +9,7 @@ const schema = new Schema({
     price: { type: Number, default: 10 },
     stock: { type: Number, default: 50 },
     owner_id: { type: Types.ObjectId, ref: "users"},
-    role: { type: Number, enum: [1, 2], required:true },
+    role: { type: Number, enum: [1, 2]}
 
 },
     { timestamps: true}

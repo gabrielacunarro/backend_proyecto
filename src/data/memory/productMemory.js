@@ -32,7 +32,7 @@ class ProductManager {
 
                 return id;
             } catch (error) {
-                winston.error(`Error creating product: ${error.message}`);
+                winston.ERROR(`Error creating product: ${error.message}`);
                 throw {
                     statusCode: 500,
                     response: {
@@ -89,7 +89,7 @@ class ProductManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error reading product: ${error.message}`);
+            winston.ERROR(`Error reading product: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -120,7 +120,7 @@ class ProductManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error deleting product: ${error.message}`);
+            winston.ERROR(`Error deleting product: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -152,7 +152,7 @@ class ProductManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error updating product: ${error.message}`);
+            winston.ERROR(`Error updating product: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {

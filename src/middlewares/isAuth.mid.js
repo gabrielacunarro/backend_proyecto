@@ -5,6 +5,7 @@ export default (req, res, next) => {
         const token = req.cookies.token;
         const userData = verifyToken(token);
         if (userData) {
+            req.user = userData;
             return next();
         }
         const error = new Error("Bad auth from middleware");

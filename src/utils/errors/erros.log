@@ -1,1 +1,64 @@
 
+[31mERROR[39m: this.service.report is not a function
+[31mERROR[39m: E11000 duplicate key error collection: -dev.carts index: uid_1 dup key: { uid: ObjectId('6637e30a021a52438b178563') }
+[31mERROR[39m: Missing helper: "eq"
+[31mERROR[39m: Error in POST /products: products validation failed: role: Path `role` is required. {"_message":"products validation failed","errors":{"role":{"kind":"required","message":"Path `role` is required.","name":"ValidatorError","path":"role","properties":{"message":"Path `role` is required.","path":"role","type":"required"}}},"stack":"ValidationError: products validation failed: role: Path `role` is required.\n    at Document.invalidate (C:\\Users\\Gabii\\Desktop\\Proyecto_backend\\node_modules\\mongoose\\lib\\document.js:3285:32)\n    at C:\\Users\\Gabii\\Desktop\\Proyecto_backend\\node_modules\\mongoose\\lib\\document.js:3046:17\n    at C:\\Users\\Gabii\\Desktop\\Proyecto_backend\\node_modules\\mongoose\\lib\\schemaType.js:1388:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)"}
+[31mERROR[39m: products validation failed: role: Path `role` is required.
+[31mERROR[39m: Cannot destructure property 'title' of 'req.body' as it is undefined.
+[31mERROR[39m: Cannot destructure property 'title' of 'req.body' as it is undefined.
+[31mERROR[39m: Cannot destructure property 'title' of 'req.body' as it is undefined.
+[31mERROR[39m: Cannot destructure property 'title' of 'req.body' as it is undefined.
+[31mERROR[39m: Cannot destructure property 'title' of 'req.body' as it is undefined.
+[31mERROR[39m: Cannot destructure property 'title' of 'req.body' as it is undefined.
+[31mERROR[39m: Cannot destructure property 'title' of 'req.body' as it is undefined.
+[31mERROR[39m: Cannot destructure property 'filter' of 'undefined' as it is undefined.
+[31mERROR[39m: users validation failed: email: juana36 no es un correo electrónico válido
+[31mERROR[39m: users validation failed: email: juana36 not valid email
+[31mERROR[39m: users validation failed: email: juana36 not valid email
+[31mERROR[39m: users validation failed: email: juana36 not valid email
+[31mERROR[39m: users validation failed: email: juana36 not valid email
+[31mERROR[39m: users validation failed: email: juana36 its not a valid email
+[31mERROR[39m: readOne is not defined
+[31mERROR[39m: readOne is not defined
+[31mERROR[39m: Failed to lookup view "detail" in views directory "C:\Users\Gabii\Desktop\Proyecto_backend/src/views"
+[31mERROR[39m: Failed to lookup view "/layouts/detail" in views directory "C:\Users\Gabii\Desktop\Proyecto_backend/src/views"
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function
+[31mERROR[39m: next is not a function

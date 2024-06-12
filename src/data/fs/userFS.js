@@ -36,7 +36,7 @@ class UserManager {
             try {
                 await fs.mkdir(dataFolder, { recursive: true });
             } catch (mkdirError) {
-                winston.error('Error creating folder:', mkdirError.message);
+                winston.ERROR('Error creating folder:', mkdirError.message);
             }
         }
     }
@@ -58,7 +58,7 @@ class UserManager {
 
             return id; // Devuelve el ID del usuario creado
         } catch (error) {
-            winston.error(`Error creating user: ${error.message}`);
+            winston.ERROR(`Error creating user: ${error.message}`);
             throw error;
         }
     }
@@ -73,7 +73,7 @@ class UserManager {
                 return true;
             });
         } catch (error) {
-            winston.error(`Error reading users: ${error.message}`);
+            winston.ERROR(`Error reading users: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -87,7 +87,7 @@ class UserManager {
         try {
             return UserManager.#users.find(user => user.id === id) || null;
         } catch (error) {
-            winston.error(`Error reading user: ${error.message}`);
+            winston.ERROR(`Error reading user: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -138,7 +138,7 @@ class UserManager {
                 this.saveUsers().then(() => {
                     winston.INFO(`User with ID ${id} has been successfully destroyed.`);
                 }).catch(error => {
-                    winston.error(`Error saving users after destroying user: ${error.message}`);
+                    winston.ERROR(`Error saving users after destroying user: ${error.message}`);
                 });
                 return true;
             } else {
@@ -146,7 +146,7 @@ class UserManager {
                 return false;
             }
         } catch (error) {
-            winston.error(`Error destroying user: ${error.message}`);
+            winston.ERROR(`Error destroying user: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -172,7 +172,7 @@ class UserManager {
 
             return null;
         } catch (error) {
-            winston.error(`Error updating user: ${error.message}`);
+            winston.ERROR(`Error updating user: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -187,7 +187,7 @@ class UserManager {
             const lowercasedEmail = email.toLowerCase();
             return UserManager.#users.find(user => user.email.toLowerCase() === lowercasedEmail) || null;
         } catch (error) {
-            winston.error(`Error reading user by email: ${error.message}`);
+            winston.ERROR(`Error reading user by email: ${error.message}`);
             return null;
         }
     }

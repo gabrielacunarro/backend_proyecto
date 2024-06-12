@@ -22,7 +22,7 @@ class OrdersManager {
             try {
                 await fs.mkdir(dataFolder, { recursive: true });
             } catch (mkdirError) {
-                winston.error('Error creating folder:', mkdirError.message);
+                winston.ERROR('Error creating folder:', mkdirError.message);
             }
         }
     }
@@ -59,7 +59,7 @@ class OrdersManager {
                 },
             };
         } catch (error) {
-            winston.error(`Error reading orders: ${error.message}`);
+            winston.ERROR(`Error reading orders: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -90,7 +90,7 @@ class OrdersManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error reading order: ${error.message}`);
+            winston.ERROR(`Error reading order: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -122,7 +122,7 @@ class OrdersManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error deleting order: ${error.message}`);
+            winston.ERROR(`Error deleting order: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -155,7 +155,7 @@ class OrdersManager {
                 };
             }
         } catch (error) {
-            winston.error(`Error updating order: ${error.message}`);
+            winston.ERROR(`Error updating order: ${error.message}`);
             throw {
                 statusCode: 500,
                 response: {
@@ -173,7 +173,7 @@ class OrdersManager {
             if (error.code === 'ENOENT' || error.message === 'Unexpected end of JSON input') {
                 return [];
             } else {
-                winston.error('Error loading orders:', error.message);
+                winston.ERROR('Error loading orders:', error.message);
                 throw error;
             }
         }
@@ -184,7 +184,7 @@ class OrdersManager {
             const data = JSON.stringify(orders, null, 2);
             await fs.writeFile(OrdersManager.#ordersFile, data, { encoding: 'utf8' });
         } catch (error) {
-            winston.error('Error saving orders:', error.message);
+            winston.ERROR('Error saving orders:', error.message);
             throw error;
         }
     }

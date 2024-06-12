@@ -20,7 +20,7 @@ const tickets = new TicketsRouter();
 export default class ApiRouter extends CustomRouter {
     init() {
         this.use("/users", user.getRouter())
-        this.use("/products", product.getRouter())
+        this.use("/products",  product.getRouter())
         this.use("/orders", passport.authenticate("jwt", { session: false, failureRedirect: "/api/sessions/badauth" }), order.getRouter())
         this.use("/sessions", session.getRouter())
         this.use("/comments", commentsRouter)

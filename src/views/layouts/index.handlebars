@@ -1,35 +1,46 @@
+<div class="main-container">
 <main class="flex-grow-1 w-100 d-flex flex-column">
-    <section id="background">
-        <h1 class="title">Eleva tu estilo con Essence Selecto</h1>
-    </section>
-    <h2 class="subtitle mt-4 mb-2 text-center">Nuestros perfumes</h2>
-    <span class="m-auto d-flex justify-content-end align-items-center">
-        <div class="input-group" style="width: 300px;">
-            <input id="text" type="text" class="form-control rounded-end" placeholder="Buscar..." />
-            <button id="search" class="btn btn- rounded-start" type="button">
-                <i class="fas fa-search"></i>
-            </button>
+    <section id="banner-carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://i.imgur.com/siijC78.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.imgur.com/n0X5WJ3.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.imgur.com/uFsqQOu.png" class="d-block w-100" alt="...">
+            </div>
         </div>
-    </span>
-    <section id="perfumes" class="d-flex flex-wrap justify-content-evenly w-100 mt-2 mb-4">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#banner-carousel" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#banner-carousel" data-bs-slide-to="1"></li>
+            <li data-bs-target="#banner-carousel" data-bs-slide-to="2"></li>
+        </ol>
+    </section>
+    <h2 class="subtitle text-center">Fragancias</h2>
+    <section id="perfumes" class="d-flex flex-wrap justify-content-evenly w-100 mt-3 mb-5">
         {{#each products}}
         <div class="card m-2 anchor" style="width: 360px">
+            <div class="card-header">
+                <i>6 cuotas sin interés<i>
+            </div>
             <img src="{{this.photo}}" style="height: 200px" class="card-img-top object-fit-cover"
                 alt="{{this.title}}" />
             <h5 class="p-2 text-center card-title">{{this.title}}</h5>
             <p class="p-2 text-center card-description" style="font-size: 14px; margin-top: 0;">{{this.description}}</p>
             <p class="p-2 text-center card-price">Precio: ${{this.price}}</p>
             <p class="p-2 text-center card-stock">Stock: {{this.quantity}}</p>
+            <button class="btn btn-primary viewMore" data-product-id="{{this._id}}">View More</button>
         </div>
         {{/each}}
-
     </section>
-    <span class="w-100 d-flex justify-content-center">
+    <span class="w-100 d-flex justify-content-center mt-4">
         <i id="prev" class="fas fa-arrow-left btn btn- fs-5 m-4 mt-0" style="font-size: 24px; cursor: pointer;"></i>
         <i id="next" class="fas fa-arrow-right btn btn- fs-5 m-4 mt-0" style="font-size: 24px; cursor: pointer;"></i>
     </span>
 </main>
+</div>
 
-<script src="/scripts/addToCart.js"></script>
-<script src="/scripts/index.js"></script>
-
+<script src="../../scripts/addToCart.js"></script>
+<script src="../../scripts/index.js"></script>

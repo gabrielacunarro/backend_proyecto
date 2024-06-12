@@ -1,6 +1,5 @@
 import { Router } from "express";
 
-
 const ordersViewRouter = Router();
 
 ordersViewRouter.get('/orders', (req, res) => {

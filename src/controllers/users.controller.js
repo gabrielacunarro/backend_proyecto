@@ -23,26 +23,33 @@ class UsersController {
             const orderAndPaginate = {
                 limit: req.query.limit || 10,
                 page: req.query.page || 1,
-            }
-            const filter = {}
-            if (req.query.email) {
-                filter.email = new RegExp(req.query.email.trim(), 'i')
-            }
-            if (req.query.name === "desc") {
-                orderAndPaginate.sort.name = 1
-            }
-            const all = await this.services.read({ filter, orderAndPaginate });
+                sort: { name: 1 },
+                lean: true
+            };
+    
+            const filter = {};
             
-            if (all.length < 0) {
+            if (req.query.email) {
+                filter.email = new RegExp(req.query.email.trim(), 'i');
+            }
+    
+            if (req.query.name === "desc") {
+                orderAndPaginate.sort.name = -1;
+            }
+    
+            const all = await this.services.read({ filter, orderAndPaginate });
+    
+            if (!all || all.length === 0) {
                 return res.success404(all);
             }
-
-            return res.success201(all);
+    
+            return res.success200(all);
         } catch (error) {
+            winston.ERROR(error);
             next(error);
         }
     };
-
+    
     readOne = async (req, res, next) => {
         try {
             const { uid } = req.params;
