@@ -11,8 +11,7 @@ export default class OrdersRouter extends CustomRouter {
         this.update("/:oid", ["USER"], update);
         this.read("/total/:uid", ["USER"], bills);
     }
-}
-
+}    
 
 
 

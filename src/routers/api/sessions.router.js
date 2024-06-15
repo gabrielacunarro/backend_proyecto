@@ -93,4 +93,3 @@ export default class SessionsRouter extends CustomRouter {
         this.update("/reset", ["PUBLIC", "USER", "ADMIN"], updatePassword );
     }
 }
-
