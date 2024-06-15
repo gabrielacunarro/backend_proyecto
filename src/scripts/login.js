@@ -1,4 +1,8 @@
 const loginButton = document.querySelector("#login");
+const showResetPasswordFormButton = document.querySelector("#showResetPasswordForm");
+const showLoginFormButton = document.querySelector("#showLoginForm");
+const loginForm = document.querySelector("#loginForm");
+const resetPasswordForm = document.querySelector("#resetPasswordForm");
 
 loginButton.addEventListener("click", async (e) => {
     try {
@@ -12,7 +16,7 @@ loginButton.addEventListener("click", async (e) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         };
-        let response = await fetch("/api/sessions/login", opts);
+        let response = await fetch("/sessions/login", opts);
         if (!response.ok) {
             Swal.fire({
                 icon: 'error',
@@ -39,6 +43,54 @@ loginButton.addEventListener("click", async (e) => {
     }
 });
 
+showResetPasswordFormButton.addEventListener('click', function () {
+    window.location.href = '/reset';
+});
+
+
+resetPasswordForm.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById('resetEmail').value;
+    const password = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+
+    try {
+        const response = await fetch('http://localhost:8080/sessions/reset', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password, newPassword })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Password updated successfully',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            resetPasswordForm.reset();
+            resetPasswordForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to reset password',
+                text: result.message
+            });
+        }
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'An unexpected error occurred',
+            text: 'Please try again later.'
+        });
+    }
+});
 
 const googleButton = document.querySelector("#google");
 googleButton.addEventListener("click", async (e) => {
@@ -85,9 +137,3 @@ function showErrorAlert(title = 'An unexpected error occurred', text = 'Please t
         text: text
     });
 }
-
-
-
-
-
-

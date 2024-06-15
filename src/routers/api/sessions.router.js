@@ -90,7 +90,7 @@ export default class SessionsRouter extends CustomRouter {
         });
 
         this.create("/verify", ["PUBLIC", "USER", "ADMIN"], verifyAccount);
-        this.update("/password", ["PUBLIC", "USER", "ADMIN"], updatePassword );
+        this.update("/reset", ["PUBLIC", "USER", "ADMIN"], updatePassword );
     }
 }
 

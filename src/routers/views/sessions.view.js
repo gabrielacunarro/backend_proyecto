@@ -1,20 +1,29 @@
 import { Router } from "express";
 
 const sessionsViewRouter = Router();
-sessionsViewRouter.get('/sessions/register', (req, res) => {
+sessionsViewRouter.get('/register', (req, res) => {
     res.render('layouts/register');
 });
 
-sessionsViewRouter.post('/sessions/register', async (req, res) => {
+sessionsViewRouter.post('/register', async (req, res) => {
 
 });
 
-sessionsViewRouter.get('/sessions/login', (req, res) => {
+sessionsViewRouter.get('/login', (req, res) => {
 
     res.render('layouts/login');
 });
 
-sessionsViewRouter.post('/sessions/login', async (req, res) => {
+sessionsViewRouter.post('/login', async (req, res) => {
+
+});
+
+sessionsViewRouter.get('/reset', (req, res) => {
+
+    res.render('layouts/reset');
+});
+
+sessionsViewRouter.post('/reset', async (req, res) => {
 
 });
 

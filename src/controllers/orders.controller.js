@@ -94,10 +94,9 @@ class OrdersController {
             const one = await this.service.destroy(oid);
 
             if (one) {
-                return res.success200(`Order with ID ${oid} has been successfully deleted.`);
+                return res.success200(res,`Order with ID ${oid} has been successfully deleted.`);
             } else {
-                const error = customError.new(errors.notFound);
-                throw error;
+                throw customError.new(errors.notFound);
             }
         } catch (error) {
             return next(error);

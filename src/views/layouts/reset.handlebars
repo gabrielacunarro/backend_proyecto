@@ -1,0 +1,21 @@
+<main>
+    <div id="alertContainer" class="w-50 m-auto my-5"></div>
+    <h1>Reset Password</h1>
+    <form id="resetPasswordForm" method="post" class="w-50 m-auto">
+        <div class="mb-3">
+            <label for="resetEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="resetEmail" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="currentPassword" class="form-label">Current Password</label>
+            <input type="password" class="form-control" id="currentPassword" name="password" required>
+        </div>
+        <div class="mb-3">
+            <label for="newPassword" class="form-label">New Password</label>
+            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+        </div>
+        <button id="resetPasswordButton" type="submit" class="w-100 btn btn-primary">Reset Password</button>
+        <button id="showLoginForm" type="button" class="w-100 btn btn-link mt-3">Back to Login</button>
+    </form>
+</main>
+<script src="../../scripts/login.js"></script>

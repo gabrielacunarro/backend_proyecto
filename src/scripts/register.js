@@ -14,11 +14,11 @@ selector.addEventListener("click", async (e) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         }
-        let response = await fetch("/api/sessions/register", opts);
+        let response = await fetch("/sessions/register", opts);
         response = await response.json();
         if (response.statusCode === 201) {
-            alert("Registered!")
-            window.location.href = "/sessions/login";
+            alert("Registered! Please verify your account from your email. ")
+            window.location.href = "/login";
         } else {
             alert(response.message)
         }

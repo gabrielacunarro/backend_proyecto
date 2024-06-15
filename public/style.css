@@ -104,6 +104,7 @@ main {
 
 /* Botones */
 .card button,
+.addToCart,
 a.btn.btn-primary {
     max-width: 40%;
     background-color: #606060;
@@ -117,10 +118,10 @@ a.btn.btn-primary {
 }
 
 .card button:hover,
+.addToCart:hover,
 a.btn.btn-primary:hover {
     background-color: #333;
 }
-
 
 /* Formulario */
 form {
@@ -148,6 +149,7 @@ input {
 /* Botones de formulario */
 #register,
 #login,
+#resetPassword,
 #create,
 #google,
 #github {
@@ -161,6 +163,7 @@ input {
 
 #register:hover,
 #login:hover,
+#resetPassword:hover,
 #create:hover,
 #google:hover,
 #github:hover {

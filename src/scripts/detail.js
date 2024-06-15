@@ -1,10 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const productDetailsSection = document.getElementById("product-details");
 
-    // Obtener el ID del producto de la URL
     const productId = window.location.pathname.split("/").pop();
 
-    // Función para obtener los detalles del producto desde la API
     function fetchProductDetails(productId) {
         fetch(`/api/products/${productId}`)
             .then(response => response.json())
@@ -16,29 +14,21 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // Función para renderizar los detalles del producto en la página
     function renderProductDetails(product) {
-        // Limpiar el contenido anterior
         productDetailsSection.innerHTML = "";
-        console.log(product)
-        // Crear el HTML para mostrar los detalles del producto
         const productDetailHtml = `
-            <div class="card m-2 anchor" style="width: 360px">
-                <h2>${product.response.title}</h2>
-                <img src="${product.response.photo}" style="height: 240px" class="card-img-top object-fit-cover" alt="${product.title}" />
-                <div class="card-body">
-                    <p>Description: ${product.response.description}</p>
-                    <p>Price: ${product.response.price}</p>
-                    <p>Stock: ${product.response.stock}</p>
-                    <!-- Agrega más detalles del producto según sea necesario -->
-                </div>
+            <div class="product-details-container">
+                <h2 class="product-details-title">${product.response.title}</h2>
+                <img src="${product.response.photo}" class="product-details-img" alt="${product.response.title}" />
+                <p class="product-details-description">Description: ${product.response.description}</p>
+                <p class="product-details-price">Price:$${product.response.price}</p>
+                <p class="product-details-stock">Stock: ${product.response.stock}</p>
+                <button class="addToCart">Add to cart</button>
             </div>
         `;
 
-        // Insertar el HTML en el elemento del producto
         productDetailsSection.innerHTML = productDetailHtml;
     }
 
-    // Obtener y renderizar los detalles del producto al cargar la página
     fetchProductDetails(productId);
 });
