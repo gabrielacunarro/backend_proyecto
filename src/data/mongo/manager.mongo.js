@@ -38,7 +38,7 @@ class MongoManager {
     async readOne(id) {
         try {
             const one = await this.model.findById(id)
-            notFoundOne(one)
+          //OJO SACAR COMENTARIO  //notFoundOne(one)
             return one
         } catch (error) {
             throw error

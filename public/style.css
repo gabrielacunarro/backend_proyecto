@@ -91,7 +91,7 @@ main {
 }
 
 .card img {
-    width: 50%;
+    width: auto;
     height: auto;
     object-fit: inherit;
     margin: 0 auto;
@@ -100,6 +100,28 @@ main {
 
 .card:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/*Details  */
+
+.product-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto; 
+    padding: 20px; 
+}
+
+.product-details-content {
+    text-align: center; /* Alinea el contenido al centro */
+}
+
+.product-details-img{
+    width: 100px;
+    height: auto;
+    object-fit: inherit;
+    margin: 0 auto;
 }
 
 /* Botones */
@@ -115,6 +137,20 @@ a.btn.btn-primary {
     cursor: pointer;
     color: #fff;
     margin-bottom: 10px;
+}
+
+/*reset & login */
+
+.custom-link {
+    background: none;
+    border: none;
+    color: #333;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.custom-link:hover {
+    text-decoration: none;
 }
 
 .card button:hover,

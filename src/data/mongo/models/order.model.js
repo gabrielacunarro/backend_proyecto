@@ -7,7 +7,7 @@ const schema = new Schema(
         uid: { type: Types.ObjectId, required: true, ref: "users" },
         pid: { type: Types.ObjectId, required: true, ref: "products" }, 
         quantity: { type: Number, default: 1 },
-        state: { type: String, enum: ["reserved", "paid", "delivered"], default: "reserved" },
+        state: { type: String, enum: ["cart", "paid"], default: "cart" },
     },
     { timestamps: true }
 );

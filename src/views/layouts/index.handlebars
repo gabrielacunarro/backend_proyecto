@@ -18,21 +18,9 @@
             <li data-bs-target="#banner-carousel" data-bs-slide-to="2"></li>
         </ol>
     </section>
-    <h2 class="subtitle text-center">Fragancias</h2>
+    <h2 class="subtitle text-center">Fragrances</h2>
     <section id="perfumes" class="d-flex flex-wrap justify-content-evenly w-100 mt-3 mb-5">
         {{#each products}}
-        <div class="card m-2 anchor" style="width: 360px">
-            <div class="card-header">
-                <i>6 cuotas sin interés<i>
-            </div>
-            <img src="{{this.photo}}" style="height: 200px" class="card-img-top object-fit-cover"
-                alt="{{this.title}}" />
-            <h5 class="p-2 text-center card-title">{{this.title}}</h5>
-            <p class="p-2 text-center card-description" style="font-size: 14px; margin-top: 0;">{{this.description}}</p>
-            <p class="p-2 text-center card-price">Precio: ${{this.price}}</p>
-            <p class="p-2 text-center card-stock">Stock: {{this.quantity}}</p>
-            <button class="btn btn-primary viewMore" data-product-id="{{this._id}}">View More</button>
-        </div>
         {{/each}}
     </section>
     <span class="w-100 d-flex justify-content-center mt-4">

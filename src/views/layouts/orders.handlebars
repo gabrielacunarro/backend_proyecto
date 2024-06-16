@@ -1,24 +1,24 @@
 <main>
-    <h1>Órdenes</h1>
+    <h1>Orders</h1>
     <div class="order-table">
         <table class="table">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Fecha</th>
-                    <th>Producto</th>
-                    <th>Cantidad</th> 
-                    <th>Estado</th> 
+                    <th>Product</th>
+                    <th>Thumbnail</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>State</th>
                 </tr>
             </thead>
             <tbody id="orders-body">
                 {{#each orders}}
                 <tr>
-                    <td>{{this._id}}</td>
-                    <td>{{this.createdAt}}</td>
-                    <td>{{this.pid.title}} - Precio: {{this.pid.price}}</td>
-                    <td>{{this.quantity}}</td> 
-                    <td>{{this.state}}</td> 
+                    <td>{{this.pid.title}}</td>
+                    <td><img src="{{this.pid.photo}}" alt="Product Thumbnail" width="50"></td>
+                    <td>{{formatPrice this.pid.price}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>{{this.state}}</td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -26,7 +26,4 @@
     </div>
 </main>
 
-<script src="/scripts/addToCart.js"></script>
 <script src="../../scripts/orders.js"></script>
-
-

@@ -11,35 +11,25 @@ class OrdersController {
 
     create = async (req, res, next) => {
         try {
-
-            if (!req.user ) {
-                const error = customError.new(errors.forbidden);
-                throw error;
+            if (!req.user || req.user.role !== 0) {
+                throw customError.new(errors.forbidden);
             }
             
             const { pid } = req.body;
 
             const product = await productsServices.readOne(pid);
-
+    
             if (!product) {
-                const error = customError.new(errors.notFound);
-                throw error;
+                throw customError.new(errors.notFound);
             }
-
-            const createdByUser = await usersServices.readOne(product.owner_id);
-
-            if (createdByUser.role === 1) {
-                const data = req.body;
-                const createdOrder = await this.service.create(data);
-                return res.success201(createdOrder);
-            } else {
-                throw customError.new(errors.forbidden);
-            }
+    
+            const data = req.body;
+            const createdOrder = await this.service.create(data);
+            return res.success201(createdOrder);
         } catch (error) {
             return next(error);
         }
     };
-
 
     read = async (req, res, next) => {
         try {
@@ -54,7 +44,6 @@ class OrdersController {
         }
     };
 
-    //ver
     readOne = async (req, res, next) => {
         try {
             const oid = req.body;

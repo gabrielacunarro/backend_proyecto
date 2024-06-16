@@ -72,7 +72,15 @@ class ProductsController {
             const product = await this.service.readOne(pid);
 
             if (product) {
-                return res.success200(product)
+                const cleanProduct = {
+                    title: product.title,
+                    description: product.description,
+                    photo: product.photo,
+                    price: product.price,
+                    stock: product.stock
+                };
+
+                return res.success200(cleanProduct);
             } else {
                 const error = customError.new(errors.notFound);
                 throw error;
