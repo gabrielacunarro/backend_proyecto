@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             ordersBody.appendChild(orderRow);
         });
 
-        // Add click event to all table rows
         ordersBody.addEventListener('click', async (event) => {
             if (event.target.classList.contains('delete-btn')) {
                 const orderId = event.target.closest('tr').getAttribute('data-id');

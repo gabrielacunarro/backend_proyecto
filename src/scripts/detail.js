@@ -34,7 +34,6 @@ function renderProductDetails(product, isLoggedIn, userId) {
                         ${product.response.description}
                     </p>
                     <p class="p-2 text-center product-details-price">Price: $${product.response.price}</p>
-                    <p class="p-2 text-center product-details-stock">Stock: ${product.response.stock}</p>
                     ${isLoggedIn ? '<button class="addToCart btn-add-cart">Add to cart</button>' : ''}
                 </div>
             </div>
