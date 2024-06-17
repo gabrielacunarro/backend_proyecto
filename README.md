@@ -1,124 +1,128 @@
-# Backend Proyecto
+# Backend Project
 
-## Estructura del Proyecto
+## Project Structure
 
-- **data:** Carpeta que almacena los archivos JSON para productos, usuarios y órdenes.
-- **assets:** Carpeta que contiene imágenes relacionadas con productos, usuarios y órdenes.
+- **data:** Folder storing JSON files for products, users, and orders.
+- **assets:** Folder containing images related to products, users, and orders.
 - **managers:**
-  - **product.js:** Archivo que define la clase `ProductManager` para gestionar productos.
-  - **user.js:** Archivo que define la clase `UserManager` para gestionar usuarios.
-  - **order.js:** Archivo que define la clase `OrderManager` para gestionar órdenes.
-  - **mongo.manager.js:** Archivo que define la clase MongoManager para gestionar operaciones en la base de datos MongoDB.
+  - **product.js:** File defining the `ProductManager` class for managing products.
+  - **user.js:** File defining the `UserManager` class for managing users.
+  - **order.js:** File defining the `OrderManager` class for managing orders.
+  - **mongo.manager.js:** File defining the MongoManager class for managing MongoDB operations.
 
-- **utils.js:** Archivo que contiene funciones y utilidades compartidas en todo el proyecto.
-- **middlewares:** Carpeta que almacena funciones de middleware para el servidor.
+- **utils.js:** File containing shared functions and utilities throughout the project.
+- **middlewares:** Folder containing middleware functions for the server.
 
-- **server.js:** Archivo principal que inicia el servidor.
-- **routers:** Carpeta que contiene módulos de enrutamiento para diferentes recursos (productos, usuarios, órdenes, etc.).
+- **server.js:** Main file that initializes the server.
+- **routers:** Folder containing routing modules for different resources (products, users, orders, etc.).
 
 ## Endpoints
 
-### Productos
-- `GET /productos`: Obtener la lista de productos.
-- `GET /productos/:id`: Obtener un producto por ID.
-- `POST /productos`: Crear un nuevo producto.
-- `PUT /productos/:id`: Actualizar un producto existente.
-- `DELETE /productos/:id`: Eliminar un producto.
+### Products
+- `GET /products`: Get the list of products.
+- `GET /products/:id`: Get a product by ID.
+- `POST /products`: Create a new product.
+- `PUT /products/:id`: Update an existing product.
+- `DELETE /products/:id`: Delete a product.
 
-### Usuarios
-- `GET /usuarios`: Obtener la lista de usuarios.
-- `GET /usuarios/:id`: Obtener un usuario por ID.
-- `POST /usuarios`: Crear un nuevo usuario.
-- `PUT /usuarios/:id`: Actualizar un usuario existente.
-- `DELETE /usuarios/:id`: Eliminar un usuario.
-- `GET /usuarios/readbyemail/:email:` Obtener un usuario por email.
+### Users
+- `GET /users`: Get the list of users.
+- `GET /users/:id`: Get a user by ID.
+- `POST /users`: Create a new user.
+- `PUT /users/:id`: Update an existing user.
+- `DELETE /users/:id`: Delete a user.
+- `GET /users/readbyemail/:email:` Get a user by email.
 
-### Órdenes
-- `GET /ordenes`: Obtener la lista de órdenes.
-- `GET /ordenes/:uid`: Obtener una orden por ID del usuario.
-- `POST /ordenes`: Crear una nueva orden.
-- `PUT /ordenes/:id`: Actualizar una orden existente.
-- `DELETE /ordenes/:id`: Eliminar una orden.
-- `GET /orders/total` Obtener el monto total por usuario.
+### Orders
+- `GET /orders`: Get the list of orders.
+- `GET /orders/:uid`: Get an order by user ID.
+- `POST /orders`: Create a new order.
+- `PUT /orders/:id`: Update an existing order.
+- `DELETE /orders/:id`: Delete an order.
+- `GET /orders/total`: Get the total amount per user.
 
 ## MongoDB
 
-- **db.js:** Archivo que contiene la configuración y conexión a la base de datos MongoDB.
+- **db.js:** File containing MongoDB configuration and connection.
 
 - **managers:**
-  - **mongo.manager.js:** Archivo que define la clase MongoManager para gestionar operaciones en la base de datos MongoDB.
+  - **mongo.manager.js:** File defining the MongoManager class for managing MongoDB operations.
 
-  ## Paginación y Filtros
+## Pagination and Filters
 
-La aplicación cuenta con un sistema de paginación y filtros que permite a los usuarios gestionar grandes conjuntos de datos de manera eficiente. Las principales características incluyen:
+The application features a pagination and filtering system that allows users to efficiently manage large datasets. Key features include:
 
-- **Paginación**: Los resultados se dividen en páginas para facilitar la navegación y mejorar la experiencia del usuario. Esto es especialmente útil cuando se manejan grandes cantidades de información, como en listas de productos o resultados de búsqueda.
+- **Pagination:** Results are divided into pages to facilitate navigation and enhance user experience, particularly useful for managing large amounts of information such as product lists or search results.
 
-- **Filtros**: Los usuarios pueden refinar sus búsquedas utilizando filtros específicos, lo que les permite encontrar rápidamente la información deseada. Los filtros pueden ser aplicados en diferentes criterios.
+- **Filters:** Users can refine their searches using specific filters, enabling them to quickly find desired information. Filters can be applied across different criteria.
 
-Estas funcionalidades proporcionan una experiencia de usuario más fluida y eficiente, permitiendo a los usuarios explorar y encontrar fácilmente la información que están buscando.
+These features provide a smoother and more efficient user experience, allowing users to explore and easily find the information they are looking for.
 
-## Gestión de Sesiones y Validación de Credenciales
+## Session Management and Credential Validation
 
-- **Gestión de Sesiones**: Se utilizan sesiones de usuario para mantener la autenticación entre solicitudes. Esto se logra mediante el uso de paquetes como `express-session`.
+- **Session Management:** User sessions are used to maintain authentication between requests, implemented using packages like `express-session`.
 
-- **Vistas de Inicio de Sesión**: Se han implementado vistas con handlebars para el login del usuario
+- **Login Views:** Handlebars views are implemented for user login.
 
-- **Validación de Credenciales**: Se proporcionan funciones de validación de credenciales como `has8char` e `isValidPass` en el archivo `utils.js`. Estas funciones aseguran que las contraseñas cumplan con los requisitos mínimos de seguridad antes de ser almacenadas en la base de datos.
+- **Credential Validation:** Credential validation functions such as `has8char` and `isValidPass` are provided in the `utils.js` file. These functions ensure passwords meet minimum security requirements before being stored in the database.
 
-- **Compresión de Datos**:
--La aplicación utiliza técnicas de compresión como Gzip y Brotli para optimizar el rendimiento al reducir el tamaño de los datos transferidos entre el servidor y el cliente. Esto mejora la velocidad de carga de la aplicación y reduce el consumo de ancho de banda.
+- **Data Compression:**
+-The application uses compression techniques like Gzip and Brotli to optimize performance by reducing data size transferred between server and client. This improves application load speed and reduces bandwidth consumption.
 
-- **Mejora del Error Handler**:
--Se ha mejorado el manejo de errores en la aplicación para proporcionar mensajes de error más descriptivos y útiles al usuario. Esto ayuda a identificar y solucionar problemas de manera más eficiente, mejorando la experiencia del usuario.
+- **Improved Error Handling:**
+-Error handling in the application has been enhanced to provide more descriptive and useful error messages to users. This helps identify and resolve issues more efficiently, improving user experience.
 
-- **Diccionario de errores**:
--Error 400: Error - Se produce cuando ocurre un error genérico en la aplicación.
--Error 401: Bad auth - Se produce cuando la autenticación del usuario falla debido a credenciales incorrectas.
--Error 403: Forbidden - Se produce cuando el cliente intenta acceder a un recurso para el cual no tiene permisos suficientes.
--Error 404: Not Found - Se produce cuando se intenta acceder a un recurso que no existe en el servidor.
--Error 500: Fatal - Se produce cuando ocurre un error interno en el servidor que impide completar la solicitud del cliente.
+- **Error Dictionary:**
+-Error 400: Error - Occurs when a generic error happens in the application.
+-Error 401: Bad auth - Occurs when user authentication fails due to incorrect credentials.
+-Error 403: Forbidden - Occurs when the client attempts to access a resource for which they do not have sufficient permissions.
+-Error 404: Not Found - Occurs when attempting to access a resource that does not exist on the server.
+-Error 500: Fatal - Occurs when an internal server error prevents completion of the client's request.
 
-- **Mocks**:
--Se han incorporado mocks para simular el comportamiento de componentes externos o dependencias durante las pruebas unitarias. Esto permite probar el código de manera aislada y garantizar su funcionamiento correcto en diferentes escenarios.
+- **Mocks:**
+-Mocks have been incorporated to simulate the behavior of external components or dependencies during unit tests. This allows isolated testing of the code and ensures proper operation in different scenarios.
 
-- **Logger**:
+- **Logger:**
 
-Se ha integrado un sistema de logging en el proyecto para registrar eventos importantes y errores. El logger utiliza la biblioteca Winston, que proporciona flexibilidad y opciones de configuración avanzadas. Además, el sistema de loggin se ha configurado de manera dinámica para adaptarse al entorno de ejecución.
+A logging system has been integrated into the project to record important events and errors. The logger uses the Winston library, providing flexibility and advanced configuration options. Additionally, the logging system is dynamically configured to adapt to the runtime environment.
 
-- **Gestión de Roles y Permisos**:
-Se ha establecido un nuevo rol para el schema del usuario llamado "premium" (role=2), el cual estará habilitado también para gestionar sus productos.
-Se ha modificado el schema de producto para contar con un campo "owner_id", el cual hará referencia al id de la persona que creó el producto (admin o premium).
-Se han modificado los permisos para que:
-Un usuario premium solo pueda actualizar/borrar los productos que le pertenecen.
-El admin pueda actualizar/borrar cualquier producto, aún si es de otro owner.
-Se ha implementado una nueva ruta en el router de api/users, la cual permitirá cambiar el rol de un usuario, de "user" (cero) a "premium" (dos) y viceversa.
-Se ha modificado la lógica para leer productos para que un usuario premium NO pueda ver sus productos en la tienda.
+- **Role and Permission Management:**
+A new role has been established for the user schema called "premium" (role=2), which also allows managing their products.
+The product schema has been modified to include an "owner_id" field, referencing the ID of the person who created the product (admin or premium).
+Permissions have been adjusted so that:
+A premium user can only update/delete products they own.
+Admins can update/delete any product, even if it belongs to another owner.
+A new route has been implemented in the api/users router, allowing changing a user's role from "user" (zero) to "premium" (two) and vice versa.
+Logic has been modified to read products so that a premium user CANNOT view their products in the store.
 
-## Mejoras añadidas:
+## Added Enhancements:
 
-## Pruebas con Supertest, Mocha, y Chai
-Se han agregado pruebas unitarias utilizando Supertest, Mocha y Chai para verificar la funcionalidad de los endpoints de la API.
-Las pruebas cubren la autenticación de usuarios, la creación, lectura, actualización y eliminación de productos y usuarios, así como la gestión de sesiones y la validación de credenciales.
-Se han implementado aserciones para garantizar que los endpoints respondan correctamente con los códigos de estado esperados y los datos adecuados.
-Se han manejado problemas de sincronización y asincronía para asegurar que las pruebas se ejecuten de manera adecuada.
+## Testing with Supertest, Mocha, and Chai
+Unit tests have been added using Supertest, Mocha, and Chai to verify the functionality of API endpoints.
+Tests cover user authentication, creation, reading, updating, and deletion of products and users, as well as session management and credential validation.
+Assertions have been implemented to ensure endpoints respond correctly with expected status codes and appropriate data.
+Synchronization and asynchronous issues have been handled to ensure tests run properly.
 
-## Pruebas de Estrés con Artillery
-Se han añadido pruebas de estrés utilizando Artillery para evaluar el rendimiento del sistema bajo carga.
-Las pruebas de estrés incluyen escenarios como el inicio de sesión, la lectura de productos y la finalización de la sesión.
-Estas pruebas ayudan a identificar posibles cuellos de botella y a optimizar el rendimiento del sistema para manejar un gran volumen de usuarios concurrentes.
-Con estas mejoras, el proyecto ha ganado en seguridad, funcionalidad y rendimiento, proporcionando una experiencia de usuario más robusta y satisfactoria.
+## Stress Testing with Artillery
+Stress tests have been added using Artillery to evaluate system performance under load.
+Stress tests include scenarios such as login, reading products, and completing sessions.
+These tests help identify potential bottlenecks and optimize system performance to handle a large volume of concurrent users.
+With these enhancements, the project has gained in security, functionality, and performance, providing a more robust and satisfactory user experience.
 
-## Pagos con Stripe
-POST /api/payments/checkout: Crear un pago utilizando Stripe para completar una orden.
-Este endpoint utiliza la API de Stripe para generar una sesión de checkout y procesar el pago.
-La sesión de checkout incluye los productos de las órdenes seleccionadas y redirige al usuario a una página de agradecimiento (success_url) después de completar el pago.
-Integración con Stripe
-Se ha implementado una integración con Stripe para procesar pagos de manera segura y eficiente. La aplicación utiliza la API de Stripe para crear sesiones de checkout, lo que permite a los usuarios realizar pagos de productos seleccionados de manera rápida y sencilla.
+## Stripe Payments
+### POST /api/payments/checkout
+Create a payment using Stripe to complete an order.
 
-La integración con Stripe proporciona las siguientes funcionalidades:
+This endpoint utilizes the Stripe API to generate a checkout session and process payment.
+The checkout session includes products from selected orders and redirects the user to a thank-you page (success_url) after completing the payment.
 
-Creación de Sesión de Checkout: Se utiliza la API de Stripe para crear una sesión de checkout que incluye los productos seleccionados por el usuario.
-Modo de Pago: Se configura la sesión de checkout en modo de pago para procesar transacciones en tiempo real.
-Redirección al Usuario: Después de completar el pago, los usuarios son redirigidos a una página de agradecimiento (success_url), lo que mejora la experiencia del usuario final.
-La integración con Stripe asegura que los pagos sean seguros y cumplan con los estándares de seguridad PCI-DSS, proporcionando confianza tanto a los usuarios como a la plataforma de comercio electrónico.
+### Integration with Stripe
+An integration with Stripe has been implemented to securely and efficiently process payments. The application uses the Stripe API to create checkout sessions, allowing users to quickly and easily make payments for selected products.
+
+The Stripe integration provides the following functionalities:
+
+- **Checkout Session Creation:** The Stripe API is used to create a checkout session that includes products selected by the user.
+- **Payment Mode:** The checkout session is configured in payment mode to process real-time transactions.
+- **User Redirection:** After completing the payment, users are redirected to a thank-you page (success_url), enhancing the final user experience.
+
+The Stripe integration ensures secure payments compliant with PCI-DSS security standards, providing confidence to both users and the e-commerce platform.

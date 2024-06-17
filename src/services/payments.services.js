@@ -5,7 +5,6 @@ class checkoutService {
         try {
             const { orderIds } = data;
 
-            // Llama al repositorio de pagos con los IDs de órdenes
             const intent = await checkoutRepo.create(orderIds);
             return intent;
         } catch (error) {
