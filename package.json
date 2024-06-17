@@ -128,6 +128,7 @@
         "simple-update-notifier": "^2.0.0",
         "socket.io": "^4.7.4",
         "statuses": "^2.0.1",
+        "stripe": "^15.12.0",
         "supports-color": "^5.5.0",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.0",

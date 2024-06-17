@@ -326,3 +326,11 @@ Expecting 'ID', got 'INVALID'
 [31mERROR[39m: orders validation failed: uid: Path `uid` is required.
 [31mERROR[39m: orders validation failed: uid: Path `uid` is required.
 [31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: Error creating payment: checkoutRepository is not defined
+[31mERROR[39m: Error creating payment: Error creating payment: Order.find is not a function
+[31mERROR[39m: Error creating payment: Error creating payment: Order.find is not a function
+[31mERROR[39m: Error creating payment: Error creating payment: orderIds.map is not a function
+[31mERROR[39m: Order IDs must be provided as a non-empty array
+[31mERROR[39m: Order IDs must be provided as a non-empty array
+[31mERROR[39m: Order IDs must be provided as a non-empty array
+[31mERROR[39m: Order IDs must be provided as a non-empty array
