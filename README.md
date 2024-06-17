@@ -108,3 +108,17 @@ Se han añadido pruebas de estrés utilizando Artillery para evaluar el rendimie
 Las pruebas de estrés incluyen escenarios como el inicio de sesión, la lectura de productos y la finalización de la sesión.
 Estas pruebas ayudan a identificar posibles cuellos de botella y a optimizar el rendimiento del sistema para manejar un gran volumen de usuarios concurrentes.
 Con estas mejoras, el proyecto ha ganado en seguridad, funcionalidad y rendimiento, proporcionando una experiencia de usuario más robusta y satisfactoria.
+
+## Pagos con Stripe
+POST /api/payments/checkout: Crear un pago utilizando Stripe para completar una orden.
+Este endpoint utiliza la API de Stripe para generar una sesión de checkout y procesar el pago.
+La sesión de checkout incluye los productos de las órdenes seleccionadas y redirige al usuario a una página de agradecimiento (success_url) después de completar el pago.
+Integración con Stripe
+Se ha implementado una integración con Stripe para procesar pagos de manera segura y eficiente. La aplicación utiliza la API de Stripe para crear sesiones de checkout, lo que permite a los usuarios realizar pagos de productos seleccionados de manera rápida y sencilla.
+
+La integración con Stripe proporciona las siguientes funcionalidades:
+
+Creación de Sesión de Checkout: Se utiliza la API de Stripe para crear una sesión de checkout que incluye los productos seleccionados por el usuario.
+Modo de Pago: Se configura la sesión de checkout en modo de pago para procesar transacciones en tiempo real.
+Redirección al Usuario: Después de completar el pago, los usuarios son redirigidos a una página de agradecimiento (success_url), lo que mejora la experiencia del usuario final.
+La integración con Stripe asegura que los pagos sean seguros y cumplan con los estándares de seguridad PCI-DSS, proporcionando confianza tanto a los usuarios como a la plataforma de comercio electrónico.
