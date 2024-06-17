@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let productsSection = document.getElementById("perfumes");
     let prevButton = document.getElementById("prev");
     let nextButton = document.getElementById("next");
+    
 
     let currentPage = 0;
     let totalProducts = 0;

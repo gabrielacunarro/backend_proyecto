@@ -36,19 +36,21 @@ passport.use("login", new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
         try {
-            const user = await repository.readByEmail(email)
+            const user = await repository.readByEmail(email);
             if (user && verifyHash(password, user.password)) {
-                const token = createToken({ email, role: user.role })
-                req.token = token
-                return done(null, user)
+                const token = createToken(user._id, user.email, user.role);
+                req.token = token; // Asignar el token al objeto req
+                req.userId = user._id; // Asignar el userId al objeto req
+                return done(null, user);
             } else {
-                return done(null, false, { messages: "Bad auth from passport cb" });
+                return done(null, false, { message: "Bad auth from passport cb" });
             }
         } catch (error) {
-            return done(error)
+            return done(error);
         }
     }
 ));
+
 passport.use("google",
     new GoogleStrategy(
         {

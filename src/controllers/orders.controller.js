@@ -16,11 +16,15 @@ class OrdersController {
             }
             
             const { pid } = req.body;
-
-            const product = await productsServices.readOne(pid);
     
+            // Validación de pid
+            if (!pid) {
+                throw new Error('Missing pid in request body');
+            }
+    
+            const product = await productsServices.readOne(pid);
             if (!product) {
-                throw customError.new(errors.notFound);
+                throw new Error('Product not found');
             }
     
             const data = req.body;
@@ -30,6 +34,7 @@ class OrdersController {
             return next(error);
         }
     };
+    
 
     read = async (req, res, next) => {
         try {
@@ -47,7 +52,7 @@ class OrdersController {
     readOne = async (req, res, next) => {
         try {
             const oid = req.body;
-    
+            
             if (!oid) {
                 return res.status(400).json({ message: "OID parameter is required" });
             }
@@ -80,10 +85,13 @@ class OrdersController {
     destroy = async (req, res, next) => {
         try {
             const { oid } = req.params;
-            const one = await this.service.destroy(oid);
-
+            const one = await this.service.destroy(oid); 
+    
             if (one) {
-                return res.success200(res,`Order with ID ${oid} has been successfully deleted.`);
+                return res.status(200).json({
+                    statusCode: 200,
+                    message: `Order with ID ${oid} has been successfully deleted.`,
+                });
             } else {
                 throw customError.new(errors.notFound);
             }

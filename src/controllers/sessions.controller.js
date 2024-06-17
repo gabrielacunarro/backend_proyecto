@@ -21,41 +21,40 @@ class SessionController {
 
     async login(req, res, next) {
         try {
-            const { email, password } = req.body;
-    
+            const { email, password, verificationCode } = req.body;
+
             const user = await this.service.readByEmail(email);
             if (!user) {
                 return res.status(404).json({ message: 'User not found.' });
             }
-    
+
             // Verificar si el usuario está verificado
             if (!user.verified) {
                 return res.status(403).json({ message: 'User is not verified. Please verify your account.' });
             }
-    
+
             // Verificar el código de verificación si se proporciona
             if (verificationCode && verificationCode !== user.verificationCode) {
                 return res.status(401).json({ message: 'Incorrect verification code.' });
             }
-    
+
             // Verificar la contraseña
             const isPasswordValid = verifyHash(password, user.password);
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Invalid credentials.' });
             }
-    
+
             // Generar el token JWT y establecerlo en la cookie
-            const token = createToken({ userId: user._id, email: user.email }); 
-    
-            return res.cookie("token", token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true }).json({
-                statusCode: 200,
-                message: "Logged in!"
-            });
+            const token = createToken(user._id, user.email, user.role);
+
+            res.cookie("token", token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true })
+            return res.success200(token)
+
         } catch (error) {
             next(error);
         }
     }
-    
+
     signout = async (req, res, next) => {
         try {
             return res.clearCookie("token").json({

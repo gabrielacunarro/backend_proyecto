@@ -4,26 +4,30 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Quantity</th>
                     <th>Product</th>
                     <th>Thumbnail</th>
                     <th>Price</th>
-                    <th>Quantity</th>
                     <th>State</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="orders-body">
-                {{#each orders}}
-                <tr>
-                    <td>{{this.pid.title}}</td>
-                    <td><img src="{{this.pid.photo}}" alt="Product Thumbnail" width="50"></td>
-                    <td>{{formatPrice this.pid.price}}</td>
-                    <td>{{this.quantity}}</td>
-                    <td>{{this.state}}</td>
+                {{#each response.docs}}
+                <tr data-id="{{_id}}">
+                    <td>{{quantity}}</td>
+                    <td>{{pid.title}}</td>
+                    <td class="thumbnail-container">
+                        <img src="{{pid.photo}}" alt="Product Thumbnail" class="product-thumbnail">
+                    </td>
+                    <td>{{formatPrice pid.price}}</td>
+                    <td>{{state}}</td>
+                    <td><span class="delete-btn" data-id="{{_id}}">&times;</span></td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </div>
 </main>
-
 <script src="../../scripts/orders.js"></script>
+{{!-- <script src="../../scripts/detail.js"></script> --}}

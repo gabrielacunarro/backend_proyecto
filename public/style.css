@@ -206,6 +206,24 @@ input {
     background-color: #333;
 }
 
+/* cart*/
+.delete-btn {
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff0000; 
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    display: inline-block;
+}
+.delete-btn:hover {
+    color: #cc0000; 
+}
+
+
 /* Estilos para el botón de búsqueda (lupa) */
 .input-group{
     margin-right: 50px;
