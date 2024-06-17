@@ -8,7 +8,7 @@ let dao = {};
 
 switch (persistence) {
     case "MEMORY":
-    Utiliza MEMORY
+    //Utiliza MEMORY
     winston.INFO("MEMORY CONNECTED");
     const { default: productManager } = await import("./memory/productMemory.js");
     dao = { products: productManager };
