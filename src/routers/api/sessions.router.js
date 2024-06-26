@@ -2,7 +2,7 @@ import has8char from "../../middlewares/has8char.mid.js";
 import passport from "../../middlewares/passport.mid.js";
 import passCbMid from "../../middlewares/passCb.mid.js";
 import CustomRouter from "../CustomRouter.js";
-import { verifyAccount, updatePassword  } from "../../controllers/sessions.controller.js";
+import { verifyAccount, updatePassword } from "../../controllers/sessions.controller.js";
 
 
 export default class SessionsRouter extends CustomRouter {
@@ -22,7 +22,7 @@ export default class SessionsRouter extends CustomRouter {
             try {
 
                 return res.cookie("token", req.token, {
-                    maxAge: 60 * 60 * 24 * 7, httpOnly: true
+                    maxAge: 60 * 60 * 24 * 7, httpOnly: true, path: '/'
                 }).success200("Logged in!");
             } catch (error) {
                 return next(error);
@@ -90,6 +90,6 @@ export default class SessionsRouter extends CustomRouter {
         });
 
         this.create("/verify", ["PUBLIC", "USER", "ADMIN"], verifyAccount);
-        this.update("/reset", ["PUBLIC", "USER", "ADMIN"], updatePassword );
+        this.update("/reset", ["PUBLIC", "USER", "ADMIN"], updatePassword);
     }
 }

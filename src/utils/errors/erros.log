@@ -336,3 +336,29 @@ Expecting 'ID', got 'INVALID'
 [31mERROR[39m: Order IDs must be provided as a non-empty array
 [31mERROR[39m: orders validation failed: uid: Path `uid` is required.
 [31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Cast to ObjectId failed for value "{ statusCode: 200, response: { session: { role: 0 } } }" (type Object) at path "uid" because of "BSONError"
+[31mERROR[39m: orders validation failed: uid: Cast to ObjectId failed for value "{ statusCode: 200, response: { session: { role: 0 } } }" (type Object) at path "uid" because of "BSONError"
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: next is not a function
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: orders validation failed: uid: Path `uid` is required.

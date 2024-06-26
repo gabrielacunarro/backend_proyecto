@@ -17,14 +17,20 @@ async function loadProductDetails(productId) {
     }
 }
 
-function renderProductDetails(product, isLoggedIn, userId) {
-    const productDetailsSection = document.getElementById("product-details");
-    if (!productDetailsSection) {
-        console.error('Product details section not found.');
-        return;
-    }
+async function renderProductDetails(productId) {
+    try {
+        const product = await loadProductDetails(productId);
+        if (!product || !product.response) {
+            console.error('Product details not found or invalid response format:', product);
+            return;
+        }
 
-    if (typeof product === 'object' && product.hasOwnProperty('response')) {
+        const productDetailsSection = document.getElementById("product-details");
+        if (!productDetailsSection) {
+            console.error('Product details section not found.');
+            return;
+        }
+
         const productDetailHtml = `
             <div class="product-details-container">
                 <img src="${product.response.photo}" class="product-details-img" alt="${product.response.title}" />
@@ -34,79 +40,95 @@ function renderProductDetails(product, isLoggedIn, userId) {
                         ${product.response.description}
                     </p>
                     <p class="p-2 text-center product-details-price">Price: $${product.response.price}</p>
-                    ${isLoggedIn ? '<button class="addToCart btn-add-cart">Add to cart</button>' : ''}
+                    <button class="addToCart btn-add-cart">Add to cart</button>
                 </div>
             </div>
         `;
 
         productDetailsSection.innerHTML = productDetailHtml;
 
-        if (isLoggedIn) {
-            const addToCartButton = productDetailsSection.querySelector(".addToCart");
-            if (addToCartButton) {
-                addToCartButton.addEventListener("click", async () => {
-                    try {
-                        
-                        const order = {
-                            pid: product.response.pid,
-                            uid: userId, 
-                            quantity: 1,
-                            state: "cart"
-                        };
-
-                        const response = await fetch('/api/orders', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(order)
+        const addToCartButton = productDetailsSection.querySelector(".addToCart");
+        if (addToCartButton) {
+            addToCartButton.addEventListener("click", async () => {
+                try {
+                    const userId = getUserIdFromSession();
+                    if (!userId) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Please log in to add product to cart.',
                         });
-
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-
-                        const result = await response.json();
-                        if (result.statusCode === 401) {
-                            alert("PLEASE LOG IN!");
-                        } else {
-                            alert("Product added to cart!");
-                        }
-                    } catch (error) {
-                        console.error('Error adding product to cart:', error);
-                        alert(error.message);
+                        return;
                     }
-                });
-            } else {
-                console.error('Add to cart button not found.');
-            }
+
+                    const order = {
+                        pid: product.response.pid,
+                        uid: userId,
+                        quantity: 1,
+                        state: "cart"
+                    };
+
+                    const response = await fetch('/api/orders', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(order)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const result = await response.json();
+                    if (result.statusCode === 401) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'PLEASE LOG IN!',
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Product added to cart!',
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error adding product to cart:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error.message,
+                    });
+                }
+            });
+        } else {
+            console.error('Add to cart button not found.');
         }
-    } else {
-        console.error('Unexpected response format:', product);
+    } catch (error) {
+        console.error('Error rendering product details:', error);
     }
 }
 
-async function checkSession() {
-    try {
-        const response = await fetch("/api/sessions/", {
-            method: "POST",
-            credentials: "same-origin" 
-        });
-        const res = await response.json();
-        return res.statusCode === 200 ? res.response.session.cookies : null; 
-    } catch (error) {
-        console.error('Error al obtener la sesión:', error);
-        return null;
+function getUserIdFromSession() {
+    const cookies = document.cookie.split('; ');
+    const tokenCookie = cookies.find(cookie => cookie.startsWith('token='));
+    if (tokenCookie) {
+        const tokenValue = tokenCookie.split('=')[1];
+        try {
+            const payload = JSON.parse(atob(tokenValue.split('.')[1]));
+            return payload.userId; 
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return null;
+        }
+    } else {
+        return null; 
     }
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
-
     const productId = window.location.pathname.split("/").pop();
-
-    const userId = await checkSession();
-    const isLoggedIn = userId !== null;
-
-    const product = await loadProductDetails(productId);
-    renderProductDetails(product, isLoggedIn, userId);
+    await renderProductDetails(productId);
 });

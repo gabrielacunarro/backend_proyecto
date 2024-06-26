@@ -8,7 +8,7 @@ class SessionController {
     async register(req, res, next) {
         try {
             const { email, name } = req.body;
-            const verificationCode = generateVerificationCode(); // Hipotético método para generar código de verificación
+            const verificationCode = generateVerificationCode();
             const createdUser = await this.service.register({ email, name, verificationCode });
 
             await sendMail({ email, name, verificationCode });
@@ -43,7 +43,7 @@ class SessionController {
     
             const token = createToken({ userId: user._id, email: user.email }); 
     
-            return res.cookie("token", token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true }).json({
+            return res.cookie("token", token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true, path: '/' }).json({
                 statusCode: 200,
                 message: "Logged in!"
             });

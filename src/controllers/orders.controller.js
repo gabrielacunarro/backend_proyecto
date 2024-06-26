@@ -15,11 +15,10 @@ class OrdersController {
                 throw customError.new(errors.forbidden);
             }
             
-            const { pid } = req.body;
+            const { pid, uid } = req.body;
     
-            // Validación de pid
-            if (!pid) {
-                throw new Error('Missing pid in request body');
+            if (!pid || !uid) {
+                throw new Error('Missing pid or uid in request body');
             }
     
             const product = await productsServices.readOne(pid);
@@ -27,13 +26,14 @@ class OrdersController {
                 throw new Error('Product not found');
             }
     
-            const data = req.body;
+            const data = { ...req.body, uid }; 
             const createdOrder = await this.service.create(data);
             return res.success201(createdOrder);
         } catch (error) {
             return next(error);
         }
     };
+    
     
 
     read = async (req, res, next) => {
