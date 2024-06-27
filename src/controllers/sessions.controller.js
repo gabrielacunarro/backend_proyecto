@@ -22,16 +22,16 @@ class SessionController {
     async login(req, res, next) {
         try {
             const { email, password } = req.body;
-    
+
             const user = await this.service.readByEmail(email);
             if (!user) {
                 return res.status(404).json({ message: 'User not found.' });
             }
-    
+
             if (!user.verified) {
                 return res.status(403).json({ message: 'User is not verified. Please verify your account.' });
             }
-    
+
             if (verificationCode && verificationCode !== user.verificationCode) {
                 return res.status(401).json({ message: 'Incorrect verification code.' });
             }
@@ -40,10 +40,10 @@ class SessionController {
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Invalid credentials.' });
             }
-    
-            const token = createToken({ userId: user._id, email: user.email }); 
-    
-            return res.cookie("token", token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true,sameSite: 'None',Secure:true, path: '/' }).json({
+
+            const token = createToken({ userId: user._id, email: user.email });
+
+            return res.cookie("token", token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true, sameSite: 'None', secure: true, path: '/' }).json({
                 statusCode: 200,
                 message: "Logged in!"
             });
@@ -51,7 +51,7 @@ class SessionController {
             next(error);
         }
     }
-    
+
     signout = async (req, res, next) => {
         try {
             return res.clearCookie("token").json({

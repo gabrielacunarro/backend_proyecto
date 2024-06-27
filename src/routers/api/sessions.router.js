@@ -20,15 +20,17 @@ export default class SessionsRouter extends CustomRouter {
         //login
         this.create("/login", ["PUBLIC"], passCbMid("login"), async (req, res, next) => {
             try {
-
-                return res.cookie("token", req.token, {
-                    maxAge: 60 * 60 * 24 * 7, httpOnly: true, sameSite: 'None',Secure:true, path: '/'
-                }).success200("Logged in!");
+                res.cookie("token", req.token, {
+                    maxAge: 60 * 60 * 24 * 7, httpOnly: true,sameSite: 'None', secure: true, path: '/'
+                }).json({
+                    statusCode: 200,
+                    message: "Logged in!"
+                });
             } catch (error) {
-                return next(error);
+                next(error);
             }
         });
-
+        
 
         //signout
         this.create("/signout", ["USER", "ADMIN", "PREM"], passCbMid("jwt"), async (req, res, next) => {
