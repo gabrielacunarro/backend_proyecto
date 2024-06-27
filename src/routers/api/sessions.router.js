@@ -21,7 +21,7 @@ export default class SessionsRouter extends CustomRouter {
         this.create("/login", ["PUBLIC"], passCbMid("login"), async (req, res, next) => {
             try {
                 res.cookie("token", req.token, {
-                    maxAge: 60 * 60 * 24 * 7, httpOnly: true,sameSite: 'None', secure: true, path: '/'
+                    maxAge: 60 * 60 * 24 * 7, httpOnly: false,sameSite: 'Lax', secure: false, path: '/'
                 }).json({
                     statusCode: 200,
                     message: "Logged in!"

@@ -113,13 +113,11 @@ async function renderProductDetails(productId) {
 
 function getUserIdFromSession() {
     try {
-        const cookies = document.cookie.split('; ');
-        const tokenCookie = cookies.find(cookie => cookie.startsWith('token='));
-        if (!tokenCookie) {
+        const tokenValue = getCookieValue('token');
+        if (!tokenValue) {
             throw new Error('Token cookie not found');
         }
 
-        const tokenValue = tokenCookie.split('=')[1];
         const payload = JSON.parse(atob(tokenValue.split('.')[1]));
         if (!payload || !payload.userId) {
             throw new Error('User ID not found in token payload');
@@ -132,6 +130,40 @@ function getUserIdFromSession() {
     }
 }
 
+function getUserIdFromSession() {
+    try {
+        // Agrega una línea de depuración para ver el estado de document.cookie
+        console.log('document.cookie:', document.cookie);
+
+        const tokenValue = getCookieValue('token');
+        if (!tokenValue) {
+            throw new Error('Token cookie not found');
+        }
+
+        const payload = JSON.parse(atob(tokenValue.split('.')[1]));
+        if (!payload || !payload.userId) {
+            throw new Error('User ID not found in token payload');
+        }
+
+        return payload.userId;
+    } catch (error) {
+        console.error('Error retrieving user ID from session:', error);
+        return null;
+    }
+}
+
+function getCookieValue(cookieName) {
+    const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+    console.log('Cookies:', cookies); // Debugging line to see all cookies
+    for (let cookie of cookies) {
+        const [name, value] = cookie.split('=');
+        if (name === cookieName) {
+            console.log(`Found cookie: ${name}=${value}`); // Debugging line to see the found cookie
+            return decodeURIComponent(value);
+        }
+    }
+    return null;
+}
 
 document.addEventListener("DOMContentLoaded", async function () {
     const productId = window.location.pathname.split("/").pop();
@@ -168,4 +200,3 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 });
-
