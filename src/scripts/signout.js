@@ -77,7 +77,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
     } catch (error) {
-        console.error('Error al obtener la sesión:', error);
         Swal.fire({
             icon: 'error',
             title: 'An unexpected error occurred',
