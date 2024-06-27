@@ -132,8 +132,6 @@ function getUserIdFromSession() {
 
 function getUserIdFromSession() {
     try {
-        // Agrega una línea de depuración para ver el estado de document.cookie
-        console.log('document.cookie:', document.cookie);
 
         const tokenValue = getCookieValue('token');
         if (!tokenValue) {
@@ -154,11 +152,9 @@ function getUserIdFromSession() {
 
 function getCookieValue(cookieName) {
     const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-    console.log('Cookies:', cookies); // Debugging line to see all cookies
     for (let cookie of cookies) {
         const [name, value] = cookie.split('=');
         if (name === cookieName) {
-            console.log(`Found cookie: ${name}=${value}`); // Debugging line to see the found cookie
             return decodeURIComponent(value);
         }
     }

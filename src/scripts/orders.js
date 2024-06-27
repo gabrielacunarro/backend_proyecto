@@ -140,7 +140,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const data = await response.json();
                 if (data.stripeUrl) {
-                    // Redirigir a la URL de Stripe para el pago
                     window.location.replace(data.stripeUrl);
                 } else {
                     console.error('Error: No se recibió la URL de Stripe en la respuesta.');
