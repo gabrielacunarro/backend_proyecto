@@ -21,13 +21,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             const state = order.state || 'N/A';
 
             orderRow.innerHTML = `
-                <td>${quantity}</td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="quantity-btn" data-action="decrease" data-id="${order._id}">-</button>
+                        <span>${quantity}</span>
+                        <button class="quantity-btn" data-action="increase" data-id="${order._id}">+</button>
+                    </div>
+                </td>
                 <td>${productTitle}</td>
                 <td><img src="${productPhoto}" alt="Product Thumbnail" width="50"></td>
                 <td>${productPrice}</td>
                 <td>${state}</td>
-                <td><span class="delete-btn">&times;</span></td>
-            `;
+                <td><span class="delete-btn" data-id="${order._id}">&times;</span></td>
+    `;
 
             ordersBody.appendChild(orderRow);
         });
@@ -51,7 +57,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         throw new Error(deleteData.message || 'Failed to delete order');
                     }
                 } catch (error) {
-                    console.error('Error deleting order:', error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error deleting order',
@@ -62,11 +67,52 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
     } catch (error) {
-        console.error('Error fetching orders:', error);
         Swal.fire({
             icon: 'error',
             title: 'An unexpected error occurred',
             text: 'Please try again later.'
         });
     }
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const ordersTable = document.getElementById('orders-body');
+
+    ordersTable.addEventListener('click', async (event) => {
+        if (event.target.classList.contains('quantity-btn')) {
+            const orderId = event.target.closest('tr').getAttribute('data-id');
+            const action = event.target.getAttribute('data-action');
+
+            const quantityElement = event.target.parentElement.querySelector('span');
+            if (!quantityElement) return;
+
+            let newQuantity = parseInt(quantityElement.textContent, 10);
+            if (action === 'increase') {
+                newQuantity++;
+            } else if (action === 'decrease' && newQuantity > 1) {
+                newQuantity--;
+            } else {
+                return; 
+            }
+
+            try {
+                const response = await fetch(`/api/orders/${orderId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ quantity: newQuantity })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const updatedOrder = await response.json();
+                quantityElement.textContent = updatedOrder.quantity; 
+            } catch (error) {
+                alert('Error updating quantity: ' + error.message);
+            }
+        }
+    });
 });

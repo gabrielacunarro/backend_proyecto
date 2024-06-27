@@ -9,24 +9,35 @@
                     <th>Thumbnail</th>
                     <th>Price</th>
                     <th>State</th>
-                    <th>Actions</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody id="orders-body">
                 {{#each response.docs}}
                 <tr data-id="{{_id}}">
-                    <td>{{quantity}}</td>
+                    <td>
+                        <div class="quantity-control">
+                            <button class="quantity-btn" data-action="decrease" data-id="{{_id}}">-</button>
+                            <span>{{quantity}}</span>
+                            <button class="quantity-btn" data-action="increase" data-id="{{_id}}">+</button>
+                        </div>
+                    </td>
                     <td>{{pid.title}}</td>
                     <td class="thumbnail-container">
                         <img src="{{pid.photo}}" alt="Product Thumbnail" class="product-thumbnail">
                     </td>
                     <td>{{formatPrice pid.price}}</td>
                     <td>{{state}}</td>
-                    <td><span class="delete-btn" data-id="{{_id}}">&times;</span></td>
+                    <td>
+                        <span class="delete-btn" data-id="{{_id}}">&times;</span>
+                    </td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
+    </div>
+    <div class="checkout-section">
+        <button id="checkout-btn">Checkout</button>
     </div>
 </main>
 <script src="../../scripts/orders.js"></script>

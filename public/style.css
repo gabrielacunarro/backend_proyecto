@@ -24,9 +24,8 @@ body::-webkit-scrollbar {
 
 /* Contenedor principal */
 .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
 }
 
 /* Barra de navegación */
@@ -64,10 +63,7 @@ body::-webkit-scrollbar {
 
 /* Contenido principal */
 main {
-    flex: 1;
-    padding: 20px;
-    text-align: center;
-    overflow-y: auto;
+text-align: center;
 }
 
 /* Título de la página */
@@ -81,6 +77,7 @@ main {
 }
 
 /*Carousel*/
+
 .carousel-indicators li {
     display: none;
 }
@@ -233,6 +230,7 @@ input {
 }
 
 /* Estilos para el botón de búsqueda (lupa) */
+
 .input-group {
     margin-right: 50px;
 }
@@ -256,14 +254,7 @@ input {
     height: 40px;
     font-size: 16px;
     line-height: 1;
-    border-color: rgb(66, 66, 66);
-}
-
-input:focus,
-#text {
-    outline-color: rgb(66, 66, 66) !important;
-    outline-width: 1px;
-    outline-style: solid;
+    border-color: transparent
 }
 
 .input-group #text::placeholder {
@@ -296,7 +287,6 @@ input:focus,
 #next {
     background-color: transparent;
     border: none;
-    /* color: #606060; */
     color: #333;
     transition: color 0.3s ease-in-out;
     padding: 0;
@@ -314,6 +304,61 @@ input:focus,
     color: rgb(205, 186, 119);
 }
 
+/* Checkout styles*/
+.checkout-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#checkout-btn {
+    background-color: #606060;
+    transition: background-color 0.3s ease-in-out;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #fff;
+}
+
+#checkout-btn:hover {
+    background-color: #333;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-btn {
+    width: 30px; 
+    height: 30px; 
+    color: #fff;
+    border: none;
+    padding: 0; 
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #333;
+}
+
+.product-thumbnail {
+    max-width: 50px; 
+}
+
+.table td,
+.table th {
+    text-align: center; 
+    vertical-align: middle; 
+}
+
+
 /* Estilos para el subtítulo */
 .subtitle {
     margin-top: 40px;
@@ -321,12 +366,16 @@ input:focus,
 
 /* Pie de página */
 .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: rgb(46, 46, 46);
     color: #fff;
     padding: 10px;
     text-align: center;
-    margin-top: auto;
 }
+
 
 .red-social a {
     display: inline-block;

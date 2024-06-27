@@ -73,14 +73,19 @@ class OrdersController {
         try {
             const { oid } = req.params;
             const { quantity, state } = req.body;
-
+    
             const updatedOrder = await this.service.update(oid, { quantity, state });
-
-            return res.success200(`Order with ID ${oid} has been successfully updated.`, updatedOrder);
+    
+            if (!updatedOrder) {
+                throw new Error(`Order with ID ${oid} not found`);
+            }
+    
+            return res.status(200).json(updatedOrder);
         } catch (error) {
             return next(error);
         }
     };
+    
 
     destroy = async (req, res, next) => {
         try {
