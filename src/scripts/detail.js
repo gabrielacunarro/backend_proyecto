@@ -168,35 +168,4 @@ function getCookieValue(cookieName) {
 document.addEventListener("DOMContentLoaded", async function () {
     const productId = window.location.pathname.split("/").pop();
     await renderProductDetails(productId);
-
-    const checkoutButton = document.getElementById('checkout-btn');
-
-    if (checkoutButton) {
-        checkoutButton.addEventListener('click', async () => {
-            try {
-                const response = await fetch('/create-checkout-session', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ /* Aquí podrías enviar datos necesarios si es necesario */ })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const { id } = await response.json();
-                const stripe = Stripe('your-publishable-key-here');
-                stripe.redirectToCheckout({ sessionId: id });
-            } catch (error) {
-                console.error('Error creating checkout session:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Error creating checkout session: ' + error.message,
-                });
-            }
-        });
-    }
 });
