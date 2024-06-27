@@ -43,7 +43,7 @@ class SessionController {
     
             const token = createToken({ userId: user._id, email: user.email }); 
     
-            return res.cookie("token", token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true, path: '/' }).json({
+            return res.cookie("token", token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true,sameSite: 'None',Secure:true, path: '/' }).json({
                 statusCode: 200,
                 message: "Logged in!"
             });

@@ -22,7 +22,7 @@ export default class SessionsRouter extends CustomRouter {
             try {
 
                 return res.cookie("token", req.token, {
-                    maxAge: 60 * 60 * 24 * 7, httpOnly: true, path: '/'
+                    maxAge: 60 * 60 * 24 * 7, httpOnly: true, sameSite: 'None',Secure:true, path: '/'
                 }).success200("Logged in!");
             } catch (error) {
                 return next(error);

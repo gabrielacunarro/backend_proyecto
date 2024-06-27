@@ -112,21 +112,26 @@ async function renderProductDetails(productId) {
 }
 
 function getUserIdFromSession() {
-    const cookies = document.cookie.split('; ');
-    const tokenCookie = cookies.find(cookie => cookie.startsWith('token='));
-    if (tokenCookie) {
-        const tokenValue = tokenCookie.split('=')[1];
-        try {
-            const payload = JSON.parse(atob(tokenValue.split('.')[1]));
-            return payload.userId;
-        } catch (error) {
-            console.error('Error decoding token:', error);
-            return null;
+    try {
+        const cookies = document.cookie.split('; ');
+        const tokenCookie = cookies.find(cookie => cookie.startsWith('token='));
+        if (!tokenCookie) {
+            throw new Error('Token cookie not found');
         }
-    } else {
+
+        const tokenValue = tokenCookie.split('=')[1];
+        const payload = JSON.parse(atob(tokenValue.split('.')[1]));
+        if (!payload || !payload.userId) {
+            throw new Error('User ID not found in token payload');
+        }
+
+        return payload.userId;
+    } catch (error) {
+        console.error('Error retrieving user ID from session:', error);
         return null;
     }
 }
+
 
 document.addEventListener("DOMContentLoaded", async function () {
     const productId = window.location.pathname.split("/").pop();

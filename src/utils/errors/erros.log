@@ -362,3 +362,5 @@ Expecting 'ID', got 'INVALID'
 [31mERROR[39m: orders validation failed: uid: Path `uid` is required.
 [31mERROR[39m: orders validation failed: uid: Path `uid` is required.
 [31mERROR[39m: orders validation failed: uid: Path `uid` is required.
+[31mERROR[39m: Missing pid or uid in request body
+[31mERROR[39m: Missing pid or uid in request body
