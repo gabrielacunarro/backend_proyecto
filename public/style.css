@@ -376,6 +376,11 @@ input {
     text-align: center;
 }
 
+.main-container {
+    margin-bottom: 60px;
+    position: relative; 
+}
+
 
 .red-social a {
     display: inline-block;
