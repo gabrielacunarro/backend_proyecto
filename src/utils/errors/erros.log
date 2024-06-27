@@ -364,3 +364,139 @@ Expecting 'ID', got 'INVALID'
 [31mERROR[39m: orders validation failed: uid: Path `uid` is required.
 [31mERROR[39m: Missing pid or uid in request body
 [31mERROR[39m: Missing pid or uid in request body
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot destructure property 'orderIds' of 'data' as it is undefined.
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: Incomplete data provided: Products are required
+[31mERROR[39m: Incomplete data provided: Products are required
+[31mERROR[39m: Incomplete data provided: Products are required
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: Error creating payment: data.map is not a function
+[31mERROR[39m: Error creating payment: Data should be an array
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'title')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'title')
+[31mERROR[39m: Error creating payment: Incomplete or invalid data provided for CheckoutProduct creation
+[31mERROR[39m: Error creating payment: Incomplete or invalid data provided for CheckoutProduct creationnn
+[31mERROR[39m: Error creating payment: Incomplete or invalid data provided for CheckoutProduct creationnn
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: User.findById is not a function
+[31mERROR[39m: User.readOne(...).populate is not a function
+[31mERROR[39m: Error creating payment: Incomplete data provided for payment creation
+[31mERROR[39m: Error creando el pago: Datos incompletos proporcionados para la creación del pago
+[31mERROR[39m: Error creando el pago: Datos incompletos proporcionados para la creación del pago
+[31mERROR[39m: Data should be an array
+[31mERROR[39m: Data should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Invalid product price
+[31mERROR[39m: Invalid product price
+[31mERROR[39m: Invalid product price
+[31mERROR[39m: Invalid price data
+[31mERROR[39m: Invalid price data
+[31mERROR[39m: Invalid price data
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading '_id')
+[31mERROR[39m: Cannot read properties of undefined (reading '_id')
+[31mERROR[39m: Cannot read properties of undefined (reading '_id')
+[31mERROR[39m: Cannot read properties of undefined (reading '_id')
+[31mERROR[39m: Cannot read properties of undefined (reading '_id')
+[31mERROR[39m: Cannot read properties of undefined (reading 'title')
+[31mERROR[39m: Cannot read properties of undefined (reading '_id')
+[31mERROR[39m: Cannot read properties of undefined (reading '_id')
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Cannot destructure property 'title' of 'data.product_id' as it is undefined.
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Failed to create checkout session
+[31mERROR[39m: Failed to create checkout session
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Failed to create checkout session
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Cannot read properties of undefined (reading 'price')
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Orders should be an array
+[31mERROR[39m: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: Cannot read properties of undefined (reading 'map')
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: No orders provided
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'title')
+[31mERROR[39m: data is not defined
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'title')
+[31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'title')

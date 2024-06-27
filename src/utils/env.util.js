@@ -15,6 +15,7 @@ export default {
     GOOGLE_ID: process.env.GOOGLE_ID,
     GOOGLE_CLIENT: process.env.GOOGLE_CLIENT,
     GOOGLE_EMAIL: process.env.GOOGLE_EMAIL,
-    GOOGLE_PASS: process.env.GOOGLE_PASS
+    GOOGLE_PASS: process.env.GOOGLE_PASS,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY
 };
 

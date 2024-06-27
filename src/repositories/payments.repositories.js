@@ -1,31 +1,33 @@
 import Stripe from 'stripe';
-import CheckoutProduct from '../dto/checkout.dto.js';
+import CheckoutProduct from '../dto/payments.dto.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 class checkoutRepository {
-    constructor() {
-    }
+    constructor() {}
 
     create = async (data) => {
         try {
-            const products = [
-                { product_id: { title: 'Perfume', price: 90 }, quantity: 2 },
-                { product_id: { title: 'Perfume Woman', price: 90 }, quantity: 1 }
-            ];
+            const products = data.map(item => ({
+                product_id: {
+                    title: item.pid.title,
+                    price: item.pid.price
+                },
+                quantity: item.quantity
+            }));
 
             const line_items = products.map(product => new CheckoutProduct(product));
 
             const mode = 'payment';
-            const success_url = 'http://localhost:8080/thanks';
+            const success_url = 'http://localhost:8080/thanks.html';
 
-            const intent = await stripe.checkout.sessions.create({
+            const session = await stripe.checkout.sessions.create({
                 line_items,
                 mode,
                 success_url
             });
 
-            return intent;
+            return { sessionId: session.id, stripeUrl: session.url };
         } catch (error) {
             console.error('Error creating payment: ', error);
             throw new Error('Error creating payment: ' + error.message);

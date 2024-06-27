@@ -1,18 +1,17 @@
-import checkoutRepo from '../repositories/payments.repositories.js';
+import checkoutRepository from "../repositories/payments.repositories.js";
 
-class checkoutService {
+class CheckoutService {
+    constructor() {}
+
     async create(data) {
         try {
-            const { orderIds } = data;
-
-            const intent = await checkoutRepo.create(orderIds);
-            return intent;
+            const { sessionId, stripeUrl } = await checkoutRepository.create(data);
+            return { sessionId, stripeUrl };
         } catch (error) {
-            console.error('Error creating payment: ', error);
-            throw new Error('Error creating payment: ' + error.message);
+            throw error;
         }
     }
 }
 
-const service = new checkoutService();
-export default service;
+const checkoutService = new CheckoutService();
+export default checkoutService;

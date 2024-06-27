@@ -134,6 +134,7 @@ text-align: center;
 /* Botones */
 .card button,
 .addToCart,
+#checkout,
 a.btn.btn-primary {
     max-width: 40%;
     background-color: #606060;
@@ -325,28 +326,35 @@ input {
 }
 
 .quantity-control {
-    display: flex;
-    align-items: center;
+    position: relative; 
 }
 
 .quantity-btn {
-    width: 30px; 
-    height: 30px; 
-    color: #fff;
+    position: absolute;
+    top: 50%; 
+    transform: translateY(-50%); 
+    width: 30px;
+    height: 30px;
+    color: #333;
     border: none;
-    padding: 0; 
     cursor: pointer;
     font-size: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 5px;
     transition: background-color 0.3s ease;
 }
 
 .quantity-btn:hover {
     background-color: #333;
+    color: #fff;
 }
+
+.quantity-btn[data-action="decrease"] {
+    left: 0; /* Posiciona el botón "-" a la izquierda */
+}
+
+.quantity-btn[data-action="increase"] {
+    right: 0; /* Posiciona el botón "+" a la derecha */
+}
+
 
 .product-thumbnail {
     max-width: 50px; 
