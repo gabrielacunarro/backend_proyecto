@@ -19,7 +19,7 @@ class checkoutRepository {
             const line_items = products.map(product => new CheckoutProduct(product));
 
             const mode = 'payment';
-            const success_url = 'http://localhost:8080/thanks.html';
+            const success_url = 'http://localhost:8080/thanks';
 
             const session = await stripe.checkout.sessions.create({
                 line_items,

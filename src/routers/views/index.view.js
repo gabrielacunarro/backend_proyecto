@@ -3,12 +3,14 @@ import  products  from "../../data/mongo/products.mongo.js";
 import productsRouter from "../views/products.view.js";
 import OrdersViewRouter from "../views/orders.view.js";
 import sessionsRouter from "../views/sessions.view.js";
+import thanksViewRouter from "../views/thanks.view.js"
 
 export default class ViewsRouter extends CustomRouter {
     init() {
         this.use("/products", productsRouter);
         this.use("/orders", OrdersViewRouter);
         this.use("/sessions", sessionsRouter);
+        this.use("/thanks", thanksViewRouter);
         this.read("/", ["PUBLIC"],async (req, res, next) => {
             try {
                 const orderAndPaginate = {

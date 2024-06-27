@@ -500,3 +500,4 @@ Expecting 'ID', got 'INVALID'
 [31mERROR[39m: data is not defined
 [31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'title')
 [31mERROR[39m: Error creating payment: Cannot read properties of undefined (reading 'title')
+[31mERROR[39m: Failed to lookup view "thanks" in views directory "C:\Users\Gabii\Desktop\Proyecto_backend/src/views"

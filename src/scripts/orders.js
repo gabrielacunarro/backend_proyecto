@@ -85,10 +85,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (updatedOrder && updatedOrder.response && updatedOrder.response.quantity) {
                         quantityElement.textContent = updatedOrder.response.quantity;
                     } else {
-                        console.error('Updated order does not contain quantity');
+                        throw error('Updated order does not contain quantity');
                     }
                 } catch (error) {
-                    console.error('Error updating quantity:', error.message);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error updating quantity',
@@ -114,7 +113,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         text: 'Order was successfully deleted.',
                     });
                 } catch (error) {
-                    console.error('Error deleting order:', error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error deleting order',
@@ -142,20 +140,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (data.stripeUrl) {
                     window.location.replace(data.stripeUrl);
                 } else {
-                    console.error('Error: No se recibió la URL de Stripe en la respuesta.');
+                    throw error
                 }
             } catch (error) {
-                console.error('Error en el proceso de checkout:', error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error en el proceso de checkout',
+                    title: 'Error in the checkout process',
                     text: error.message,
                 });
             }
         };
 
     } catch (error) {
-        console.error('Error loading orders:', error);
         Swal.fire({
             icon: 'error',
             title: 'Error loading orders',
