@@ -10,8 +10,7 @@ import { serve, setup } from "swagger-ui-express";
 import morgan from "morgan";
 import { engine } from "express-handlebars";
 import cookieParser from "cookie-parser";
-import expressSession from "express-session"
-import sessionFileStore from "session-file-store"
+import expressSession from "express-session";
 import MongoStore from "connect-mongo";
 import sessionsViewRouter from './src/routers/views/sessions.view.js';
 import cors from "cors"
@@ -51,58 +50,35 @@ server.use(sessionsViewRouter);
 server.use(ordersViewRouter);
 server.use(thanksViewRouter);
 
-const FileStore = sessionFileStore(expressSession)
-
+// Configuración de MongoStore para almacenamiento de sesiones
 server.use(cookieParser(env.SECRET_KEY));
-//MEMORY STORE
-server.use(
-    expressSession({
-        secret: env.SECRET_KEY,
-        resave: true,
-        saveUninitialized: true,
-        cookie: { maxAge: 60000 },
-    })
-)
-
-// FILE STORE
 server.use(expressSession({
     secret: env.SECRET_KEY,
     resave: true,
     saveUninitialized: true,
-    store: new FileStore({
-        path: "./src/data/fs/files/sessions",
-        ttl: 10000,
-        retries: 2
+    store: MongoStore.create({
+        mongoUrl: env.DB_LINK,
+        ttl: 7 * 24 * 60 * 60, // Tiempo de vida de la sesión en segundos (7 días)
     }),
-}))
-
-//MONGO STORAGE
-server.use(expressSession({
-    secret: env.SECRET_KEY,
-    resave: true,
-    saveUninitialized: true,
-    store: new MongoStore({
-        ttl: 7 * 24 * 60 * 60, // por siete dias
-        mongoUrl: env.DB_LINK
-    })
-}))
+}));
 
 server.use(
     cors({
         origin: true,
         credentials: true,
-    }))
+    })
+);
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(__dirname + "/public"));
 server.use(express.static(__dirname + "/src"));
 server.use(morgan("dev"));
-server.use(winston)
+server.use(winston);
 server.use(
     compression({
         brotli: { enabled: true, zlib: {} }
-    }))
-
+    })
+);
 
 //routers
 const router = new IndexRouter()
@@ -124,12 +100,4 @@ const numCPUs = cpus().length;
 //     server.listen(9000,()=>
 // winston.info("worker ready on port: ",9000))
 // }
-
-
-
-
-
-
-
-
 
