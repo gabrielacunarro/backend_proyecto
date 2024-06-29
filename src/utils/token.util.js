@@ -1,14 +1,13 @@
 import jwt from "jsonwebtoken";
 
-//ingresa un obj devuelve un token
-function createToken(data) {
-    const expiresIn = process.env.TOKEN_EXPIRATION_TIME || 60 * 60 * 24 * 7; 
+function createToken(userId, email, role) {
+    const expiresIn = process.env.TOKEN_EXPIRATION_TIME || 60 * 60 * 24 * 7;
     const token = jwt.sign(
-        data,
+        { userId, email, role },
         process.env.SECRET,
         { expiresIn }
-    )
-    return token
+    );
+    return token;
 }
 
 function verifyToken(token) {

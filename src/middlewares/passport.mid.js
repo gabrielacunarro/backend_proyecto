@@ -5,10 +5,11 @@ import { Strategy as GithubStrategy } from "passport-github2";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt"
 import { verifyHash, createHash } from "../utils/hash.util.js";
 import { createToken } from "../utils/token.util.js";
-const { GOOGLE_ID, GOOGLE_CLIENT, SECRET, GITHUB_CLIENT, GITHUB_ID } = process.env
 import repository from "../repositories/users.repositories.js";
 import service from "../services/users.services.js";
 import crypto from "crypto"
+
+const { GOOGLE_ID, GOOGLE_CLIENT, SECRET, GITHUB_CLIENT, GITHUB_ID } = process.env
 
 passport.use("register", new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
@@ -18,7 +19,6 @@ passport.use("register", new LocalStrategy(
             if (!one) {
                 let data = req.body;
                 data.verifiedCode = crypto.randomBytes(12).toString("base64")
-
                 let user = await repository.create(data)
                 if (user) {
                     service.register(data)
@@ -36,19 +36,21 @@ passport.use("login", new LocalStrategy(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
         try {
-            const user = await repository.readByEmail(email)
+            const user = await repository.readByEmail(email);
             if (user && verifyHash(password, user.password)) {
-                const token = createToken({ email, role: user.role })
-                req.token = token
-                return done(null, user)
+                const token = createToken(user._id, user.email, user.role);
+                req.token = token; // Asignar el token al objeto req
+                req.userId = user._id; // Asignar el userId al objeto req
+                return done(null, user);
             } else {
-                return done(null, false, { messages: "Bad auth from passport cb" });
+                return done(null, false, { message: "Bad auth from passport cb" });
             }
         } catch (error) {
-            return done(error)
+            return done(error);
         }
     }
 ));
+
 passport.use("google",
     new GoogleStrategy(
         {

@@ -11,7 +11,7 @@ export default (strategy) => {
             if (!user) {
                 return res.status(401).json({
                     statusCode: 401,
-                    message: info.message || "Unauthorized",
+                    message: info?.message || "Unauthorized",
                 });
             }
             req.user = user;

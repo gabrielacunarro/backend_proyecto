@@ -1,39 +1,161 @@
-window.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    let orders = [];
+
     try {
         const response = await fetch('/api/orders');
-        const data = await response.json();
-        
-        if (!data || !data.response || !data.response.docs) {
-            throw new Error('No se encontraron órdenes');
+        const { response: { docs: ordersData } } = await response.json();
+
+        if (!ordersData || ordersData.length === 0) {
+            throw new Error('No orders found');
         }
-        
-        const orders = data.response.docs; 
 
-        const ordersBody = document.getElementById('orders-body'); 
+        orders = ordersData;
 
-        orders.forEach(order => {
-            const orderRow = document.createElement('tr'); 
+        const ordersBody = document.getElementById('orders-body');
 
-            const productTitle = order.pid ? order.pid.title : 'N/A';
+        const renderOrderRow = (order) => {
+            const { _id, pid, quantity, state } = order;
+            const productTitle = pid ? pid.title : 'N/A';
+            const productPhoto = pid && pid.photo ? pid.photo : 'https://via.placeholder.com/50';
+            const productPrice = pid ? pid.price.toFixed(2) : '0.00';
+            order.price = pid ? pid.price : 0;
 
-            const quantity = order.quantity || 'N/A';
-
-            const state = order.state || 'N/A';
-
-            // Crear celdas para cada propiedad de la orden y agregarlas a la fila
-            orderRow.innerHTML = `
-                <td>${order._id}</td>
-                <td>${order.createdAt}</td>
-                <td>${productTitle}</td>
-                <td>${quantity}</td>
-                <td>${state}</td>
+            return `
+                <tr data-id="${_id}">
+                    <td>
+                        <div class="quantity-control">
+                            <button class="quantity-btn" data-action="decrease">-</button>
+                            <span>${quantity}</span>
+                            <button class="quantity-btn" data-action="increase">+</button>
+                        </div>
+                    </td>
+                    <td>${productTitle}</td>
+                    <td><img src="${productPhoto}" alt="Product Thumbnail" width="50"></td>
+                    <td>$${productPrice}</td>
+                    <td>${state}</td>
+                    <td><span class="delete-btn">&times;</span></td>
+                </tr>
             `;
+        };
 
-            ordersBody.appendChild(orderRow); 
+        const loadOrders = () => {
+            ordersBody.innerHTML = orders.map(renderOrderRow).join('');
+        };
+
+        loadOrders();
+
+        document.addEventListener('click', async (event) => {
+            const target = event.target;
+
+            if (target.classList.contains('quantity-btn')) {
+                const orderId = target.closest('tr').getAttribute('data-id');
+                const action = target.getAttribute('data-action');
+                const quantityElement = target.parentElement.querySelector('span');
+
+                let newQuantity = parseInt(quantityElement.textContent, 10);
+
+                if (isNaN(newQuantity)) {
+                    console.error('Current quantity is not a number');
+                    return;
+                }
+
+                if (action === 'increase') {
+                    newQuantity++;
+                } else if (action === 'decrease' && newQuantity > 1) {
+                    newQuantity--;
+                } else {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/orders/${orderId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ quantity: newQuantity, state: 'cart' })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const updatedOrder = await response.json();
+
+                    if (updatedOrder && updatedOrder.response && updatedOrder.response.quantity) {
+                        quantityElement.textContent = updatedOrder.response.quantity;
+                    } else {
+                        throw error('Updated order does not contain quantity');
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error updating quantity',
+                        text: error.message,
+                    });
+                }
+            } else if (target.classList.contains('delete-btn')) {
+                const orderId = target.closest('tr').getAttribute('data-id');
+
+                try {
+                    const deleteResponse = await fetch(`/api/orders/${orderId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (!deleteResponse.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    target.closest('tr').remove();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order deleted',
+                        text: 'Order was successfully deleted.',
+                    });
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error deleting order',
+                        text: error.message,
+                    });
+                }
+            }
         });
+
+        document.querySelector("#checkout").onclick = async () => {
+            try {
+                const response = await fetch("/api/payments/checkout", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ orders })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                if (data.stripeUrl) {
+                    window.location.replace(data.stripeUrl);
+                } else {
+                    throw error
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error in the checkout process',
+                    text: error.message,
+                });
+            }
+        };
+
     } catch (error) {
-        throw error('Error al obtener las órdenes:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error loading orders',
+            text: error.message,
+        });
     }
 });
-
-

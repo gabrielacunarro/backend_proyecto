@@ -11,35 +11,30 @@ class OrdersController {
 
     create = async (req, res, next) => {
         try {
-
-            if (!req.user ) {
-                const error = customError.new(errors.forbidden);
-                throw error;
-            }
-            
-            const { pid } = req.body;
-
-            const product = await productsServices.readOne(pid);
-
-            if (!product) {
-                const error = customError.new(errors.notFound);
-                throw error;
-            }
-
-            const createdByUser = await usersServices.readOne(product.owner_id);
-
-            if (createdByUser.role === 1) {
-                const data = req.body;
-                const createdOrder = await this.service.create(data);
-                return res.success201(createdOrder);
-            } else {
+            if (!req.user || req.user.role !== 0) {
                 throw customError.new(errors.forbidden);
             }
+            
+            const { pid, uid } = req.body;
+    
+            if (!pid || !uid) {
+                throw new Error('Missing pid or uid in request body');
+            }
+    
+            const product = await productsServices.readOne(pid);
+            if (!product) {
+                throw new Error('Product not found');
+            }
+    
+            const data = { ...req.body, uid }; 
+            const createdOrder = await this.service.create(data);
+            return res.success201(createdOrder);
         } catch (error) {
             return next(error);
         }
     };
-
+    
+    
 
     read = async (req, res, next) => {
         try {
@@ -54,11 +49,10 @@ class OrdersController {
         }
     };
 
-    //ver
     readOne = async (req, res, next) => {
         try {
             const oid = req.body;
-    
+            
             if (!oid) {
                 return res.status(400).json({ message: "OID parameter is required" });
             }
@@ -79,22 +73,26 @@ class OrdersController {
         try {
             const { oid } = req.params;
             const { quantity, state } = req.body;
-
+    
             const updatedOrder = await this.service.update(oid, { quantity, state });
-
-            return res.success200(`Order with ID ${oid} has been successfully updated.`, updatedOrder);
+    
+            return res.success200(updatedOrder);
         } catch (error) {
             return next(error);
         }
     };
+    
 
     destroy = async (req, res, next) => {
         try {
             const { oid } = req.params;
-            const one = await this.service.destroy(oid);
-
+            const one = await this.service.destroy(oid); 
+    
             if (one) {
-                return res.success200(res,`Order with ID ${oid} has been successfully deleted.`);
+                return res.status(200).json({
+                    statusCode: 200,
+                    message: `Order with ID ${oid} has been successfully deleted.`,
+                });
             } else {
                 throw customError.new(errors.notFound);
             }

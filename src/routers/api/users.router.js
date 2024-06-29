@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import CustomRouter from "../CustomRouter.js";
 //import usersManager from "../../data/fs/userFS.js";
 import { create, read, readOne, update, destroy, readByEmail, changeUserRole } from "../../controllers/users.controller.js";

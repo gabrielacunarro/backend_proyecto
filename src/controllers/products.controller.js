@@ -10,26 +10,26 @@ class ProductsController {
     create = async (req, res, next) => {
         try {
             const data = req.body;
-            const userRole = req.user.role; 
-            const userId = req.user._id; 
-    
+            const userRole = req.user.role;
+            const userId = req.user._id;
+
             const productData = {
                 ...data,
-                role: userRole, 
-                owner_id: userId 
+                role: userRole,
+                owner_id: userId
             };
-    
+
             winston.INFO(JSON.stringify(productData));
-    
+
             const createdProduct = await this.service.create(productData);
-    
+
             return res.status(201).json({ message: 'Product created successfully', createdProduct });
         } catch (error) {
             winston.ERROR("Error POST /products:", error);
             return next(error);
         }
     };
-    
+
 
     read = async (req, res, next) => {
         try {
@@ -47,12 +47,12 @@ class ProductsController {
                 orderAndPaginate.sort.title = 1
             }
 
-            if(req.query.role){
+            if (req.query.role) {
                 filter.role = req.query.role
-            }else{
+            } else {
                 filter.role = 1
             }
-            
+
             const all = await this.service.read({ filter, orderAndPaginate });
             if (!all) {
                 const error = customError.new(errors.notFound);
@@ -64,7 +64,7 @@ class ProductsController {
             next(error);
         }
     };
-    
+
 
     readOne = async (req, res, next) => {
         try {
@@ -72,7 +72,16 @@ class ProductsController {
             const product = await this.service.readOne(pid);
 
             if (product) {
-                return res.success200(product)
+                const cleanProduct = {
+                    pid: product._id,
+                    title: product.title,
+                    description: product.description,
+                    photo: product.photo,
+                    price: product.price,
+                    stock: product.stock
+                };
+
+                return res.success200(cleanProduct);
             } else {
                 const error = customError.new(errors.notFound);
                 throw error;
@@ -86,20 +95,20 @@ class ProductsController {
         try {
             const { pid } = req.params;
             const data = req.body;
-    
+
             const product = await this.service.readOne(pid);
             if (!product) {
-                return res.error404(); 
+                return res.error404();
             }
-    
+
             if (req.user.role !== 1) {
                 if (!product.owner_id || !req.user._id.equals(product.owner_id)) {
-                    return res.error403(); 
+                    return res.error403();
                 }
             }
-    
+
             const updatedProduct = await this.service.update(pid, data);
-    
+
             if (updatedProduct) {
                 return res.success200(`Product with ID ${pid} has been successfully updated.`);
             } else {
@@ -110,12 +119,12 @@ class ProductsController {
             return next(error);
         }
     };
-    
+
 
     destroy = async (req, res, next) => {
         try {
             const { pid } = req.params;
-    
+
             const product = await this.service.readOne(pid);
             if (!product) {
                 return res.error404();
@@ -124,9 +133,9 @@ class ProductsController {
             if (req.user.role === 2 && !req.user._id.equals(product.role)) {
                 return res.error403();
             }
-    
+
             const deletedProduct = await this.service.destroy(pid);
-    
+
             if (deletedProduct) {
                 return res.success200(`Product with ID ${pid} has been successfully deleted.`);
             } else {

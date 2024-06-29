@@ -17,6 +17,7 @@ import sessionsViewRouter from './src/routers/views/sessions.view.js';
 import cors from "cors"
 import formViewRouter from "./src/routers/views/form.view.js";
 import ordersViewRouter from "./src/routers/views/orders.view.js";
+import thanksViewRouter from "./src/routers/views/thanks.view.js";
 import IndexRouter from "./src/routers/index.router.js";
 import pathHandler from "./src/middlewares/pathHandler.mid.js";
 import errorHandler from "./src/middlewares/errorHandler.mid.js";
@@ -48,6 +49,7 @@ server.set("views", __dirname + "/src/views");
 server.use(formViewRouter);
 server.use(sessionsViewRouter);
 server.use(ordersViewRouter);
+server.use(thanksViewRouter);
 
 const FileStore = sessionFileStore(expressSession)
 

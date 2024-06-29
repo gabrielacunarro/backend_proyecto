@@ -10,12 +10,12 @@ async function sendMail(data) {
         });
 
         await transport.sendMail({
-            from: `ESSENCE <${process.env.GOOGLE_EMAIL}>`,
+            from: `Essece Selecto <${process.env.GOOGLE_EMAIL}>`,
             to: data.email,
             subject: `USER ${data.name.toUpperCase()} REGISTERED!`,
             html: `
             <h1>USER REGISTERED!<h1>
-            <p>VERIFY CODE: ${data.verifiedCode}</p>
+            <p>YOU VERIFICATION CODE: ${data.verifiedCode}</p>
             `,
         });
     } catch (error) {

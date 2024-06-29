@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         const response = await fetch("/api/sessions/", { method: "POST" });
         const res = await response.json();
+
         if (res.statusCode === 200) {
             const registerButton = document.querySelector("#registerbtn");
             const loginButton = document.querySelector("#loginbtn");
@@ -11,7 +12,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (loginButton) {
                 loginButton.parentNode.removeChild(loginButton);
             }
+
             const signoutButton = document.querySelector("#signout");
+            if (signoutButton) {
+                signoutButton.style.display = "inline-block";
+            }
+
             signoutButton.addEventListener("click", async (event) => {
                 event.preventDefault();
                 try {
@@ -29,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         Swal.fire({
                             icon: 'success',
                             title: 'Signout successful!',
+                            showConfirmButton: false,
                         }).then(() => {
                             localStorage.removeItem("token");
                             location.replace("/");
@@ -53,19 +60,19 @@ document.addEventListener("DOMContentLoaded", async function () {
                 ordersButton.parentNode.removeChild(ordersButton);
             }
             if (signoutButton) {
-                signoutButton.parentNode.removeChild(signoutButton);
+                signoutButton.style.display = "none";
             }
         }
 
         if (res.response && res.response.session && res.response.session.role === 1) {
             const ordersButton = document.querySelector("#ordersbtn");
             if (ordersButton) {
-                ordersButton.style.display = "none";
+                ordersButton.style.display = "none"; 
             }
         } else if (res.response && res.response.session && res.response.session.role === 0) {
             const formButton = document.querySelector("#formbtn");
             if (formButton) {
-                formButton.style.display = "none";
+                formButton.style.display = "none"; 
             }
         }
 
@@ -77,7 +84,3 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main

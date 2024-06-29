@@ -15,22 +15,22 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const opts = {
                 method: "POST",
-                headers: { 
+                headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(data)
             };
 
             let response = await fetch("/api/products", opts);
-            
+
             if (!response.ok) {
-                // Manejo de errores HTTP
                 throw new Error('Network response was not ok');
             }
 
             let result = await response.json();
 
             alert(result.message);
+            window.location.href = "/";
         } catch (error) {
             alert(error.message);
         }

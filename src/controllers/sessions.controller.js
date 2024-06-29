@@ -5,29 +5,52 @@ class SessionController {
     constructor() {
         this.service = service;
     }
-    register = async (req, res, next) => {
+    async register(req, res, next) {
         try {
-            const { email, name, verifiedCode } = req.user;
-            const createdUser = await this.service.register({ email, name, verifiedCode });
+            const { email, name } = req.body;
+            const verificationCode = generateVerificationCode();
+            const createdUser = await this.service.register({ email, name, verificationCode });
 
-            const uid = createdUser._id;
+            await sendMail({ email, name, verificationCode });
 
-            return res.status(201).json({ userId: uid });
+            return res.status(201).json({ userId: createdUser._id });
         } catch (error) {
             next(error);
         }
-    };
+    }
 
-    login = async (req, res, next) => {
+    async login(req, res, next) {
         try {
-            return res.cookie("token", req.token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true }).json({
+            const { email, password } = req.body;
+
+            const user = await this.service.readByEmail(email);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found.' });
+            }
+
+            if (!user.verified) {
+                return res.status(403).json({ message: 'User is not verified. Please verify your account.' });
+            }
+
+            if (verificationCode && verificationCode !== user.verificationCode) {
+                return res.status(401).json({ message: 'Incorrect verification code.' });
+            }
+
+            const isPasswordValid = verifyHash(password, user.password);
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: 'Invalid credentials.' });
+            }
+
+            const token = createToken({ userId: user._id, email: user.email });
+
+            return res.cookie("token", token, { maxAge: 60 * 60 * 24 * 7, httpOnly: false, sameSite: 'Lax', secure: false, path: '/' }).json({
                 statusCode: 200,
                 message: "Logged in!"
-            })
+            });
         } catch (error) {
-            return next(error)
+            next(error);
         }
-    };
+    }
 
     signout = async (req, res, next) => {
         try {
@@ -59,29 +82,29 @@ class SessionController {
             return res.status(500).json({ message: 'Internal server error while verifying the account.' });
         }
     };
-updatePassword = async (req, res, next) => {
-    try {
-        const { email, password, newPassword } = req.body; 
+    updatePassword = async (req, res, next) => {
+        try {
+            const { email, password, newPassword } = req.body;
 
-        const user = await this.service.readByEmail(email);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
+            const user = await this.service.readByEmail(email);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found.' });
+            }
+
+            const isPasswordValid = verifyHash(password, user.password);
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: 'Old password is incorrect.' });
+            }
+
+            const hashedPassword = createHash(newPassword);
+
+            await this.service.update(user._id, { password: hashedPassword });
+
+            return res.status(200).json({ message: 'Password updated successfully.' });
+        } catch (error) {
+            return next(error);
         }
-
-        const isPasswordValid = verifyHash(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Old password is incorrect.' });
-        }
-
-        const hashedPassword = createHash(newPassword);
-
-        await this.service.update(user._id, { password: hashedPassword });
-
-        return res.status(200).json({ message: 'Password updated successfully.' });
-    } catch (error) {
-        return next(error);
-    }
-};
+    };
 
 }
 const controller = new SessionController();

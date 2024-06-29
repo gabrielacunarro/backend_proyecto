@@ -2,7 +2,7 @@ import has8char from "../../middlewares/has8char.mid.js";
 import passport from "../../middlewares/passport.mid.js";
 import passCbMid from "../../middlewares/passCb.mid.js";
 import CustomRouter from "../CustomRouter.js";
-import { verifyAccount, updatePassword  } from "../../controllers/sessions.controller.js";
+import { verifyAccount, updatePassword } from "../../controllers/sessions.controller.js";
 
 
 export default class SessionsRouter extends CustomRouter {
@@ -20,15 +20,17 @@ export default class SessionsRouter extends CustomRouter {
         //login
         this.create("/login", ["PUBLIC"], passCbMid("login"), async (req, res, next) => {
             try {
-
-                return res.cookie("token", req.token, {
-                    maxAge: 60 * 60 * 24 * 7, httpOnly: true
-                }).success200("Logged in!");
+                res.cookie("token", req.token, {
+                    maxAge: 60 * 60 * 24 * 7, httpOnly: false,sameSite: 'Lax', secure: false, path: '/'
+                }).json({
+                    statusCode: 200,
+                    message: "Logged in!"
+                });
             } catch (error) {
-                return next(error);
+                next(error);
             }
         });
-
+        
 
         //signout
         this.create("/signout", ["USER", "ADMIN", "PREM"], passCbMid("jwt"), async (req, res, next) => {
@@ -90,6 +92,6 @@ export default class SessionsRouter extends CustomRouter {
         });
 
         this.create("/verify", ["PUBLIC", "USER", "ADMIN"], verifyAccount);
-        this.update("/reset", ["PUBLIC", "USER", "ADMIN"], updatePassword );
+        this.update("/reset", ["PUBLIC", "USER", "ADMIN"], updatePassword);
     }
 }
