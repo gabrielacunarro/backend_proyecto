@@ -103,26 +103,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    const googleButton = document.querySelector("#google");
-    if (googleButton) {
-        googleButton.addEventListener("click", async (e) => {
-            try {
-                e.preventDefault();
-                let response = await fetch("/api/sessions/google", {
-                    method: "GET"
-                });
-                if (response.ok) {
-                    setTimeout(() => {
-                        window.location.href = "http://localhost:8080/api/sessions/google";
-                    }, 2000);
-                } else {
-                    showErrorAlert('Failed to initiate Google login', 'Please try again later.');
-                }
-            } catch (error) {
-                showErrorAlert('An unexpected error occurred while initiating Google login', 'Please try again later.');
-            }
-        });
-    }
 
     const githubButton = document.querySelector("#github");
     if (githubButton) {

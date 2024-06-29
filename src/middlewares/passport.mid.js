@@ -51,42 +51,6 @@ passport.use("login", new LocalStrategy(
     }
 ));
 
-passport.use("google",
-    new GoogleStrategy(
-        {
-            clientID: GOOGLE_ID,
-            clientSecret: GOOGLE_CLIENT,
-            callbackURL: "http://localhost:8080/api/sessions/google/cb",
-            passReqToCallback: true
-        },
-        async (req, accessToken, refreshToken, profile, done) => {
-            try {
-                let user = await repository.readByEmail(profile._id);
-                const sessionData = {
-                    email: profile._id,
-                    role: null
-                };
-                if (user) {
-                    sessionData.role = user.role;
-                } else {
-                    const newUser = {
-                        email: profile._id,
-                        name: profile.name.givenName,
-                        photo: profile.coverPhoto,
-                        password: createHash(profile._id)
-                    };
-                    user = await repository.create(newUser);
-                    sessionData.role = user.role;
-                }
-                req.session.email = sessionData.email;
-                req.session.role = sessionData.role;
-                return done(null, user);
-            } catch (error) {
-                return done(error);
-            }
-        }
-    )
-);
 passport.use(
     "github",
     new GithubStrategy(
