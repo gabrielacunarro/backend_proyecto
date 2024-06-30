@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const newPassword = document.getElementById('newPassword').value;
 
             try {
-                const response = await fetch('http://localhost:8080/sessions/reset', {
+                const response = await fetch('/reset', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
