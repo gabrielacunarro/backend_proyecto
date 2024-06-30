@@ -18,6 +18,7 @@ class OrdersServices {
     };
     
     destroy = async (id) => await this.repository.destroy(id)
+    clearCart = async (userId) => await this.repository.clearCart(userId);
 }
 
 const service = new OrdersServices()

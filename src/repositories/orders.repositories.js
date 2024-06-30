@@ -13,6 +13,11 @@ class OrdersRep {
     readOne = async (id) => await this.model.readOne(id);
     update = async (id, data) => await this.model.update(id, data);
     destroy = async (id) => await this.model.destroy(id);
+    clearCart = async (userId) => {
+        const filter = { uid: userId, state: 'cart' };
+        const deletedOrders = await this.model.deleteMany(filter);
+        return deletedOrders;
+    };
 }
 
 const repository = new OrdersRep();
