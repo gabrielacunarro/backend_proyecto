@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (updatedOrder && updatedOrder.response && updatedOrder.response.quantity) {
                         quantityElement.textContent = updatedOrder.response.quantity;
                     } else {
-                        throw error('Updated order does not contain quantity');
+                        throw new Error('Updated order does not contain quantity');
                     }
                 } catch (error) {
                     Swal.fire({
@@ -138,9 +138,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const data = await response.json();
                 if (data.stripeUrl) {
+                    orders = [];
+                    ordersBody.innerHTML = ''; 
+
                     window.location.replace(data.stripeUrl);
                 } else {
-                    throw error
+                    throw new Error('No stripeUrl found in response');
                 }
             } catch (error) {
                 Swal.fire({

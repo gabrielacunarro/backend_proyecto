@@ -111,9 +111,22 @@ class OrdersController {
             next(error);
         }
     };
+    clearCart = async (req, res, next) => {
+        try {
+            const deletedOrders = await this.service.clearCart(req.user.id);
+
+            if (deletedOrders.deletedCount > 0) {
+                return res.status(200).json({ message: 'Cart orders successfully deleted' });
+            } else {
+                return res.status(404).json({ message: 'No cart orders found to delete' });
+            }
+        } catch (error) {
+            return next(error);
+        }
+    };
 }
 
 export default OrdersController
 const controller = new OrdersController()
-const { create, read, readOne, destroy, update, bills } = controller
-export { create, read, readOne, destroy, update, bills }
+const { create, read, readOne, destroy, update, bills,clearCart  } = controller
+export { create, read, readOne, destroy, update, bills,clearCart  }

@@ -1,6 +1,6 @@
 import CustomRouter from "../CustomRouter.js";
 import passCbMid from "../../middlewares/passCb.mid.js"
-import { create, read, readOne, destroy, update, bills } from "../../controllers/orders.controller.js";
+import { create, read, readOne, destroy, update, bills, clearCart } from "../../controllers/orders.controller.js";
 
 export default class OrdersRouter extends CustomRouter {
     init() {
@@ -10,6 +10,7 @@ export default class OrdersRouter extends CustomRouter {
         this.destroy("/:oid", ["USER", "ADMIN", "PREM"], passCbMid("jwt"), destroy);
         this.update("/:oid", ["USER"], passCbMid("jwt"), update);
         this.read("/total/:uid", ["USER"], passCbMid("jwt"), bills);
+        this.destroy("/clearCart", ["USER"], passCbMid("jwt"), clearCart);
     }
 }    
 
